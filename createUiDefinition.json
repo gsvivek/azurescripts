@@ -102,8 +102,8 @@
         ],
         "outputs": {
             "location": "[location()]",
-            "adminUsername": "[steps('basics').adminUsername]",
-            "adminPassword": "[steps('basics').adminPassword]",
+            "adminUsername": "[basics().adminUsername]",
+            "adminPassword": "[basics().adminPassword]",
             "vmSize": "[steps('vmDetails').vmSize]",
             "osDropdown": "[steps('vmDetails').osDropdown]"
         }
