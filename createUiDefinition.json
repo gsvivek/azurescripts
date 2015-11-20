@@ -113,9 +113,13 @@
                 "bladeSubtitle": "Create an account on Informatica Cloud",
                 "elements": [
                     {
-                        "name": "userEmail",
+                        "name": "cloudUsername",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Informatica Cloud Email Address"
+                        "label": "Email Address",
+                        "toolTip": "This will be your Informatica Cloud username",
+                        "constraints": {
+                            "required": true
+                        }
                     },
                     {
                         "name": "cloudPassword",
@@ -127,7 +131,10 @@
                         "toolTip": {
                             "password": "Password for your Informatica Cloud account."
                         },
-                        "osPlatform": "Windows"
+                        "osPlatform": "Windows",
+                        "constraints": {
+                            "required": true
+                        }
                     },
                     {
                         "name": "cloudTier1ConnectorList",
@@ -415,6 +422,8 @@
             "adminPassword": "[basics('adminPassword')]",
             "vmSize": "[steps('vmDetails').vmSize]",
             "osDropdown": "[steps('vmDetails').osDropdown]",
+            "cloudUsername": "[steps('cloudRegDetails').cloudUsername]",
+            "cloudPassword": "[steps('cloudRegDetails').cloudPassword]",
             "tier1Connector": "[steps('cloudRegDetails').cloudTier1ConnectorList]",
             "tier2Connector1": "[steps('cloudRegDetails').cloudTier2ConnectorList1]",
             "tier2Connector2": "[steps('cloudRegDetails').cloudTier2ConnectorList2]"
