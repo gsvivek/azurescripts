@@ -139,7 +139,7 @@
                     {
                         "name": "cloudTier1ConnectorList",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Select One Tier 1 Connector",
+                        "label": "Select one Tier 1 Connector",
                         "defaultValue": "",
                         "toolTip": "",
                         "constraints": {
@@ -202,7 +202,7 @@
                     {
                         "name": "cloudTier2ConnectorList1",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Select One Tier 2 Connector",
+                        "label": "Select one Tier 2 Connector",
                         "defaultValue": "",
                         "toolTip": "",
                         "constraints": {
