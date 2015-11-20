@@ -37,14 +37,14 @@
                     {
                         "name": "osDropdown",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Please select the OS",
+                        "label": "Select the OS for the VM",
                         "defaultValue": "Windows Server 2012 R2 Datacenter",
                         "toolTip": "",
                         "constraints": {
                             "allowedValues": [
                                 {
                                     "label": "Windows Server 2012 R2 Datacenter",
-                                    "value": "win"
+                                    "value": "win2012R2"
                                 },
                                 {
                                     "label": "SUSE Linux Enterprise Server 12",
@@ -52,11 +52,11 @@
                                 },
                                 {
                                     "label": "SUSE Linux Enterprise Server 11 SP4",
-                                    "value": "suseLin11"
+                                    "value": "suseLin11sp4"
                                 },
                                 {
                                     "label": "Ubuntu Server 14.04 LTS",
-                                    "value": "ubuntu"
+                                    "value": "ubuntu14"
                                 }
                             ]
                         }
@@ -94,324 +94,330 @@
                                 {
                                     "label": "Yes",
                                     "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ],
+                            "regex": "^Yes$",
+                            "validationMessage": "Select Yes to proceed"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "cloudRegDetails",
+                "type": "Microsoft.Common.Selector",
+                "label": "Informatica Cloud Registration",
+                "subLabel": {
+                    "preValidation": "Fill details for an Informatica Cloud account",
+                    "postValidation": "Done"
+                },
+                "toolTip": "Fill these details to get an Informatica Cloud Account with 3 free connectors",
+                "bladeTitle": "Informatica Cloud Registration",
+                "bladeSubtitle": "Create an account on Informatica Cloud",
+                "elements": [
+                    {
+                        "name": "cloudUsername",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Email Address",
+                        "toolTip": "This will be the username for your Informatica Cloud account.",
+                        "constraints": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "cloudPassword",
+                        "type": "Microsoft.Compute.CredentialsCombo",
+                        "label": {
+                            "password": "Informatica Cloud Password",
+                            "confirmPassword": "Confirm password"
+                        },
+                        "toolTip": {
+                            "password": "Password for your Informatica Cloud account."
+                        },
+                        "osPlatform": "Windows",
+                        "constraints": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "cloudTier1ConnectorList",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Select One Tier 1 Connector",
+                        "defaultValue": "",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Amazon RedShift",
+                                    "value": "0b0ad503-1c2c-4514-95ac-85a5adb71b3b"
+                                },
+                                {
+                                    "label": "Amazon S3",
+                                    "value": "554a67aa-7f07-42f8-bfad-c927cf4d7f28"
+                                },
+                                {
+                                    "label": "Amazon Dynamo DB",
+                                    "value": "45d431c2-9474-40de-bcf1-409dc56faa3f"
+                                },
+                                {
+                                    "label": "Hadoop",
+                                    "value": "92d6c3db-bfca-4b96-a492-e1b3dea2351e"
+                                },
+                                {
+                                    "label": "Microsoft Dynamics AX",
+                                    "value": "f443ee4a-88bf-4b57-a19a-5c79a6ff0633"
+                                },
+                                {
+                                    "label": "Microsoft Dynamics AX 2012",
+                                    "value": "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
+                                },
+                                {
+                                    "label": "Microsoft Dynamics NAV",
+                                    "value": "d78660a5-ddeb-4441-9f3b-7979243c865b"
+                                },
+                                {
+                                    "label": "Microsoft GreatPlains",
+                                    "value": "47ca4b25-e21d-4d86-a8c6-7f59e495bc44"
+                                },
+                                {
+                                    "label": "Netsuite",
+                                    "value": "e977b246-8cd4-4ed9-94ab-e534353e87ff"
+                                },
+                                {
+                                    "label": "Oracle EBS",
+                                    "value": "b42d3007-0dfb-4825-86a0-a31262ea78eb"
+                                },
+                                {
+                                    "label": "OracleCRMOnDemand",
+                                    "value": "3f243c84-a1ab-4c93-ad33-277e5ac7c516"
+                                },
+                                {
+                                    "label": "Taleo Enterprise",
+                                    "value": "c7c69da0-df69-4290-9f8e-de2b0cc2d792"
+                                },
+                                {
+                                    "label": "Workday",
+                                    "value": "bf39a0dd-4b9d-4ec1-ac9f-c39e2712ece8"
                                 }
                             ]
                         }
                     },
                     {
-                        "name": "cloudRegDetails",
-                        "type": "Microsoft.Common.Selector",
-                        "label": "Informatica Cloud Registration",
-                        "subLabel": {
-                            "preValidation": "Fill details for an Informatica Cloud account",
-                            "postValidation": "Done"
-                        },
-                        "toolTip": "Fill these details to get an Informatica Cloud Account with 3 free connectors",
-                        "bladeTitle": "Informatica Cloud Registration",
-                        "bladeSubtitle": "Create an account on Informatica Cloud",
-                        "elements": [
-                            {
-                                "name": "cloudUsername",
-                                "type": "Microsoft.Common.TextBox",
-                                "label": "Email Address",
-                                "toolTip": "This will be your Informatica Cloud username",
-                                "constraints": {
-                                    "required": true
-                                }
-                            },
-                            {
-                                "name": "cloudPassword",
-                                "type": "Microsoft.Compute.CredentialsCombo",
-                                "label": {
-                                    "password": "Informatica Cloud Password",
-                                    "confirmPassword": "Confirm password"
+                        "name": "cloudTier2ConnectorList1",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Select One Tier 2 Connector",
+                        "defaultValue": "",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Avature",
+                                    "value": "8136bc27-5c96-4012-998c-b9e3549f12b6"
                                 },
-                                "toolTip": {
-                                    "password": "Password for your Informatica Cloud account."
+                                {
+                                    "label": "BigMachines",
+                                    "value": "fe7462ed-ef80-4f7d-a783-51bca5782e57"
                                 },
-                                "osPlatform": "Windows",
-                                "constraints": {
-                                    "required": true
+                                {
+                                    "label": "Box",
+                                    "value": "fc504191-bdda-4f2f-82db-f7d30473c750"
+                                },
+                                {
+                                    "label": "Concur",
+                                    "value": "c68397fd-b600-4896-b014-3aea8908f251"
+                                },
+                                {
+                                    "label": "Coupa",
+                                    "value": "7791b183-222c-4cc8-b5dc-cd1992bd8ede"
+                                },
+                                {
+                                    "label": "CVent",
+                                    "value": "758b1e11-0444-4c27-87bd-da79606caa6d"
+                                },
+                                {
+                                    "label": "Dropbox",
+                                    "value": "afd3b70d-d8e2-424b-94b9-7ba1f22d5af2"
+                                },
+                                {
+                                    "label": "Eloqua",
+                                    "value": "b45a89f6-e5b4-43b1-87c5-c02cb11151c0"
+                                },
+                                {
+                                    "label": "File",
+                                    "value": "fed2a26e-bb41-4d50-9d25-20a27e8c8781"
+                                },
+                                {
+                                    "label": "FileProcessor",
+                                    "value": "e1a84535-6101-4bf7-9702-5ae889cfc0b0"
+                                },
+                                {
+                                    "label": "GoogleAPI",
+                                    "value": "f386355c-51bb-43ca-ac5d-e7abd15a79d5"
+                                },
+                                {
+                                    "label": "Jira",
+                                    "value": "e1788807-ffaf-4cb0-848e-b09e36558b05"
+                                },
+                                {
+                                    "label": "JSON",
+                                    "value": "34686c55-4bd8-4733-9b19-d1d4b1b72784"
+                                },
+                                {
+                                    "label": "Marketo",
+                                    "value": "0ea71f00-949c-11e4-b4a9-0800200c9a66"
+                                },
+                                {
+                                    "label": "Microsoft Sharepoint 2010",
+                                    "value": "b631f215-1589-4fe7-bbac-eaee2080f29b"
+                                },
+                                {
+                                    "label": "Microsoft team foundation server",
+                                    "value": "6b5341c0-9992-4d00-8183-afc82b5ae4f0"
+                                },
+                                {
+                                    "label": "Odata",
+                                    "value": "b93e0491-8bb5-41a0-ba60-50cfb4102180"
+                                },
+                                {
+                                    "label": "OpenAir",
+                                    "value": "6fbec006-291a-4a3a-8cba-2d39c8039990"
+                                },
+                                {
+                                    "label": "Quickbooks",
+                                    "value": "e45e263e-f99c-41ff-a10f-9e06c5963c7f"
+                                },
+                                {
+                                    "label": "REST",
+                                    "value": "cf03505e-01fc-4c35-914d-a6c18cd1f286"
+                                },
+                                {
+                                    "label": "Xactly",
+                                    "value": "5b7e0388-fad8-433e-8b0b-2c9d947c9b29"
+                                },
+                                {
+                                    "label": "XML source",
+                                    "value": "b4d9c90e-8aa7-4d0c-8ed1-d0ffedb04e5c"
+                                },
+                                {
+                                    "label": "XML Target",
+                                    "value": "060a02a7-94e4-402c-bb24-d08519d82c44"
+                                },
+                                {
+                                    "label": "Zoura",
+                                    "value": "0302f0c6-c852-438b-a3e5-51ab11222d1f"
                                 }
-                            },
-                            {
-                                "name": "cloudTier1ConnectorList",
-                                "type": "Microsoft.Common.DropDown",
-                                "label": "Please select One Tier 1 Connector",
-                                "defaultValue": "",
-                                "toolTip": "",
-                                "constraints": {
-                                    "allowedValues": [
-                                        {
-                                            "label": "Amazon RedShift",
-                                            "value": "0b0ad503-1c2c-4514-95ac-85a5adb71b3b"
-                                        },
-                                        {
-                                            "label": "Amazon S3",
-                                            "value": "554a67aa-7f07-42f8-bfad-c927cf4d7f28"
-                                        },
-                                        {
-                                            "label": "Amazon Dynamo DB",
-                                            "value": "45d431c2-9474-40de-bcf1-409dc56faa3f"
-                                        },
-                                        {
-                                            "label": "Hadoop",
-                                            "value": "92d6c3db-bfca-4b96-a492-e1b3dea2351e"
-                                        },
-                                        {
-                                            "label": "Microsoft Dynamics AX",
-                                            "value": "f443ee4a-88bf-4b57-a19a-5c79a6ff0633"
-                                        },
-                                        {
-                                            "label": "Microsoft Dynamics AX 2012",
-                                            "value": "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
-                                        },
-                                        {
-                                            "label": "Microsoft Dynamics NAV",
-                                            "value": "d78660a5-ddeb-4441-9f3b-7979243c865b"
-                                        },
-                                        {
-                                            "label": "Microsoft GreatPlains",
-                                            "value": "47ca4b25-e21d-4d86-a8c6-7f59e495bc44"
-                                        },
-                                        {
-                                            "label": "Netsuite",
-                                            "value": "e977b246-8cd4-4ed9-94ab-e534353e87ff"
-                                        },
-                                        {
-                                            "label": "Oracle EBS",
-                                            "value": "b42d3007-0dfb-4825-86a0-a31262ea78eb"
-                                        },
-                                        {
-                                            "label": "OracleCRMOnDemand",
-                                            "value": "3f243c84-a1ab-4c93-ad33-277e5ac7c516"
-                                        },
-                                        {
-                                            "label": "Taleo Enterprise",
-                                            "value": "c7c69da0-df69-4290-9f8e-de2b0cc2d792"
-                                        },
-                                        {
-                                            "label": "Workday",
-                                            "value": "bf39a0dd-4b9d-4ec1-ac9f-c39e2712ece8"
-                                        }
-                                    ]
+                            ]
+                        }
+                    },
+                    {
+                        "name": "cloudTier2ConnectorList2",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Select another Tier 2 Connector",
+                        "defaultValue": "",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Avature",
+                                    "value": "8136bc27-5c96-4012-998c-b9e3549f12b6"
+                                },
+                                {
+                                    "label": "BigMachines",
+                                    "value": "fe7462ed-ef80-4f7d-a783-51bca5782e57"
+                                },
+                                {
+                                    "label": "Box",
+                                    "value": "fc504191-bdda-4f2f-82db-f7d30473c750"
+                                },
+                                {
+                                    "label": "Concur",
+                                    "value": "c68397fd-b600-4896-b014-3aea8908f251"
+                                },
+                                {
+                                    "label": "Coupa",
+                                    "value": "7791b183-222c-4cc8-b5dc-cd1992bd8ede"
+                                },
+                                {
+                                    "label": "CVent",
+                                    "value": "758b1e11-0444-4c27-87bd-da79606caa6d"
+                                },
+                                {
+                                    "label": "Dropbox",
+                                    "value": "afd3b70d-d8e2-424b-94b9-7ba1f22d5af2"
+                                },
+                                {
+                                    "label": "Eloqua",
+                                    "value": "b45a89f6-e5b4-43b1-87c5-c02cb11151c0"
+                                },
+                                {
+                                    "label": "File",
+                                    "value": "fed2a26e-bb41-4d50-9d25-20a27e8c8781"
+                                },
+                                {
+                                    "label": "FileProcessor",
+                                    "value": "e1a84535-6101-4bf7-9702-5ae889cfc0b0"
+                                },
+                                {
+                                    "label": "GoogleAPI",
+                                    "value": "f386355c-51bb-43ca-ac5d-e7abd15a79d5"
+                                },
+                                {
+                                    "label": "Jira",
+                                    "value": "e1788807-ffaf-4cb0-848e-b09e36558b05"
+                                },
+                                {
+                                    "label": "JSON",
+                                    "value": "34686c55-4bd8-4733-9b19-d1d4b1b72784"
+                                },
+                                {
+                                    "label": "Marketo",
+                                    "value": "0ea71f00-949c-11e4-b4a9-0800200c9a66"
+                                },
+                                {
+                                    "label": "Microsoft Sharepoint 2010",
+                                    "value": "b631f215-1589-4fe7-bbac-eaee2080f29b"
+                                },
+                                {
+                                    "label": "Microsoft team foundation server",
+                                    "value": "6b5341c0-9992-4d00-8183-afc82b5ae4f0"
+                                },
+                                {
+                                    "label": "Odata",
+                                    "value": "b93e0491-8bb5-41a0-ba60-50cfb4102180"
+                                },
+                                {
+                                    "label": "OpenAir",
+                                    "value": "6fbec006-291a-4a3a-8cba-2d39c8039990"
+                                },
+                                {
+                                    "label": "Quickbooks",
+                                    "value": "e45e263e-f99c-41ff-a10f-9e06c5963c7f"
+                                },
+                                {
+                                    "label": "REST",
+                                    "value": "cf03505e-01fc-4c35-914d-a6c18cd1f286"
+                                },
+                                {
+                                    "label": "Xactly",
+                                    "value": "5b7e0388-fad8-433e-8b0b-2c9d947c9b29"
+                                },
+                                {
+                                    "label": "XML source",
+                                    "value": "b4d9c90e-8aa7-4d0c-8ed1-d0ffedb04e5c"
+                                },
+                                {
+                                    "label": "XML Target",
+                                    "value": "060a02a7-94e4-402c-bb24-d08519d82c44"
+                                },
+                                {
+                                    "label": "Zoura",
+                                    "value": "0302f0c6-c852-438b-a3e5-51ab11222d1f"
                                 }
-                            },
-                            {
-                                "name": "cloudTier2ConnectorList1",
-                                "type": "Microsoft.Common.DropDown",
-                                "label": "Please select One Tier 2 Connector",
-                                "defaultValue": "",
-                                "toolTip": "",
-                                "constraints": {
-                                    "allowedValues": [
-                                        {
-                                            "label": "Avature",
-                                            "value": "8136bc27-5c96-4012-998c-b9e3549f12b6"
-                                        },
-                                        {
-                                            "label": "BigMachines",
-                                            "value": "fe7462ed-ef80-4f7d-a783-51bca5782e57"
-                                        },
-                                        {
-                                            "label": "Box",
-                                            "value": "fc504191-bdda-4f2f-82db-f7d30473c750"
-                                        },
-                                        {
-                                            "label": "Concur",
-                                            "value": "c68397fd-b600-4896-b014-3aea8908f251"
-                                        },
-                                        {
-                                            "label": "Coupa",
-                                            "value": "7791b183-222c-4cc8-b5dc-cd1992bd8ede"
-                                        },
-                                        {
-                                            "label": "CVent",
-                                            "value": "758b1e11-0444-4c27-87bd-da79606caa6d"
-                                        },
-                                        {
-                                            "label": "Dropbox",
-                                            "value": "afd3b70d-d8e2-424b-94b9-7ba1f22d5af2"
-                                        },
-                                        {
-                                            "label": "Eloqua",
-                                            "value": "b45a89f6-e5b4-43b1-87c5-c02cb11151c0"
-                                        },
-                                        {
-                                            "label": "File",
-                                            "value": "fed2a26e-bb41-4d50-9d25-20a27e8c8781"
-                                        },
-                                        {
-                                            "label": "FileProcessor",
-                                            "value": "e1a84535-6101-4bf7-9702-5ae889cfc0b0"
-                                        },
-                                        {
-                                            "label": "GoogleAPI",
-                                            "value": "f386355c-51bb-43ca-ac5d-e7abd15a79d5"
-                                        },
-                                        {
-                                            "label": "Jira",
-                                            "value": "e1788807-ffaf-4cb0-848e-b09e36558b05"
-                                        },
-                                        {
-                                            "label": "JSON",
-                                            "value": "34686c55-4bd8-4733-9b19-d1d4b1b72784"
-                                        },
-                                        {
-                                            "label": "Marketo",
-                                            "value": "0ea71f00-949c-11e4-b4a9-0800200c9a66"
-                                        },
-                                        {
-                                            "label": "Microsoft Sharepoint 2010",
-                                            "value": "b631f215-1589-4fe7-bbac-eaee2080f29b"
-                                        },
-                                        {
-                                            "label": "Microsoft team foundation server",
-                                            "value": "6b5341c0-9992-4d00-8183-afc82b5ae4f0"
-                                        },
-                                        {
-                                            "label": "Odata",
-                                            "value": "b93e0491-8bb5-41a0-ba60-50cfb4102180"
-                                        },
-                                        {
-                                            "label": "OpenAir",
-                                            "value": "6fbec006-291a-4a3a-8cba-2d39c8039990"
-                                        },
-                                        {
-                                            "label": "Quickbooks",
-                                            "value": "e45e263e-f99c-41ff-a10f-9e06c5963c7f"
-                                        },
-                                        {
-                                            "label": "REST",
-                                            "value": "cf03505e-01fc-4c35-914d-a6c18cd1f286"
-                                        },
-                                        {
-                                            "label": "Xactly",
-                                            "value": "5b7e0388-fad8-433e-8b0b-2c9d947c9b29"
-                                        },
-                                        {
-                                            "label": "XML source",
-                                            "value": "b4d9c90e-8aa7-4d0c-8ed1-d0ffedb04e5c"
-                                        },
-                                        {
-                                            "label": "XML Target",
-                                            "value": "060a02a7-94e4-402c-bb24-d08519d82c44"
-                                        },
-                                        {
-                                            "label": "Zoura",
-                                            "value": "0302f0c6-c852-438b-a3e5-51ab11222d1f"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "name": "cloudTier2ConnectorList2",
-                                "type": "Microsoft.Common.DropDown",
-                                "label": "Please select another Tier 2 Connector",
-                                "defaultValue": "",
-                                "toolTip": "",
-                                "constraints": {
-                                    "allowedValues": [
-                                        {
-                                            "label": "Avature",
-                                            "value": "8136bc27-5c96-4012-998c-b9e3549f12b6"
-                                        },
-                                        {
-                                            "label": "BigMachines",
-                                            "value": "fe7462ed-ef80-4f7d-a783-51bca5782e57"
-                                        },
-                                        {
-                                            "label": "Box",
-                                            "value": "fc504191-bdda-4f2f-82db-f7d30473c750"
-                                        },
-                                        {
-                                            "label": "Concur",
-                                            "value": "c68397fd-b600-4896-b014-3aea8908f251"
-                                        },
-                                        {
-                                            "label": "Coupa",
-                                            "value": "7791b183-222c-4cc8-b5dc-cd1992bd8ede"
-                                        },
-                                        {
-                                            "label": "CVent",
-                                            "value": "758b1e11-0444-4c27-87bd-da79606caa6d"
-                                        },
-                                        {
-                                            "label": "Dropbox",
-                                            "value": "afd3b70d-d8e2-424b-94b9-7ba1f22d5af2"
-                                        },
-                                        {
-                                            "label": "Eloqua",
-                                            "value": "b45a89f6-e5b4-43b1-87c5-c02cb11151c0"
-                                        },
-                                        {
-                                            "label": "File",
-                                            "value": "fed2a26e-bb41-4d50-9d25-20a27e8c8781"
-                                        },
-                                        {
-                                            "label": "FileProcessor",
-                                            "value": "e1a84535-6101-4bf7-9702-5ae889cfc0b0"
-                                        },
-                                        {
-                                            "label": "GoogleAPI",
-                                            "value": "f386355c-51bb-43ca-ac5d-e7abd15a79d5"
-                                        },
-                                        {
-                                            "label": "Jira",
-                                            "value": "e1788807-ffaf-4cb0-848e-b09e36558b05"
-                                        },
-                                        {
-                                            "label": "JSON",
-                                            "value": "34686c55-4bd8-4733-9b19-d1d4b1b72784"
-                                        },
-                                        {
-                                            "label": "Marketo",
-                                            "value": "0ea71f00-949c-11e4-b4a9-0800200c9a66"
-                                        },
-                                        {
-                                            "label": "Microsoft Sharepoint 2010",
-                                            "value": "b631f215-1589-4fe7-bbac-eaee2080f29b"
-                                        },
-                                        {
-                                            "label": "Microsoft team foundation server",
-                                            "value": "6b5341c0-9992-4d00-8183-afc82b5ae4f0"
-                                        },
-                                        {
-                                            "label": "Odata",
-                                            "value": "b93e0491-8bb5-41a0-ba60-50cfb4102180"
-                                        },
-                                        {
-                                            "label": "OpenAir",
-                                            "value": "6fbec006-291a-4a3a-8cba-2d39c8039990"
-                                        },
-                                        {
-                                            "label": "Quickbooks",
-                                            "value": "e45e263e-f99c-41ff-a10f-9e06c5963c7f"
-                                        },
-                                        {
-                                            "label": "REST",
-                                            "value": "cf03505e-01fc-4c35-914d-a6c18cd1f286"
-                                        },
-                                        {
-                                            "label": "Xactly",
-                                            "value": "5b7e0388-fad8-433e-8b0b-2c9d947c9b29"
-                                        },
-                                        {
-                                            "label": "XML source",
-                                            "value": "b4d9c90e-8aa7-4d0c-8ed1-d0ffedb04e5c"
-                                        },
-                                        {
-                                            "label": "XML Target",
-                                            "value": "060a02a7-94e4-402c-bb24-d08519d82c44"
-                                        },
-                                        {
-                                            "label": "Zoura",
-                                            "value": "0302f0c6-c852-438b-a3e5-51ab11222d1f"
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
+                            ]
+                        }
                     }
                 ]
             }
@@ -422,11 +428,11 @@
             "adminPassword": "[basics('adminPassword')]",
             "vmSize": "[steps('vmDetails').vmSize]",
             "osDropdown": "[steps('vmDetails').osDropdown]",
-            "cloudUsername": "[steps('vmDetails').cloudRegDetails.cloudUsername]",
-            "cloudPassword": "[steps('vmDetails').cloudRegDetails.cloudPassword]",
-            "tier1Connector": "[steps('vmDetails').cloudRegDetails.cloudTier1ConnectorList]",
-            "tier2Connector1": "[steps('vmDetails').cloudRegDetails.cloudTier2ConnectorList1]",
-            "tier2Connector2": "[steps('vmDetails').cloudRegDetails.cloudTier2ConnectorList2]"
+            "cloudUsername": "[steps('cloudRegDetails').cloudUsername]",
+            "cloudPassword": "[steps('cloudRegDetails').cloudPassword]",
+            "tier1Connector": "[steps('cloudRegDetails').cloudTier1ConnectorList]",
+            "tier2Connector1": "[steps('cloudRegDetails').cloudTier2ConnectorList1]",
+            "tier2Connector2": "[steps('cloudRegDetails').cloudTier2ConnectorList2]"
         }
     }
 }
