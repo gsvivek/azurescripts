@@ -23,6 +23,7 @@
 		],
 		"steps" : [{
 				"name" : "vmDetails",
+				"type" : "Microsoft.Common.Selector",
 				"label" : "VM Details",
 				"subLabel" : {
 					"preValidation" : "Configure the VM Details",
@@ -90,13 +91,14 @@
 						"type" : "Microsoft.Common.Selector",
 						"label" : "Informatica Cloud Registration",
 						"sublabel" : {
-							"prevalidation" : "Before",
-							"postvalidation" : "After"
+							"prevalidation" : "Choose VM OS and Size",
+							"postvalidation" : "Done"
 						},
-						"toolTip" : "",
+						"toolTip" : "Fill these details to get an Informatica Cloud Account with 3 free connectors",
 						"bladeTitle" : "Informatica Cloud Registration",
 						"bladeSubtitle" : "Create an account on Informatica Cloud",
-						"elements" : [{
+						"elements" : [
+							{
 								"name" : "userEmail",
 								"type" : "Microsoft.Common.TextBox",
 								"label" : "Informatica Cloud Email Address"
