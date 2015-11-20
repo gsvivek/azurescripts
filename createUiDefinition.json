@@ -416,7 +416,7 @@
                     {
                         "name": "termsConditions",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "I have read the [Informatica Cloud](https://community.informatica.com/mpresources/New%20EULA/Cloud%20Connectors%20End%20User%20License%20Agreement.pdf)terms and conditions",
+                        "label": "I have read the <a href='https://community.informatica.com/mpresources/New%20EULA/Cloud%20Connectors%20End%20User%20License%20Agreement.pdf'>Informatica Cloud terms and conditions</a>",
                         "defaultValue": "Yes",
                         "toolTip": "",
                         "constraints": {
