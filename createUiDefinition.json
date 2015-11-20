@@ -94,14 +94,8 @@
                                 {
                                     "label": "Yes",
                                     "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
                                 }
-                            ],
-                            "regex": "^Yes$",
-                            "validationMessage": "Select Yes to proceed"
+                            ]
                         }
                     }
                 ]
