@@ -29,35 +29,29 @@
 					"postValidation" : "Done"
 				},
 				"bladeTitle" : "VM Details",
-				"elements" : [
-					{
-					  "name": "osDropdown",
-					  "type": "Microsoft.Common.DropDown",
-					  "label": "Please select the OS",
-					  "defaultValue": "Windows Server 2012 R2 Datacenter",
-					  "toolTip": "",
-					  "constraints": {
-						"allowedValues": [
-						  {
-							"label": "Windows Server 2012 R2 Datacenter",
-							"value": "win"
-						  },
-						  {
-							"label": "SUSE Linux Enterprise Server 12",
-							"value": "suseLin12"
-						  },
-						  {
-							"label": "SUSE Linux Enterprise Server 11 SP4",
-							"value": "suseLin11"
-						  },
-						  {
-							"label": "Ubuntu Server 14.04 LTS",
-							"value": "ubuntu"
-						  }
-						]
-					  }
-					}
-					{
+				"elements" : [{
+						"name" : "osDropdown",
+						"type" : "Microsoft.Common.DropDown",
+						"label" : "Please select the OS",
+						"defaultValue" : "Windows Server 2012 R2 Datacenter",
+						"toolTip" : "",
+						"constraints" : {
+							"allowedValues" : [{
+									"label" : "Windows Server 2012 R2 Datacenter",
+									"value" : "win"
+								}, {
+									"label" : "SUSE Linux Enterprise Server 12",
+									"value" : "suseLin12"
+								}, {
+									"label" : "SUSE Linux Enterprise Server 11 SP4",
+									"value" : "suseLin11"
+								}, {
+									"label" : "Ubuntu Server 14.04 LTS",
+									"value" : "ubuntu"
+								}
+							]
+						}
+					}, {
 						"name" : "vmSize",
 						"type" : "Microsoft.Compute.SizeSelector",
 						"label" : "Size",
@@ -78,21 +72,19 @@
 							"sku" : "2012-R2-Datacenter"
 						},
 						"count" : 1
-					},
-					{
-					  "name": "dwSizeConfirm",
-					  "type": "Microsoft.Common.OptionsGroup",
-					  "label": "Is you Azure SQL Datawarehouse size <= 1TB",
-					  "defaultValue": "Yes",
-					  "toolTip": "",
-					  "constraints": {
-						"allowedValues": [
-						  {
-							"label": "Yes",
-							"value": "Yes"
-						  }
-						]
-					  }
+					}, {
+						"name" : "dwSizeConfirm",
+						"type" : "Microsoft.Common.OptionsGroup",
+						"label" : "Is you Azure SQL Datawarehouse size <= 1TB",
+						"defaultValue" : "Yes",
+						"toolTip" : "",
+						"constraints" : {
+							"allowedValues" : [{
+									"label" : "Yes",
+									"value" : "Yes"
+								}
+							]
+						}
 					}
 				]
 			}
@@ -102,7 +94,7 @@
 			"adminUsername" : "[steps('basics').adminUsername]",
 			"adminPassword" : "[steps('basics').adminPassword]",
 			"vmSize" : "[steps('vmDetails').vmSize]",
-			"osDropdown" : "[steps('vmDetails').osDropdown]",
+			"osDropdown" : "[steps('vmDetails').osDropdown]"
 		}
 	}
 }
