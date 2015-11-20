@@ -28,7 +28,7 @@
 					"preValidation" : "Configure the VM Details",
 					"postValidation" : "Done"
 				},
-				"bladeTitle" : "Size",
+				"bladeTitle" : "VM Details",
 				"elements" : [
 					{
 					  "name": "osDropdown",
