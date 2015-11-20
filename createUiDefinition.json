@@ -108,7 +108,7 @@
                     "preValidation": "Fill details for an Informatica Cloud account",
                     "postValidation": "Done"
                 },
-                "toolTip": "Fill these details to get an Informatica Cloud Account with 3 free connectors",
+                "toolTip": "Fill details for an Informatica Cloud Account",
                 "bladeTitle": "Informatica Cloud Registration",
                 "bladeSubtitle": "Create an account on Informatica Cloud",
                 "elements": [
@@ -416,7 +416,7 @@
                     {
                         "name": "termsConditions",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "I have read the <a href='https://community.informatica.com/mpresources/New%20EULA/Cloud%20Connectors%20End%20User%20License%20Agreement.pdf'>Informatica Cloud terms and conditions</a>",
+                        "label": "I have read and agree to the Informatica Cloud <a href='https://community.informatica.com/mpresources/New%20EULA/Cloud%20Connectors%20End%20User%20License%20Agreement.pdf' target='_blank'>terms and conditions</a>",
                         "defaultValue": "Yes",
                         "toolTip": "",
                         "constraints": {
