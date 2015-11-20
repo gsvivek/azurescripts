@@ -77,7 +77,7 @@
 							"offer" : "WindowsServer",
 							"sku" : "2012-R2-Datacenter"
 						},
-						"count" : "[steps('vmDetails').vmCount]"
+						"count" : 1
 					},
 					{
 					  "name": "dwSizeConfirm",
@@ -101,17 +101,8 @@
 			"location" : "[location()]",
 			"adminUsername" : "[steps('basics').adminUsername]",
 			"adminPassword" : "[steps('basics').adminPassword]",
-			"storageAccountNewOrExisting" : "[steps('infrastructureConfig').storageAccount.newOrExisting]",
-			"StorageAccountName" : "[steps('infrastructureConfig').storageAccount.name]",
-			"storageAccountType" : "[steps('infrastructureConfig').storageAccount.type]",
-			"existingStorageAccountRG" : "[steps('infrastructureConfig').storageAccount.resourceGroup]",
-			"domainName" : "[steps('infrastructureConfig').domainName]",
-			"vmSize" : "[steps('infrastructureConfig').vmSize]",
-			"vmCount" : "[steps('infrastructureConfig').vmCount]",
-			"publicIPAddressName" : "[steps('infrastructureConfig').DnsAndPublicIP.name]",
-			"dnsNameForPublicIP" : "[steps('infrastructureConfig').dnsAndPublicIP.domainNameLabel]",
-			"existingIPRGName" : "[steps('infrastructureConfig').dnsAndPublicIP.resourceGroup]",
-			"publicIPNewOrExisting" : "[steps('infrastructureConfig').dnsAndPublicIP.newOrExistingOrNone]"
+			"vmSize" : "[steps('vmDetails').vmSize]",
+			"osDropdown" : "[steps('vmDetails').osDropdown]",
 		}
 	}
 }
