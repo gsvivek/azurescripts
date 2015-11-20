@@ -105,7 +105,7 @@
                 "type": "Microsoft.Common.Selector",
                 "label": "Informatica Cloud Registration",
                 "subLabel": {
-                    "preValidation": "Choose VM OS and Size",
+                    "preValidation": "Fill details for an Informatica Cloud account",
                     "postValidation": "Done"
                 },
                 "toolTip": "Fill these details to get an Informatica Cloud Account with 3 free connectors",
