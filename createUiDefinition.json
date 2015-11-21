@@ -110,7 +110,7 @@
                     {
                         "name": "dwSizeConfirm",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Is you Azure SQL Datawarehouse size <= 1TB",
+                        "label": "Is you Azure SQL Datawarehouse size <= 1TB?",
                         "defaultValue": "Yes",
                         "toolTip": "",
                         "constraints": {
@@ -466,7 +466,6 @@
             "domainName": "[steps('vmDetails').domainName]",
             "vmSize": "[steps('vmDetails').vmSize]",
             "vmCount": "[steps('vmDetails').vmCount]",
-            "publicIPAddressName": "[steps('vmDetails').DnsAndPublicIP.name]",
             "dnsNameForPublicIP": "[steps('vmDetails').dnsAndPublicIP.domainNameLabel]",
             "existingIPRGName": "[steps('vmDetails').dnsAndPublicIP.resourceGroup]",
             "publicIPNewOrExisting": "[steps('vmDetails').dnsAndPublicIP.newOrExistingOrNone]",
