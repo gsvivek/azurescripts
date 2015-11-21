@@ -4,7 +4,8 @@ $pinfo.FileName = "C:\Program Files\Informatica Cloud Secure Agent\jre\bin\java.
 $pinfo.RedirectStandardError = $true
 $pinfo.RedirectStandardOutput = $true
 $pinfo.UseShellExecute = $false
-$pinfo.Arguments = '-jar C:\Program Files\Informatica Cloud Secure Agent\CloudExtProvisionClient.jar "cloudUsername" "$cloudUsername" "cloudPassword" "$cloudPassword" "connectorUUIDs" "$connectorUUIDs" "identifier" "$identifier"'
+$computerSystemProduct = Get-WmiObject -class Win32_ComputerSystemProduct -namespace root\CIMV2
+$pinfo.Arguments = '-jar C:\Program Files\Informatica Cloud Secure Agent\CloudExtProvisionClient.jar "cloudUsername" "$cloudUsername" "cloudPassword" "$cloudPassword" "connectorUUIDs" "$connectorUUIDs" "identifier" "$computerSystemProduct.UUID"'
 $p = New-Object System.Diagnostics.Process
 $p.StartInfo = $pinfo
 $p.Start() | Out-Null
