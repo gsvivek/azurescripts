@@ -25,41 +25,14 @@
         ],
         "steps": [
             {
-                "name": "infrastructureConfig",
-                "label": "Infrastructure settings",
+                "name": "vmDetails",
+                "label": "VM Details",
                 "subLabel": {
-                    "preValidation": "Configure the infrastructure settings",
+                    "preValidation": "Configure the VM details",
                     "postValidation": "Done"
                 },
-                "bladeTitle": "Infrastructure settings",
+                "bladeTitle": "VM Details",
                 "elements": [
-                    {
-                        "name": "VmCount",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Number of VMs",
-                        "defaultValue": "2",
-                        "toolTip": "",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "2",
-                                    "value": 2
-                                },
-                                {
-                                    "label": "4",
-                                    "value": 4
-                                },
-                                {
-                                    "label": "8",
-                                    "value": 8
-                                },
-                                {
-                                    "label": "16",
-                                    "value": 16
-                                }
-                            ]
-                        }
-                    },
                     {
                         "name": "storageAccount",
                         "type": "Microsoft.Storage.StorageAccountSelector",
@@ -106,19 +79,7 @@
                         "options": {
                             "hideNone": true
                         }
-                    }
-                ]
-            },
-            {
-                "name": "vmDetails",
-                "type": "Microsoft.Common.Selector",
-                "label": "VM Details",
-                "subLabel": {
-                    "preValidation": "Configure the VM Details",
-                    "postValidation": "Done"
-                },
-                "bladeTitle": "VM Details",
-                "elements": [
+                    },
                     {
                         "name": "osDropdown",
                         "type": "Microsoft.Common.DropDown",
