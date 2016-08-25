@@ -106,8 +106,8 @@
                     {
                         "name": "cloudUsername",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Email Address",
-                        "toolTip": "This will be the primary contact for your Informatica Cloud account. Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>",
+                        "label": "Email Address (Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>)",
+                        "toolTip": "This will be the primary contact for your Informatica Cloud account.",
                         "constraints": {
                             "required": true
                         }
