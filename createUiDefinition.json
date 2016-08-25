@@ -42,7 +42,7 @@
                             "Standard_D2"
                         ],
                         "constraints": {
-                            "allowedSizes": [],
+                            "allowedSizes": ["Standard_D2"],
                             "excludedSizes": []
                         },
                         "osPlatform": "Windows",
