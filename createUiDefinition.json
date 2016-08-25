@@ -88,7 +88,7 @@
                                 }
                             ]
                         }
-                    },
+                    }
                 ]
             },
             {
@@ -301,7 +301,7 @@
             "cloudUsername": "[steps('cloudRegDetails').cloudUsername]",
             "cloudPassword": "[steps('cloudRegDetails').cloudPassword]",
             "tier1Connector": "[steps('cloudRegDetails').cloudTier1ConnectorList]",
-            "tier2Connector1": "[steps('cloudRegDetails').cloudTier2ConnectorList1]",
+            "tier2Connector1": "[steps('cloudRegDetails').cloudTier2ConnectorList1]"
         }
     }
 }
