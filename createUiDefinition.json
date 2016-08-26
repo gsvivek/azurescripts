@@ -93,7 +93,7 @@
 			"elements": [{
 				"name": "cloudUsername",
 				"type": "Microsoft.Common.TextBox",
-				"label": "Email Address<br/><br/>Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>.<br/>For e.g. if your email is name@gmail.com, your Informatica Cloud username would be name@azure.gmail.com.<br/>",
+				"label": "Email Address<br/><br/>Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>.<br/>For e.g. if your email is name@gmail.com, your Informatica Cloud username would be name@azure.gmail.com.<br/><br/>",
 				"constraints": {
 					"required": true
 				}
