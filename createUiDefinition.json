@@ -100,7 +100,7 @@
 						"constraints" : {
 							"required" : true
 						},
-						"tooltip": "Primary contact address for your Informatica Cloud Account"
+						"toolTip": "Primary contact address for your Informatica Cloud Account"
 					}, {
 						"name" : "cloudPassword",
 						"type" : "Microsoft.Common.PasswordBox",
