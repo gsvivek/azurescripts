@@ -93,27 +93,11 @@
 			"elements": [{
 				"name": "cloudUsername",
 				"type": "Microsoft.Common.TextBox",
-				"label": "Email Address",
-				"toolTip": "Your primary contact address for the Informatica Cloud account",
+				"label": "Email Address<br/><br/>Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>.<br/>For e.g. if your email is name@gmail.com, your Informatica Cloud username would be name@azure.gmail.com.<br/><br/>",
 				"constraints": {
 					"required": true
 				}
-			},
-                    {
-                        "name": "dummyUsername",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>.<br/>For e.g. if your email is name@gmail.com, your Informatica Cloud username would be",
-                        "defaultValue": "name@azure.gmail.com",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "name@azure.gmail.com",
-                                    "value": "1"
-                                }
-                            ]
-                        }
-                    }
-			, {
+			}, {
 				"name": "cloudPassword",
 				"type": "Microsoft.Common.PasswordBox",
 				"label": {
@@ -135,7 +119,7 @@
 			}, {
 				"name": "cloudTier1ConnectorList",
 				"type": "Microsoft.Common.DropDown",
-				"label": "Select your primary connector",
+				"label": "Select your Azure connector",
 				"defaultValue": "",
 				"toolTip": "",
 				"constraints": {
@@ -242,7 +226,7 @@
 			}, {
 				"name": "termsConditions",
 				"type": "Microsoft.Common.OptionsGroup",
-				"label": "I have read and agree to the Informatica Cloud <a href='https://marketplace.informatica.com/mpresources/New%20EULA/Cloud%20Connectors%20End%20User%20License%20Agreement.pdf' target='_blank'>End User License Agreement</a>",
+				"label": "I have read and agree to the Informatica Cloud <a href='https://marketplace.informatica.com/mpresources/New%20EULA/Cloud%20Connectors%20End%20User%20License%20Agreement.pdf' target='_blank'>End User License Agreement</a><br/><br/>",
 				"constraints": {
 					"required": true,
 					"allowedValues": [{
@@ -256,13 +240,9 @@
 			"location": "[location()]",
 			"adminUsername": "[basics('adminUsername')]",
 			"adminPassword": "[basics('adminPassword')]",
-			"storageAccountNewOrExisting": "[steps('vmDetails').storageAccount.newOrExisting]",
-			"StorageAccountName": "[steps('vmDetails').storageAccount.name]",
-			"storageAccountType": "[steps('vmDetails').storageAccount.type]",
 			"existingStorageAccountRG": "[steps('vmDetails').storageAccount.resourceGroup]",
 			"domainName": "[steps('vmDetails').domainName]",
 			"vmSize": "[steps('vmDetails').vmSize]",
-			"vmCount": "[steps('vmDetails').vmCount]",
 			"dnsNameForPublicIP": "[steps('vmDetails').dnsAndPublicIP.domainNameLabel]",
 			"existingIPRGName": "[steps('vmDetails').dnsAndPublicIP.resourceGroup]",
 			"publicIPNewOrExisting": "[steps('vmDetails').dnsAndPublicIP.newOrExistingOrNone]",
