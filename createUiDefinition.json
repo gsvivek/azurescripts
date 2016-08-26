@@ -106,17 +106,30 @@
                     {
                         "name": "cloudUsername",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Email Address",
+                        "label": "Email Address<br/><br/>",
                         "toolTip": "This will be the primary contact for your Informatica Cloud account.",
                         "constraints": {
                             "required": true
                         }
                     },
                     {
+                        "name": "dummyUsername",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>. For e.g. if your email is name@gmail.com, your Informatica Cloud username would be",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "name@azure.gmail.com",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "name": "cloudPassword",
                         "type": "Microsoft.Common.PasswordBox",
                         "label": {
-                            "password": "(Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>. For e.g. if your email is name@gmail.com, your Informatica Cloud username would be name@azure.gmail.com)<br/><br/>Informatica Cloud Password",
+                            "password": "Informatica Cloud Password",
                             "confirmPassword": "Confirm password"
                         },
                         "toolTip": {
