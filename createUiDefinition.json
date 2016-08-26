@@ -94,13 +94,12 @@
 				"bladeTitle" : "Informatica Cloud Registration",
 				"bladeSubtitle" : "Create an account on Informatica Cloud",
 				"elements" : [{
-						"name" : "cloudUsername",
+						"name" : "cloudEmail",
 						"type" : "Microsoft.Common.TextBox",
 						"label" : "Email Address<br/><br/>Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>.<br/>For e.g. if your email is name@gmail.com, your Informatica Cloud username would be name@azure.gmail.com.<br/><br/>",
 						"constraints" : {
 							"required" : true
-						},
-						"toolTip": "Primary contact address for your Informatica Cloud Account"
+						}
 					}, {
 						"name" : "cloudPassword",
 						"type" : "Microsoft.Common.PasswordBox",
@@ -114,7 +113,7 @@
 						"constraints" : {
 							"required" : true,
 							"regex" : "^([a-zA-Z0-9@*#]{8,15})$",
-							"validationMessage" : "Your password should be between 8-15 characters and can contain the special characters @*#"
+							"validationMessage" : "Password must be 8-15 characters long and can contain the special characters @*#"
 						},
 						"options" : {
 							"hideConfirmation" : false
@@ -255,7 +254,7 @@
 			"existingIPRGName" : "[steps('vmDetails').dnsAndPublicIP.resourceGroup]",
 			"publicIPNewOrExisting" : "[steps('vmDetails').dnsAndPublicIP.newOrExistingOrNone]",
 			"osDropdown" : "[steps('vmDetails').osDropdown]",
-			"cloudUsername" : "[steps('cloudRegDetails').cloudUsername]",
+			"cloudEmail" : "[steps('cloudRegDetails').cloudEmail]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
 			"tier1Connector" : "[steps('cloudRegDetails').cloudTier1ConnectorList]",
 			"tier2Connector1" : "[steps('cloudRegDetails').cloudTier2ConnectorList1]"
