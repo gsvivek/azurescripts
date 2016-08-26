@@ -100,7 +100,6 @@
 						"constraints" : {
 							"required" : true
 						},
-						"visible": false,
 						"tooltip": "Primary contact address for your Informatica Cloud Account"
 					}, {
 						"name" : "cloudPassword",
