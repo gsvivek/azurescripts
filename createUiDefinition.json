@@ -240,7 +240,6 @@
 			"location": "[location()]",
 			"adminUsername": "[basics('adminUsername')]",
 			"adminPassword": "[basics('adminPassword')]",
-			"existingStorageAccountRG": "[steps('vmDetails').storageAccount.resourceGroup]",
 			"domainName": "[steps('vmDetails').domainName]",
 			"vmSize": "[steps('vmDetails').vmSize]",
 			"dnsNameForPublicIP": "[steps('vmDetails').dnsAndPublicIP.domainNameLabel]",
