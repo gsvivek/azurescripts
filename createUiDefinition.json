@@ -106,7 +106,7 @@
                     {
                         "name": "cloudUsername",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Email Address (Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>)",
+                        "label": "Email Address",
                         "toolTip": "This will be the primary contact for your Informatica Cloud account.",
                         "constraints": {
                             "required": true
@@ -116,15 +116,16 @@
                         "name": "cloudPassword",
                         "type": "Microsoft.Compute.CredentialsCombo",
                         "label": {
-                            "password": "Informatica Cloud Password",
+                            "password": "(Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>. For e.g. if your email is name@gmail.com, your Informatica Cloud username would be name@azure.gmail.com)<br/><br/>Informatica Cloud Password",
                             "confirmPassword": "Confirm password"
                         },
                         "toolTip": {
                             "password": "Password for your Informatica Cloud account."
                         },
-                        "osPlatform": "Windows",
                         "constraints": {
-                            "required": true
+                            "required": true,
+                            "regex": "^([a-zA-Z0-9@*#]{8,15})$",
+                            "validationMessage": "Your password should be between 8-15 characters and can contain the special characters @*#"
                         }
                     },
                     {
