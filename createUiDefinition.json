@@ -123,7 +123,7 @@
 						"name" : "cloudTier1ConnectorList",
 						"type" : "Microsoft.Common.DropDown",
 						"label" : "Select your Azure connector",
-						"defaultValue" : "",
+						"defaultValue" : "Azure SQL DB",
 						"toolTip" : "",
 						"constraints" : {
 							"required" : true,
@@ -149,7 +149,7 @@
 						"name" : "cloudTier2ConnectorList1",
 						"type" : "Microsoft.Common.DropDown",
 						"label" : "Select one additional connector",
-						"defaultValue" : "",
+						"defaultValue" : "Avature",
 						"toolTip" : "",
 						"constraints" : {
 							"required" : true,
