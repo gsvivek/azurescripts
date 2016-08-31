@@ -75,8 +75,8 @@
 									"label" : "Windows Server 2012 R2 Datacenter",
 									"value" : "win2012R2"
 								}, {
-									"label" : "SUSE Linux Enterprise Server 12",
-									"value" : "suseLin12"
+									"label" : "Ubuntu Linux 14.04",
+									"value" : "ubuntuLin1404"
 								}
 							]
 						}
