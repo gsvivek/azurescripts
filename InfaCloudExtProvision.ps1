@@ -1,4 +1,4 @@
-param([string]$cloudEmail, [string]$cloudPassword,[string]$connectorUUIDs,[string]$identifier)
+param([string]$cloudEmail, [string]$cloudPassword,[string]$connectorUUIDs)
 $pinfo = New-Object System.Diagnostics.ProcessStartInfo
 $pinfo.FileName = "C:\Program Files\Informatica Cloud Secure Agent\jre\bin\java.exe"
 $pinfo.RedirectStandardError = $true
