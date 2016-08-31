@@ -29,7 +29,8 @@
 					"postValidation" : "Done"
 				},
 				"bladeTitle" : "VM Details",
-				"elements" : [{
+				"elements" : [
+				{
 						"name" : "vmSize",
 						"type" : "Microsoft.Compute.SizeSelector",
 						"label" : "Virtual machine size",
@@ -75,8 +76,8 @@
 									"label" : "Windows Server 2012 R2 Datacenter",
 									"value" : "win2012R2"
 								}, {
-									"label" : "Ubuntu Linux 14.04",
-									"value" : "ubuntuLin1404"
+									"label" : "Ubuntu Linux 12.04",
+									"value" : "ubuntuLin12"
 								}
 							]
 						}
@@ -120,7 +121,7 @@
 						},
 						"visible" : true
 					}, {
-						"name" : "cloudTier1ConnectorList",
+						"name" : "cloudTier1Connector",
 						"type" : "Microsoft.Common.DropDown",
 						"label" : "Select your Azure connector",
 						"defaultValue" : "Azure SQL DB",
@@ -146,7 +147,7 @@
 							]
 						}
 					}, {
-						"name" : "cloudTier2ConnectorList1",
+						"name" : "cloudTier2Connector",
 						"type" : "Microsoft.Common.DropDown",
 						"label" : "Select one additional connector",
 						"defaultValue" : "Avature",
@@ -256,8 +257,8 @@
 			"osDropdown" : "[steps('vmDetails').osDropdown]",
 			"cloudEmail" : "[steps('cloudRegDetails').cloudEmail]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
-			"tier1Connector" : "[steps('cloudRegDetails').cloudTier1ConnectorList]",
-			"tier2Connector1" : "[steps('cloudRegDetails').cloudTier2ConnectorList1]"
+			"cloudTier1Connector" : "[steps('cloudRegDetails').cloudTier1Connector]",
+			"cloudTier2Connector" : "[steps('cloudRegDetails').cloudTier2Connector]"
 		}
 	}
 }
