@@ -229,18 +229,6 @@
 								}
 							]
 						}
-					}, {
-						"name" : "termsConditions",
-						"type" : "Microsoft.Common.OptionsGroup",
-						"label" : "I have read and agree to the Informatica Cloud <a href='https://marketplace.informatica.com/mpresources/New%20EULA/Cloud%20Connectors%20End%20User%20License%20Agreement.pdf' target='_blank'>End User License Agreement</a><br/><br/>",
-						"constraints" : {
-							"required" : true,
-							"allowedValues" : [{
-									"label" : "Yes",
-									"value" : "Yes"
-								}
-							]
-						}
 					}
 				]
 			}
