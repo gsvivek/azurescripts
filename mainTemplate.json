@@ -1,386 +1,221 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "location" : {
-      "type" : "string",
-      "metadata" : {
-        "description" : "Location to deploy the VMs to"
-      }
-    },
-    "adminUsername": {
-      "type": "string",
-      "metadata": {
-        "description": "Admin username"
-      }
-    },
-    "adminPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "Admin password"
-      }
-    },
-    "publicIPAddressName": {
-      "type": "string",
-      "defaultValue": "myPublicIP",
-      "metadata": {
-        "description": "Public IP Name"
-      }
-    },
-    "vmSize": {
-      "type": "string",
-      "defaultValue": "Standard_D1",
-      "metadata": {
-        "description": "Size of the VM"
-      }
-    },
-    "vmCount" : {
-      "type" : "int",
-      "defaultValue": 2,
-      "metadata" : {
-        "description" : "Number of VMs to deploy"
-      }
-    },
-    "storageAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of storage account"
-      }
-    },
-    "storageAccountNewOrExisting" : {
-      "type": "string",
-      "defaultValue" : "new",
-      "allowedValues" : [
-        "new",
-        "existing"
-      ],
-      "metadata": {
-        "Description": "Indicates whether the Storage Account is new or existing"
-      }
-    },
-    "storageAccountType": {
-			"type": "string",
-			"metadata": {
-				"description": "The type of the Storage Account created"
-			},
-			"defaultValue":"Standard_LRS"
-		},
-    "existingStorageAccountRG": {
-      "type": "string",
-      "metadata": {
-        "description": "Resource Group of the Existing VM."
-      },
-      "defaultValue" : ""
-    },
-    "dnsNameForPublicIP": {
-      "type": "string",
-      "metadata": {
-        "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-      }
-    },
-    "existingIPRGName" : {
-      "type" : "string",
-      "defaultValue" : ""
-    },
-    "publicIPAddressName" : {
-      "type" : "string"
-    },
-    "publicIPNewOrExisting": {
-      "type": "string",
-      "defaultValue" : "new",
-      "allowedValues" : [
-        "new",
-        "existing"
-      ],
-      "metadata": {
-        "Description": "Indicates whether the public IP is new or existing"
-      }
-    },
-    "baseUrl" : {
+	"$schema" : "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+	"contentVersion" : "1.0.0.0",
+	"parameters" : {
+		"adminUsername" : {
 			"type" : "string",
-			"metadata": {
-				"artifactsBaseUrl": ""
-			},
-			"defaultValue": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/marketplace-samples/simple-windows-vm"
-		}
-  },
-  "variables": {
-    "vmNamePrefix" : "VM",
-    "imagePublisher" : "MicrosoftWindowsServer",
-    "imageOffer" : "WindowsServer",
-    "imageSKU" : "2012-R2-Datacenter",
-    "lbName" : "myLB",
-    "nicNamePrefix" : "nic",
-    "storageAccountType": "Standard_LRS",
-    "availabilitySetName": "myAvSet",
-    "addressPrefix": "10.0.0.0/16",
-    "subnetName": "Subnet-1",
-    "subnetPrefix": "10.0.0.0/24",
-    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('vnetName'))]",
-    "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables ('subnetName'))]",
-    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",
-    "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
-    "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/BackendPool1')]",
-    "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
-    "vnetName": "myVNET",
-    "storageAccountSetupURL" : "[concat(parameters('baseUrl'),'/storageAccount-',parameters('storageAccountNewOrExisting'),'.json')]",
-    "publicIPAdressSetupURL" : "[concat(parameters('baseUrl'),'/publicip-',parameters('publicIPNewOrExisting'),'.json')]"
-  },
-  "resources": [
-    {
-			"name": "storageAcountSetup",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion" : "2015-01-01",
-			"properties" : {
-				"mode": "Incremental",
-				"templateLink" : {
-					"uri" : "[variables('storageAccountSetupURL')]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters" : {
-					"location": {
-						"value": "[parameters('location')]"
-					},
-					"storageAccountType": {
-						"value": "[parameters('storageAccountType')]"
-					},
-					"storageAccountName" : {
-						"value": "[parameters('storageAccountName')]"
-					},
-					"storageAccountExistingRG": {
-						"value": "[parameters('existingStorageAccountRG')]"
-					}
-				}
+			"metadata" : {
+				"description" : "Admin username of the VM"
 			}
 		},
-    {
-      "name": "publicIPSetup",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('publicIPAdressSetupURL')]",
-          "contentVersion": "1.0.0.0"
+		"adminPassword" : {
+			"type" : "securestring",
+			"metadata" : {
+				"description" : "Admin password of the VM"
+			}
+		},
+		"vmSize" : {
+			"type" : "string",
+			"defaultValue" : "Standard_D1",
+			"metadata" : {
+				"description" : "Size of the VM"
+			}
+		},
+		"publicIPAddressName" : {
+			"type" : "string",
+			"defaultValue" : "myPublicIP",
+			"metadata" : {
+				"description" : "Public IP Name of the VM"
+			}
+		},
+		"dnsNameForPublicIP" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "Unique DNS Name for the Public IP used to access the Virtual Machine."
+			}
+		},
+		"osDropdown" : {
+			"type" : "string",
+			"defaultValue" : "win2012R2",
+			"allowedValues" : [
+				"win2012R2",
+				"ubuntuLin12"
+			]
+			"metadata" : {
+				"description" : "The OS type chosen by the user. Allowed values are Windows 2012 R2 and Ubuntu Linux 12.04"
+			}
+		},
+		"cloudEmail" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The email of the Informatica Cloud user."
+			}
+		},
+		"cloudPassword" : {
+			"type" : "secureString",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The password for the Informatica Cloud user account."
+			}
+		},
+		"cloudTier1Connector" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The primary connector chosen by the user."
+			}
+		},
+		"cloudTier2Connector" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The secondary connector chosen by the user."
+			}
+		}
+	},
+	"variables" : {
+		"imagePublisher" : "Informatica",
+		"imageOffer" : "ics-payg",
+		"OSImageURI" : "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-payg/ics-payg-osDisk.b560dfe0-f352-4722-b497-9243e7a32d57.vhd",
+		"nicName" : "myVMNic",
+		"addressPrefix" : "10.0.0.0/16",
+		"subnetName" : "Subnet",
+		"subnetPrefix" : "10.0.0.0/24",
+		"storageAccountType": "Standard_LRS",
+		"publicIPAddressType" : "Dynamic",
+		"vmStorageAccountContainerName" : "vhds",
+		"vmName" : "ICSPAYG",
+		"virtualNetworkName" : "MyVNET",
+		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+		"vhdStorageAccountName" : "[concat(uniqueString(resourceGroup().id), 'storage')]"
+	},
+	"resources" : [
+		{
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('vhdStorageAccountName')]",
+            "apiVersion": "2015-05-01-preview",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "accountType": "[variables('storageAccountType')]"
+            }
         },
-        "parameters": {
-			    "location": {
-			      "value" : "[parameters('location')]"
-			    },
-			    "publicIPAddressName": {
-			      "value" : "[parameters('publicIPAddressName')]"
-			    },
-			    "publicIPAddressType" : {
-			      "value" : "Dynamic"
-			    },
-			    "dnsPrefix" : {
-			      "value" : "[parameters('dnsNameForPublicIP')]"
-			    },
-			    "publicIpRGName" : {
-			    	"value" : "[parameters('existingIPRGName')]"
-			    }
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Compute/availabilitySets",
-      "name": "[variables('availabilitySetName')]",
-      "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]",
-      "properties": {}
-    },
-    {
-      "apiVersion": "2015-05-01-preview",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('vnetName')]",
-      "location": "[parameters('location')]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[variables('addressPrefix')]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[variables('subnetName')]",
-            "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "apiVersion": "2015-05-01-preview",
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(variables('nicNamePrefix'), copyindex())]",
-      "location": "[parameters('location')]",
-      "copy": {
-        "name": "nicLoop",
-        "count": "[parameters('vmCount')]"
-      },
-      "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', variables('vnetName'))]",
-        "[concat('Microsoft.Network/loadBalancers/', variables('lbName'))]"
-      ],
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "subnet": {
-                "id": "[variables('subnetRef')]"
-              },
-              "loadBalancerBackendAddressPools": [
-                {
-                  "id": "[concat(variables('lbID'), '/backendAddressPools/BackendPool1')]"
-                }
-              ],
-              "loadBalancerInboundNatRules": [
-                {
-                  "id": "[concat(variables('lbID'),'/inboundNatRules/RDP-VM', copyindex())]"
-                }
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "apiVersion": "2015-05-01-preview",
-      "name": "[variables('lbName')]",
-      "type": "Microsoft.Network/loadBalancers",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "publicIPSetup"
-      ],
-      "properties": {
-        "frontendIPConfigurations": [
-          {
-            "name": "LoadBalancerFrontEnd",
-            "properties": {
-              "publicIPAddress": {
-                "id": "[reference('publicIPSetup').outputs.resourceId.value]"
-              }
-            }
-          }
-        ],
-        "backendAddressPools": [
-          {
-            "name": "BackendPool1"
-          }
-        ],
-        "inboundNatRules": [
-          {
-            "name": "RDP-VM0",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[variables('frontEndIPConfigID')]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 50001,
-              "backendPort": 3389,
-              "enableFloatingIP": false
-            }
-          },
-          {
-            "name": "RDP-VM1",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[variables('frontEndIPConfigID')]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 50002,
-              "backendPort": 3389,
-              "enableFloatingIP": false
-            }
-          }
-        ],
-        "loadBalancingRules": [
-          {
-            "name": "LBRule",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[variables('frontEndIPConfigID')]"
-              },
-              "backendAddressPool": {
-                "id": "[variables('lbPoolID')]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 80,
-              "backendPort": 80,
-              "enableFloatingIP": false,
-              "idleTimeoutInMinutes": 5,
-              "probe": {
-                "id": "[variables('lbProbeID')]"
-              }
-            }
-          }
-        ],
-        "probes": [
-          {
-            "name": "tcpProbe",
-            "properties": {
-              "protocol": "tcp",
-              "port": 80,
-              "intervalInSeconds": "5",
-              "numberOfProbes": "2"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "apiVersion": "2015-05-01-preview",
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(variables('vmNamePrefix'), copyindex())]",
-      "copy": {
-        "name": "virtualMachineLoop",
-        "count": "[parameters('vmCount')]"
-      },
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "storageAcountSetup",
-        "[concat('Microsoft.Network/networkInterfaces/', variables('nicNamePrefix'), copyindex())]",
-        "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetName'))]"
-      ],
-      "properties": {
-        "availabilitySet": {
-          "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetName'))]"
-        },
-        "hardwareProfile": {
-          "vmSize": "[parameters('vmSize')]"
-        },
-        "osProfile": {
-          "computername": "[concat(variables('vmNamePrefix'), copyIndex())]",
-          "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
-        },
-        "storageProfile": {
-          "imageReference": {
-            "publisher": "[variables('imagePublisher')]",
-            "offer": "[variables('imageOffer')]",
-            "sku": "[variables('imageSKU')]",
-            "version": "latest"
-          },
-          "osDisk": {
-            "name": "osdisk",
-            "vhd": {
-              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/vhds/','osdisk', copyindex(), '.vhd')]"
-            },
-            "caching": "ReadWrite",
-            "createOption": "FromImage"
-          }
-        },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('nicNamePrefix'),copyindex()))]"
-            }
-          ]
-        }
-      }
-    }
-  ]
+		{
+			"apiVersion" : "2015-05-01-preview",
+			"type" : "Microsoft.Network/publicIPAddresses",
+			"name" : "[parameters('publicIPAddressName')]",
+			"location" : "[resourceGroup().location]",
+			"properties" : {
+				"publicIPAllocationMethod" : "[variables('publicIPAddressType')]",
+				"dnsSettings" : {
+					"domainNameLabel" : "[parameters('dnsNameForPublicIP')]"
+				}
+			}
+		}, {
+			"apiVersion" : "2015-05-01-preview",
+			"type" : "Microsoft.Network/virtualNetworks",
+			"name" : "[variables('virtualNetworkName')]",
+			"location" : "[resourceGroup().location]",
+			"properties" : {
+				"addressSpace" : {
+					"addressPrefixes" : [
+						"[variables('addressPrefix')]"
+					]
+				},
+				"subnets" : [{
+						"name" : "[variables('subnetName')]",
+						"properties" : {
+							"addressPrefix" : "[variables('subnetPrefix')]"
+						}
+					}
+				]
+			}
+		}, {
+			"apiVersion" : "2015-05-01-preview",
+			"type" : "Microsoft.Network/networkInterfaces",
+			"name" : "[variables('nicName')]",
+			"location" : "[resourceGroup().location]",
+			"dependsOn" : [
+				"[parameters('publicIPAddressName')]",
+				"[variables('virtualNetworkName')]"
+			],
+			"properties" : {
+				"ipConfigurations" : [{
+						"name" : "ipconfig1",
+						"properties" : {
+							"privateIPAllocationMethod" : "Dynamic",
+							"publicIPAddress" : {
+								"id" : "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIPAddressName'))]"
+							},
+							"subnet" : {
+								"id" : "[variables('subnetRef')]"
+							}
+						}
+					}
+				]
+			}
+		}, {
+			"apiVersion" : "2015-05-01-preview",
+			"type" : "Microsoft.Compute/virtualMachines",
+			"name" : "[variables('vmName')]",
+			"location" : "[resourceGroup().location]",
+			"dependsOn" : [
+				"[variables('vhdStorageAccountName')]",
+				"[variables('nicName')]"
+			],
+			"properties" : {
+				"hardwareProfile" : {
+					"vmSize" : "[variables('vmSize')]"
+				},
+				"osProfile" : {
+					"computerName" : "[variables('vmName')]",
+					"adminUsername" : "[parameters('adminUsername')]",
+					"adminPassword" : "[parameters('adminPassword')]"
+				},
+				"storageProfile" : {
+					"imageReference" : {
+						"publisher" : "[variables('imagePublisher')]",
+						"offer" : "[variables('imageOffer')]",
+						"sku" : "[parameters('osDropdown')]",
+						"version" : "latest"
+					},
+					"osDisk" : {
+						"name" : "osdisk",
+						"vhd" : {
+							"uri" : "[variables('OSImageURI')]"
+						},
+						"caching" : "ReadWrite",
+						"createOption" : "FromImage"
+					}
+				},
+				"networkProfile" : {
+					"networkInterfaces" : [{
+							"id" : "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+						}
+					]
+				}
+			},
+			"resources" : [{
+					"type" : "extensions",
+					"name" : "CustomScriptExtension",
+					"apiVersion" : "2015-05-01-preview",
+					"location" : "[resourceGroup().location]",
+					"dependsOn" : [
+						"[variables('vmName')]"
+					],
+					"properties" : {
+						"publisher" : "Microsoft.Compute",
+						"type" : "CustomScriptExtension",
+						"typeHandlerVersion" : "1.8",
+						"autoUpgradeMinorVersion" : true,
+						"settings" : {
+							"fileUris" : ["https://github.com/gsvivek/azurescripts/raw/master/InfaCloudExtProvision.ps1"],
+							"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', [parameters('cloudEmail')], ' ', [parameters('cloudPassword')], ' ', [concat([parameters('cloudTier1Connector')], '|', [parameters('cloudTier2Connector')])])]"
+						}
+					}
+				}
+			]
+		}
+	]
 }
