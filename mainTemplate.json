@@ -38,9 +38,9 @@
 			"type" : "string",
 			"defaultValue" : "win2012R2",
 			"allowedValues" : [
-				"win2012R2",
+				"2012-R2-Datacenter",
 				"ubuntuLin12"
-			]
+			],
 			"metadata" : {
 				"description" : "The OS type chosen by the user. Allowed values are Windows 2012 R2 and Ubuntu Linux 12.04"
 			}
@@ -59,25 +59,58 @@
 				"description" : "The password for the Informatica Cloud user account."
 			}
 		},
-		"cloudTier1Connector" : {
+		"cloudName" : {
 			"type" : "string",
 			"defaultValue" : "",
 			"metadata" : {
-				"description" : "The primary connector chosen by the user."
+				"description" : "The name of the Informatica Cloud user."
 			}
 		},
-		"cloudTier2Connector" : {
+		"cloudTitle" : {
 			"type" : "string",
 			"defaultValue" : "",
 			"metadata" : {
-				"description" : "The secondary connector chosen by the user."
+				"description" : "The title of the Informatica Cloud user."
+			}
+		},
+		"cloudPhone" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The phone number of the Informatica Cloud user."
+			}
+		},
+		"cloudOrgName" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The organization name of the Informatica Cloud user."
+			}
+		},
+		"cloudCountry" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The country of the Informatica Cloud user."
+			}
+		},
+		"cloudConnector1" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The target connector chosen by the user."
+			}
+		},
+		"cloudConnector2" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The source connector chosen by the user."
 			}
 		}
 	},
 	"variables" : {
-		"imagePublisher" : "Informatica",
-		"imageOffer" : "ics-payg",
-		"OSImageURI" : "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-payg/ics-payg-osDisk.b560dfe0-f352-4722-b497-9243e7a32d57.vhd",
+		"OSImageURI" : "https://infacloudazure2351.blob.core.windows.net/vmcontainerda3f1e67-50eb-4389-9b97-a63fd83ab586/osDisk.da3f1e67-50eb-4389-9b97-a63fd83ab586.vhd",
 		"nicName" : "myVMNic",
 		"addressPrefix" : "10.0.0.0/16",
 		"subnetName" : "Subnet",
@@ -85,24 +118,27 @@
 		"storageAccountType": "Standard_LRS",
 		"publicIPAddressType" : "Dynamic",
 		"vmStorageAccountContainerName" : "vhds",
-		"vmName" : "ICSPAYG",
+		"vmName" : "ics-payg-win1",
 		"virtualNetworkName" : "MyVNET",
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-		"vhdStorageAccountName" : "[concat(uniqueString(resourceGroup().id), 'storage')]"
+		"vhdStorageAccountName" : "infacloudazure2351",
+		"dnsNameForPublicIP" : "[uniqueString(resourceGroup().id)]",
+		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
+		"apiVersion": "2015-05-01-preview"
 	},
 	"resources" : [
 		{
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[variables('vhdStorageAccountName')]",
-            "apiVersion": "2015-05-01-preview",
+            "apiVersion": "[variables('apiVersion')]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "accountType": "[variables('storageAccountType')]"
             }
         },
 		{
-			"apiVersion" : "2015-05-01-preview",
+			"apiVersion" : "[variables('apiVersion')]",
 			"type" : "Microsoft.Network/publicIPAddresses",
 			"name" : "[parameters('publicIPAddressName')]",
 			"location" : "[resourceGroup().location]",
@@ -113,7 +149,7 @@
 				}
 			}
 		}, {
-			"apiVersion" : "2015-05-01-preview",
+			"apiVersion" : "[variables('apiVersion')]",
 			"type" : "Microsoft.Network/virtualNetworks",
 			"name" : "[variables('virtualNetworkName')]",
 			"location" : "[resourceGroup().location]",
@@ -132,7 +168,7 @@
 				]
 			}
 		}, {
-			"apiVersion" : "2015-05-01-preview",
+			"apiVersion" : "[variables('apiVersion')]",
 			"type" : "Microsoft.Network/networkInterfaces",
 			"name" : "[variables('nicName')]",
 			"location" : "[resourceGroup().location]",
@@ -156,7 +192,7 @@
 				]
 			}
 		}, {
-			"apiVersion" : "2015-05-01-preview",
+			"apiVersion" : "[variables('apiVersion')]",
 			"type" : "Microsoft.Compute/virtualMachines",
 			"name" : "[variables('vmName')]",
 			"location" : "[resourceGroup().location]",
@@ -166,7 +202,7 @@
 			],
 			"properties" : {
 				"hardwareProfile" : {
-					"vmSize" : "[variables('vmSize')]"
+					"vmSize" : "[parameters('vmSize')]"
 				},
 				"osProfile" : {
 					"computerName" : "[variables('vmName')]",
@@ -174,19 +210,17 @@
 					"adminPassword" : "[parameters('adminPassword')]"
 				},
 				"storageProfile" : {
-					"imageReference" : {
-						"publisher" : "[variables('imagePublisher')]",
-						"offer" : "[variables('imageOffer')]",
-						"sku" : "[parameters('osDropdown')]",
-						"version" : "latest"
-					},
-					"osDisk" : {
-						"name" : "osdisk",
-						"vhd" : {
-							"uri" : "[variables('OSImageURI')]"
+					"osDisk": {
+						"name": "[concat(variables('vmName'),'-osDisk')]",
+						"osType": "windows",
+						"caching": "ReadWrite",
+						"createOption": "FromImage",
+						"image": {
+						  "uri": "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-payg/win2012r2-osDisk.fa619ee2-cb71-428e-9e9c-26163b3a6ab3.vhd"
 						},
-						"caching" : "ReadWrite",
-						"createOption" : "FromImage"
+						"vhd": {
+						  "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('vhdStorageAccountName')), variables('apiVersion')).primaryEndpoints.blob, 'vhds/',variables('vmName'), uniquestring(resourceGroup().id), 'osDisk.vhd')]"
+						}
 					}
 				},
 				"networkProfile" : {
@@ -199,7 +233,7 @@
 			"resources" : [{
 					"type" : "extensions",
 					"name" : "CustomScriptExtension",
-					"apiVersion" : "2015-05-01-preview",
+					"apiVersion" : "[variables('apiVersion')]",
 					"location" : "[resourceGroup().location]",
 					"dependsOn" : [
 						"[variables('vmName')]"
@@ -211,7 +245,7 @@
 						"autoUpgradeMinorVersion" : true,
 						"settings" : {
 							"fileUris" : ["https://github.com/gsvivek/azurescripts/raw/master/InfaCloudExtProvision.ps1"],
-							"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', [parameters('cloudEmail')], ' ', [parameters('cloudPassword')], ' ', [concat([parameters('cloudTier1Connector')], '|', [parameters('cloudTier2Connector')])])]"
+							"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', parameters('cloudEmail'),' ',parameters('cloudPassword'),' ',parameters('cloudName'),' ',parameters('cloudTitle'),' ',parameters('cloudPhone'),' ',parameters('cloudOrgName'),' ',parameters('cloudCountry'),' ',variables('connectorUUIDList'))]"
 						}
 					}
 				}
