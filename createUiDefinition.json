@@ -24,7 +24,7 @@
 			"type": "Microsoft.Common.DropDown",
 			"label": "Select the OS for the VM",
 			"defaultValue": "Windows Server 2012 R2 Datacenter",
-			"toolTip": "",
+			"toolTip": "OS platform of the VM.",
 			"constraints": {
 				"allowedValues": [{
 					"label": "Windows Server 2012 R2 Datacenter",
@@ -47,7 +47,7 @@
 					"name": "windowsVmSize",
 					"type": "Microsoft.Compute.SizeSelector",
 					"label": "Virtual machine size",
-					"toolTip": "The size of the virtual machine for the domain controller.",
+					"toolTip": "The size of the virtual machine.",
 					"recommendedSizes": [
 						"Standard_D2"
 					],
@@ -62,7 +62,7 @@
 					"name": "linuxVmSize",
 					"type": "Microsoft.Compute.SizeSelector",
 					"label": "Virtual machine size",
-					"toolTip": "The size of the virtual machine for the domain controller.",
+					"toolTip": "The size of the virtual machine.",
 					"recommendedSizes": [
 						"Standard_D2"
 					],
@@ -77,7 +77,7 @@
 					"name": "storageAccount",
 					"type": "Microsoft.Storage.StorageAccountSelector",
 					"label": "Storage account",
-					"toolTip": "",
+					"toolTip": "The storage account in which the VM will be created.",
 					"defaultValue": {
 						"type": "Standard_LRS"
 					},
@@ -149,6 +149,7 @@
 				"name": "cloudName",
 				"type": "Microsoft.Common.TextBox",
 				"label": "Name",
+				"toolTip": "Your name.",
 				"constraints": {
 					"required": true
 				}
@@ -156,6 +157,7 @@
 				"name": "cloudTitle",
 				"type": "Microsoft.Common.TextBox",
 				"label": "Title",
+				"toolTip": "Your title.",
 				"constraints": {
 					"required": true
 				}
@@ -163,6 +165,7 @@
 				"name": "cloudPhone",
 				"type": "Microsoft.Common.TextBox",
 				"label": "Phone Number",
+				"toolTip": "Your phone number.",
 				"constraints": {
 					"required": true,
 					"regex": "^([a-zA-Z0-9@*#]{6,15})$",
@@ -172,6 +175,7 @@
 				"name": "cloudOrgName",
 				"type": "Microsoft.Common.TextBox",
 				"label": "Organization Name",
+				"toolTip": "Your organization name.",
 				"constraints": {
 					"required": true
 				}
@@ -180,7 +184,7 @@
 				"type": "Microsoft.Common.DropDown",
 				"label": "Country",
 				"defaultValue": "United States",
-				"toolTip": "",
+				"toolTip": "Your country.",
 				"constraints": {
 					"required": true,
 					"allowedValues": [{
@@ -916,7 +920,7 @@
 				"type": "Microsoft.Common.DropDown",
 				"label": "Target connector",
 				"defaultValue": "Azure SQL DB",
-				"toolTip": "",
+				"toolTip": "Target for your data transformation.",
 				"constraints": {
 					"required": true,
 					"allowedValues": [{
@@ -941,7 +945,7 @@
 				"type": "Microsoft.Common.DropDown",
 				"label": "Source connector",
 				"defaultValue": "Avature",
-				"toolTip": "",
+				"toolTip": "Source for your data transformation.",
 				"constraints": {
 					"required": true,
 					"allowedValues": [{
