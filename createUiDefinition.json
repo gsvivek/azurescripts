@@ -1,1057 +1,1049 @@
 {
-	"handler" : "Microsoft.Compute.MultiVm",
-	"version" : "0.0.1-preview",
-	"parameters" : {
-		"basics" : [{
-				"name" : "adminUsername",
-				"type" : "Microsoft.Compute.UserNameTextBox",
-				"label" : "VM Username",
-				"toolTip" : "Admin username for the virtual machines.",
-				"osPlatform" : "Windows"
-			}, {
-				"name" : "adminPassword",
-				"type" : "Microsoft.Compute.CredentialsCombo",
-				"label" : {
-					"password" : "VM Password",
-					"confirmPassword" : "Confirm password"
-				},
-				"toolTip" : {
-					"password" : "Admin password for the virtual machines."
-				},
-				"osPlatform" : "Windows"
-			}, {
-				"name" : "os",
-				"type" : "Microsoft.Common.DropDown",
-				"label" : "Select the OS for the VM",
-				"defaultValue" : "Windows Server 2012 R2 Datacenter",
-				"toolTip" : "",
-				"constraints" : {
-					"allowedValues" : [{
-							"label" : "Windows Server 2012 R2 Datacenter",
-							"value" : "Windows"
-						}, {
-							"label" : "Ubuntu Linux 16.04",
-							"value" : "Linux"
-						}
-					]
+	"handler": "Microsoft.Compute.MultiVm",
+	"version": "0.0.1-preview",
+	"parameters": {
+		"basics": [{
+			"name": "adminUsername",
+			"type": "Microsoft.Compute.UserNameTextBox",
+			"label": "VM Username",
+			"toolTip": "Admin username for the virtual machines.",
+			"osPlatform": "Windows"
+		}, {
+			"name": "adminPassword",
+			"type": "Microsoft.Compute.CredentialsCombo",
+			"label": {
+				"password": "VM Password",
+				"confirmPassword": "Confirm password"
+			},
+			"toolTip": {
+				"password": "Admin password for the virtual machines."
+			},
+			"osPlatform": "Windows"
+		}, {
+			"name": "os",
+			"type": "Microsoft.Common.DropDown",
+			"label": "Select the OS for the VM",
+			"defaultValue": "Windows Server 2012 R2 Datacenter",
+			"toolTip": "",
+			"constraints": {
+				"allowedValues": [{
+					"label": "Windows Server 2012 R2 Datacenter",
+					"value": "Windows"
+				}, {
+					"label": "Ubuntu Linux 16.04",
+					"value": "Linux"
+				}]
+			}
+		}],
+		"steps": [{
+			"name": "vmDetails",
+			"label": "VM Details",
+			"subLabel": {
+				"preValidation": "Configure the VM details",
+				"postValidation": "Done"
+			},
+			"bladeTitle": "VM Details",
+			"elements": [{
+					"name": "windowsVmSize",
+					"type": "Microsoft.Compute.SizeSelector",
+					"label": "Virtual machine size",
+					"toolTip": "The size of the virtual machine for the domain controller.",
+					"recommendedSizes": [
+						"Standard_D2"
+					],
+					"constraints": {
+						"allowedSizes": ["Standard_D2"],
+						"excludedSizes": []
+					},
+					"osPlatform": "Windows",
+					"count": 1,
+					"visible": "[equals(basics('Basics').os, 'Windows')]"
+				}, {
+					"name": "linuxVmSize",
+					"type": "Microsoft.Compute.SizeSelector",
+					"label": "Virtual machine size",
+					"toolTip": "The size of the virtual machine for the domain controller.",
+					"recommendedSizes": [
+						"Standard_D2"
+					],
+					"constraints": {
+						"allowedSizes": ["Standard_D2"],
+						"excludedSizes": []
+					},
+					"osPlatform": "Linux",
+					"count": 1,
+					"visible": "[equals(basics('Basics').os, 'Linux')]"
+				}, {
+					"name": "storageAccount",
+					"type": "Microsoft.Storage.StorageAccountSelector",
+					"label": "Storage account",
+					"toolTip": "",
+					"defaultValue": {
+						"type": "Standard_LRS"
+					},
+					"constraints": {
+						"allowedTypes": [],
+						"excludedTypes": []
+					},
+					"options": {
+						"hideExisting": false
+					},
+					"visible": true
+				}, {
+					"name": "dnsAndPublicIP",
+					"type": "Microsoft.Network.PublicIpAddressCombo",
+					"label": {
+						"publicIpAddress": "Public IP address",
+						"domainNameLabel": "DNS Prefix"
+					},
+					"toolTip": {
+						"domainNameLabel": "DNS Prefix for the VM public IP addresses."
+					},
+					"defaultValue": {
+						"publicIpAddressName": "publicIP"
+					},
+					"options": {
+						"hideNone": true
+					}
 				}
-			}
-		],
-		"steps" : [{
-				"name" : "vmDetails",
-				"label" : "VM Details",
-				"subLabel" : {
-					"preValidation" : "Configure the VM details",
-					"postValidation" : "Done"
-				},
-				"bladeTitle" : "VM Details",
-				"elements" : [
-					{
-						"name" : "windowsVmSize",
-						"type" : "Microsoft.Compute.SizeSelector",
-						"label" : "Virtual machine size",
-						"toolTip" : "The size of the virtual machine for the domain controller.",
-						"recommendedSizes" : [
-							"Standard_D2"
-						],
-						"constraints" : {
-							"allowedSizes" : ["Standard_D2"],
-							"excludedSizes" : []
-						},
-						"osPlatform" : "Windows",
-						"count" : 1,
-						"visible": "[equals(basics('Basics').os, 'Windows')]"        
-					},{
-						"name" : "linuxVmSize",
-						"type" : "Microsoft.Compute.SizeSelector",
-						"label" : "Virtual machine size",
-						"toolTip" : "The size of the virtual machine for the domain controller.",
-						"recommendedSizes" : [
-							"Standard_D2"
-						],
-						"constraints" : {
-							"allowedSizes" : ["Standard_D2"],
-							"excludedSizes" : []
-						},
-						"osPlatform" : "Linux",
-						"count" : 1,
-						"visible": "[equals(basics('Basics').os, 'Linux')]"        
-					}, {
-						"name": "storageAccount",
-						"type": "Microsoft.Storage.StorageAccountSelector",
-						"label": "Storage account",
-						"toolTip": "",
-						"defaultValue": {
-							"type": "Standard_LRS"
-						},
-						"constraints": {
-							"allowedTypes": [],
-							"excludedTypes": []
-						},
-						"options": {
-							"hideExisting": false
-						},
-						"visible": true
-					}, {
-						"name" : "dnsAndPublicIP",
-						"type" : "Microsoft.Network.PublicIpAddressCombo",
-						"label" : {
-							"publicIpAddress" : "Public IP address",
-							"domainNameLabel" : "DNS Prefix"
-						},
-						"toolTip" : {
-							"domainNameLabel" : "DNS Prefix for the VM public IP addresses."
-						},
-						"defaultValue" : {
-							"publicIpAddressName" : "publicIP"
-						},
-						"options" : {
-							"hideNone" : true
-						}
-					}
-				]
+
+			]
+		}, {
+			"name": "cloudRegDetails",
+			"type": "Microsoft.Common.Selector",
+			"label": "Informatica Cloud Registration",
+			"subLabel": {
+				"preValidation": "Fill details for an Informatica Cloud account",
+				"postValidation": "Done"
+			},
+			"toolTip": "Fill details for an Informatica Cloud Account",
+			"bladeTitle": "Informatica Cloud Registration",
+			"bladeSubtitle": "Create an account on Informatica Cloud",
+			"elements": [{
+				"name": "cloudEmail",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Email Address<br/><br/>Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>.<br/>For e.g. if your email is name@gmail.com, your Informatica Cloud username would be name@azure.gmail.com.<br/><br/>",
+				"constraints": {
+					"required": true
+				}
 			}, {
-				"name" : "cloudRegDetails",
-				"type" : "Microsoft.Common.Selector",
-				"label" : "Informatica Cloud Registration",
-				"subLabel" : {
-					"preValidation" : "Fill details for an Informatica Cloud account",
-					"postValidation" : "Done"
+				"name": "cloudPassword",
+				"type": "Microsoft.Common.PasswordBox",
+				"label": {
+					"password": "Informatica Cloud Password",
+					"confirmPassword": "Confirm password"
 				},
-				"toolTip" : "Fill details for an Informatica Cloud Account",
-				"bladeTitle" : "Informatica Cloud Registration",
-				"bladeSubtitle" : "Create an account on Informatica Cloud",
-				"elements" : [{
-						"name" : "cloudEmail",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "Email Address<br/><br/>Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>.<br/>For e.g. if your email is name@gmail.com, your Informatica Cloud username would be name@azure.gmail.com.<br/><br/>",
-						"constraints" : {
-							"required" : true
-						}
+				"toolTip": {
+					"password": "Password for your Informatica Cloud account. Password must be 6-15 characters long and can contain the special characters @*#"
+				},
+				"constraints": {
+					"required": true,
+					"regex": "^([a-zA-Z0-9@*#]{6,15})$",
+					"validationMessage": "Password must be 6-15 characters long and can contain the special characters @*#"
+				},
+				"options": {
+					"hideConfirmation": false
+				},
+				"visible": true
+			}, {
+				"name": "cloudName",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Name",
+				"constraints": {
+					"required": true
+				}
+			}, {
+				"name": "cloudTitle",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Title",
+				"constraints": {
+					"required": true
+				}
+			}, {
+				"name": "cloudPhone",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Phone Number",
+				"constraints": {
+					"required": true,
+					"regex": "^([a-zA-Z0-9@*#]{6,15})$",
+					"validationMessage": "Password must be 6-15 characters long and can contain the special characters @*#"
+				}
+			}, {
+				"name": "cloudOrgName",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Organization Name",
+				"constraints": {
+					"required": true
+				}
+			}, {
+				"name": "cloudCountry",
+				"type": "Microsoft.Common.DropDown",
+				"label": "Country",
+				"defaultValue": "United States",
+				"toolTip": "",
+				"constraints": {
+					"required": true,
+					"allowedValues": [{
+						"label": "Afghanistan",
+						"value": "AF"
 					}, {
-						"name" : "cloudPassword",
-						"type" : "Microsoft.Common.PasswordBox",
-						"label" : {
-							"password" : "Informatica Cloud Password",
-							"confirmPassword" : "Confirm password"
-						},
-						"toolTip" : {
-							"password" : "Password for your Informatica Cloud account. Password must be 6-15 characters long and can contain the special characters @*#"
-						},
-						"constraints" : {
-							"required" : true,
-							"regex" : "^([a-zA-Z0-9@*#]{6,15})$",
-							"validationMessage" : "Password must be 6-15 characters long and can contain the special characters @*#"
-						},
-						"options" : {
-							"hideConfirmation" : false
-						},
-						"visible" : true
+						"label": "Aland Islands",
+						"value": "AX"
 					}, {
-						"name" : "cloudName",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "Name",
-						"constraints" : {
-							"required" : true
-						}
+						"label": "Albania",
+						"value": "AL"
 					}, {
-						"name" : "cloudTitle",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "Title",
-						"constraints" : {
-							"required" : true
-						}
+						"label": "Algeria",
+						"value": "DZ"
 					}, {
-						"name" : "cloudPhone",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "Phone Number",
-						"constraints" : {
-							"required" : true,
-							"regex" : "^([a-zA-Z0-9@*#]{6,15})$",
-							"validationMessage" : "Password must be 6-15 characters long and can contain the special characters @*#"
-						}
+						"label": "American Samoa",
+						"value": "AS"
 					}, {
-						"name" : "cloudOrgName",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "Organization Name",
-						"constraints" : {
-							"required" : true
-						}
+						"label": "Andorra",
+						"value": "AD"
 					}, {
-						"name" : "cloudCountry",
-						"type" : "Microsoft.Common.DropDown",
-						"label" : "Country",
-						"defaultValue" : "United States",
-						"toolTip" : "",
-						"constraints" : {
-							"required" : true,
-							"allowedValues" : [{
-									"label":"Afghanistan",
-									"value":"AF"
-								}, {
-									"label":"Aland Islands",
-									"value":"AX"
-								}, {
-									"label":"Albania",
-									"value":"AL"
-								}, {
-									"label":"Algeria",
-									"value":"DZ"
-								}, {
-									"label":"American Samoa",
-									"value":"AS"
-								}, {
-									"label":"Andorra",
-									"value":"AD"
-								}, {
-									"label":"Angola",
-									"value":"AO"
-								}, {
-									"label":"Anguilla",
-									"value":"AI"
-								}, {
-									"label":"Antarctica",
-									"value":"AQ"
-								}, {
-									"label":"Antigua and Barbuda",
-									"value":"AG"
-								}, {
-									"label":"Argentina",
-									"value":"AR"
-								}, {
-									"label":"Armenia",
-									"value":"AM"
-								}, {
-									"label":"Aruba",
-									"value":"AW"
-								}, {
-									"label":"Australia",
-									"value":"AU"
-								}, {
-									"label":"Austria",
-									"value":"AT"
-								}, {
-									"label":"Azerbaijan",
-									"value":"AZ"
-								}, {
-									"label":"Bahamas",
-									"value":"BS"
-								}, {
-									"label":"Bahrain",
-									"value":"BH"
-								}, {
-									"label":"Bangladesh",
-									"value":"BD"
-								}, {
-									"label":"Barbados",
-									"value":"BB"
-								}, {
-									"label":"Belarus",
-									"value":"BY"
-								}, {
-									"label":"Belgium",
-									"value":"BE"
-								}, {
-									"label":"Belize",
-									"value":"BZ"
-								}, {
-									"label":"Benin",
-									"value":"BJ"
-								}, {
-									"label":"Bermuda",
-									"value":"BM"
-								}, {
-									"label":"Bhutan",
-									"value":"BT"
-								}, {
-									"label":"Bolivia",
-									"value":"BO"
-								}, {
-									"label":"Bosnia and Herzegovina",
-									"value":"BA"
-								}, {
-									"label":"Botswana",
-									"value":"BW"
-								}, {
-									"label":"Bouvet Island",
-									"value":"BV"
-								}, {
-									"label":"Brazil",
-									"value":"BR"
-								}, {
-									"label":"British Indian Ocean Territory",
-									"value":"IO"
-								}, {
-									"label":"Brunei Darussalam",
-									"value":"BN"
-								}, {
-									"label":"Bulgaria",
-									"value":"BG"
-								}, {
-									"label":"Burkina Faso",
-									"value":"BF"
-								}, {
-									"label":"Burundi",
-									"value":"BI"
-								}, {
-									"label":"Cambodia",
-									"value":"KH"
-								}, {
-									"label":"Cameroon",
-									"value":"CM"
-								}, {
-									"label":"Canada",
-									"value":"CA"
-								}, {
-									"label":"Cape Verde",
-									"value":"CV"
-								}, {
-									"label":"Cayman Islands",
-									"value":"KY"
-								}, {
-									"label":"Central African Republic",
-									"value":"CF"
-								}, {
-									"label":"Chad",
-									"value":"TD"
-								}, {
-									"label":"Chile",
-									"value":"CL"
-								}, {
-									"label":"China",
-									"value":"CN"
-								}, {
-									"label":"Christmas Island",
-									"value":"CX"
-								}, {
-									"label":"Cocos (Keeling) Islands",
-									"value":"CC"
-								}, {
-									"label":"Colombia",
-									"value":"CO"
-								}, {
-									"label":"Comoros",
-									"value":"KM"
-								}, {
-									"label":"Congo",
-									"value":"CG"
-								}, {
-									"label":"Congo, Democratic Republic of the",
-									"value":"CD"
-								}, {
-									"label":"Cook Islands",
-									"value":"CK"
-								}, {
-									"label":"Costa Rica",
-									"value":"CR"
-								}, {
-									"label":"Cote D'Ivoire",
-									"value":"CI"
-								}, {
-									"label":"Croatia",
-									"value":"HR"
-								}, {
-									"label":"Cuba",
-									"value":"CU"
-								}, {
-									"label":"Cyprus",
-									"value":"CY"
-								}, {
-									"label":"Czech Republic",
-									"value":"CZ"
-								}, {
-									"label":"Denmark",
-									"value":"DK"
-								}, {
-									"label":"Djibouti",
-									"value":"DJ"
-								}, {
-									"label":"Dominica",
-									"value":"DM"
-								}, {
-									"label":"Dominican Republic",
-									"value":"DO"
-								}, {
-									"label":"Ecuador",
-									"value":"EC"
-								}, {
-									"label":"Egypt",
-									"value":"EG"
-								}, {
-									"label":"El Salvador",
-									"value":"SV"
-								}, {
-									"label":"Equatorial Guinea",
-									"value":"GQ"
-								}, {
-									"label":"Eritrea",
-									"value":"ER"
-								}, {
-									"label":"Estonia",
-									"value":"EE"
-								}, {
-									"label":"Ethiopia",
-									"value":"ET"
-								}, {
-									"label":"Falkland Islands (Malvinas)",
-									"value":"FK"
-								}, {
-									"label":"Faroe Islands",
-									"value":"FO"
-								}, {
-									"label":"Fiji",
-									"value":"FJ"
-								}, {
-									"label":"Finland",
-									"value":"FI"
-								}, {
-									"label":"France",
-									"value":"FR"
-								}, {
-									"label":"French Guiana",
-									"value":"GF"
-								}, {
-									"label":"French Polynesia",
-									"value":"PF"
-								}, {
-									"label":"French Southern Territories",
-									"value":"TF"
-								}, {
-									"label":"Gabon",
-									"value":"GA"
-								}, {
-									"label":"Gambia",
-									"value":"GM"
-								}, {
-									"label":"Georgia",
-									"value":"GE"
-								}, {
-									"label":"Germany",
-									"value":"DE"
-								}, {
-									"label":"Ghana",
-									"value":"GH"
-								}, {
-									"label":"Gibraltar",
-									"value":"GI"
-								}, {
-									"label":"Greece",
-									"value":"GR"
-								}, {
-									"label":"Greenland",
-									"value":"GL"
-								}, {
-									"label":"Grenada",
-									"value":"GD"
-								}, {
-									"label":"Guadeloupe",
-									"value":"GP"
-								}, {
-									"label":"Guam",
-									"value":"GU"
-								}, {
-									"label":"Guatemala",
-									"value":"GT"
-								}, {
-									"label":"Guernsey",
-									"value":"GG"
-								}, {
-									"label":"Guinea",
-									"value":"GN"
-								}, {
-									"label":"Guinea-Bissau",
-									"value":"GW"
-								}, {
-									"label":"Guyana",
-									"value":"GY"
-								}, {
-									"label":"Haiti",
-									"value":"HT"
-								}, {
-									"label":"Heard Island and Mcdonald Islands",
-									"value":"HM"
-								}, {
-									"label":"Holy See (Vatican City State)",
-									"value":"VA"
-								}, {
-									"label":"Honduras",
-									"value":"HN"
-								}, {
-									"label":"Hong Kong",
-									"value":"HK"
-								}, {
-									"label":"Hungary",
-									"value":"HU"
-								}, {
-									"label":"Iceland",
-									"value":"IS"
-								}, {
-									"label":"India",
-									"value":"IN"
-								}, {
-									"label":"Indonesia",
-									"value":"ID"
-								}, {
-									"label":"Iran (Islamic Republic Of)",
-									"value":"IR"
-								}, {
-									"label":"Iraq",
-									"value":"IQ"
-								}, {
-									"label":"Ireland",
-									"value":"IE"
-								}, {
-									"label":"Israel",
-									"value":"IL"
-								}, {
-									"label":"Italy",
-									"value":"IT"
-								}, {
-									"label":"Jamaica",
-									"value":"JM"
-								}, {
-									"label":"Japan",
-									"value":"JP"
-								}, {
-									"label":"Jordan",
-									"value":"JO"
-								}, {
-									"label":"Kazakhstan",
-									"value":"KZ"
-								}, {
-									"label":"Kenya",
-									"value":"KE"
-								}, {
-									"label":"Kiribati",
-									"value":"KI"
-								}, {
-									"label":"Korea, Democratic People's Rep",
-									"value":"KP"
-								}, {
-									"label":"Korea, Republic of",
-									"value":"KR"
-								}, {
-									"label":"Kuwait",
-									"value":"KW"
-								}, {
-									"label":"Kyrgyzstan",
-									"value":"KG"
-								}, {
-									"label":"Lao People's Democratic Rep",
-									"value":"LA"
-								}, {
-									"label":"Latvia",
-									"value":"LV"
-								}, {
-									"label":"Lebanon",
-									"value":"LB"
-								}, {
-									"label":"Lesotho",
-									"value":"LS"
-								}, {
-									"label":"Liberia",
-									"value":"LR"
-								}, {
-									"label":"Libyan Arab Jamahiriya",
-									"value":"LY"
-								}, {
-									"label":"Liechtenstein",
-									"value":"LI"
-								}, {
-									"label":"Lithuania",
-									"value":"LT"
-								}, {
-									"label":"Luxembourg",
-									"value":"LU"
-								}, {
-									"label":"Macao",
-									"value":"MO"
-								}, {
-									"label":"Macedonia, The Former Yugoslav",
-									"value":"MK"
-								}, {
-									"label":"Madagascar",
-									"value":"MG"
-								}, {
-									"label":"Malawi",
-									"value":"MW"
-								}, {
-									"label":"Malaysia",
-									"value":"MY"
-								}, {
-									"label":"Maldives",
-									"value":"MV"
-								}, {
-									"label":"Mali",
-									"value":"ML"
-								}, {
-									"label":"Malta",
-									"value":"MT"
-								}, {
-									"label":"Marshall Islands",
-									"value":"MH"
-								}, {
-									"label":"Martinique",
-									"value":"MQ"
-								}, {
-									"label":"Mauritania",
-									"value":"MR"
-								}, {
-									"label":"Mauritius",
-									"value":"MU"
-								}, {
-									"label":"Mayotte",
-									"value":"YT"
-								}, {
-									"label":"Mexico",
-									"value":"MX"
-								}, {
-									"label":"Micronesia, Federated States",
-									"value":"FM"
-								}, {
-									"label":"Moldova, Republic of",
-									"value":"MD"
-								}, {
-									"label":"Monaco",
-									"value":"MC"
-								}, {
-									"label":"Mongolia",
-									"value":"MN"
-								}, {
-									"label":"Montenegro",
-									"value":"ME"
-								}, {
-									"label":"Montserrat",
-									"value":"MS"
-								}, {
-									"label":"Morocco",
-									"value":"MA"
-								}, {
-									"label":"Mozambique",
-									"value":"MZ"
-								}, {
-									"label":"Myanmar",
-									"value":"MM"
-								}, {
-									"label":"Namibia",
-									"value":"NA"
-								}, {
-									"label":"Nauru",
-									"value":"NR"
-								}, {
-									"label":"Nepal",
-									"value":"NP"
-								}, {
-									"label":"Netherlands",
-									"value":"NL"
-								}, {
-									"label":"New Caledonia",
-									"value":"NC"
-								}, {
-									"label":"New Zealand",
-									"value":"NZ"
-								}, {
-									"label":"Nicaragua",
-									"value":"NI"
-								}, {
-									"label":"Niger",
-									"value":"NE"
-								}, {
-									"label":"Nigeria",
-									"value":"NG"
-								}, {
-									"label":"Niue",
-									"value":"NU"
-								}, {
-									"label":"Norfolk Island",
-									"value":"NF"
-								}, {
-									"label":"Northern Mariana Islands",
-									"value":"MP"
-								}, {
-									"label":"Norway",
-									"value":"NO"
-								}, {
-									"label":"Oman",
-									"value":"OM"
-								}, {
-									"label":"Pakistan",
-									"value":"PK"
-								}, {
-									"label":"Palau",
-									"value":"PW"
-								}, {
-									"label":"Palestinian Territory, Occupied",
-									"value":"PS"
-								}, {
-									"label":"Panama",
-									"value":"PA"
-								}, {
-									"label":"Papua New Guinea",
-									"value":"PG"
-								}, {
-									"label":"Paraguay",
-									"value":"PY"
-								}, {
-									"label":"Peru",
-									"value":"PE"
-								}, {
-									"label":"Philippines",
-									"value":"PH"
-								}, {
-									"label":"Pitcairn",
-									"value":"PN"
-								}, {
-									"label":"Poland",
-									"value":"PL"
-								}, {
-									"label":"Portugal",
-									"value":"PT"
-								}, {
-									"label":"Puerto Rico",
-									"value":"PR"
-								}, {
-									"label":"Qatar",
-									"value":"QA"
-								}, {
-									"label":"Reunion",
-									"value":"RE"
-								}, {
-									"label":"Romania",
-									"value":"RO"
-								}, {
-									"label":"Russian Federation",
-									"value":"RU"
-								}, {
-									"label":"Rwanda",
-									"value":"RW"
-								}, {
-									"label":"Saint Barthelemy",
-									"value":"BL"
-								}, {
-									"label":"Saint Helena",
-									"value":"SH"
-								}, {
-									"label":"Saint Kitts and Nevis",
-									"value":"KN"
-								}, {
-									"label":"Saint Lucia",
-									"value":"LC"
-								}, {
-									"label":"Saint Martin (French part)",
-									"value":"MF"
-								}, {
-									"label":"Saint Pierre and Miquelon",
-									"value":"PM"
-								}, {
-									"label":"Saint Vincent and Grenadines",
-									"value":"VC"
-								}, {
-									"label":"Samoa",
-									"value":"WS"
-								}, {
-									"label":"San Marino",
-									"value":"SM"
-								}, {
-									"label":"Sao Tome and Principe",
-									"value":"ST"
-								}, {
-									"label":"Saudi Arabia",
-									"value":"SA"
-								}, {
-									"label":"Senegal",
-									"value":"SN"
-								}, {
-									"label":"Serbia",
-									"value":"RS"
-								}, {
-									"label":"Seychelles",
-									"value":"SC"
-								}, {
-									"label":"Sierra Leone",
-									"value":"SL"
-								}, {
-									"label":"Singapore",
-									"value":"SG"
-								}, {
-									"label":"Slovakia",
-									"value":"SK"
-								}, {
-									"label":"Slovenia",
-									"value":"SI"
-								}, {
-									"label":"Solomon Islands",
-									"value":"SB"
-								}, {
-									"label":"Somalia",
-									"value":"SO"
-								}, {
-									"label":"South Africa",
-									"value":"ZA"
-								}, {
-									"label":"South Georgia and the South Sandwich Islands",
-									"value":"GS"
-								}, {
-									"label":"Spain",
-									"value":"ES"
-								}, {
-									"label":"Sri Lanka",
-									"value":"LK"
-								}, {
-									"label":"Sudan",
-									"value":"SD"
-								}, {
-									"label":"Suriname",
-									"value":"SR"
-								}, {
-									"label":"Svalbard and Jan Mayen Islands",
-									"value":"SJ"
-								}, {
-									"label":"Swaziland",
-									"value":"SZ"
-								}, {
-									"label":"Sweden",
-									"value":"SE"
-								}, {
-									"label":"Switzerland",
-									"value":"CH"
-								}, {
-									"label":"Syrian Arab Republic",
-									"value":"SY"
-								}, {
-									"label":"Taiwan",
-									"value":"TW"
-								}, {
-									"label":"Tajikistan",
-									"value":"TJ"
-								}, {
-									"label":"Tanzania, United Republic of",
-									"value":"TZ"
-								}, {
-									"label":"Thailand",
-									"value":"TH"
-								}, {
-									"label":"Timor-Leste",
-									"value":"TL"
-								}, {
-									"label":"Togo",
-									"value":"TG"
-								}, {
-									"label":"Tokelau",
-									"value":"TK"
-								}, {
-									"label":"Tonga",
-									"value":"TO"
-								}, {
-									"label":"Trinidad and Tobago",
-									"value":"TT"
-								}, {
-									"label":"Tunisia",
-									"value":"TN"
-								}, {
-									"label":"Turkey",
-									"value":"TR"
-								}, {
-									"label":"Turkmenistan",
-									"value":"TM"
-								}, {
-									"label":"Turks and Caicos Islands",
-									"value":"TC"
-								}, {
-									"label":"Tuvalu",
-									"value":"TV"
-								}, {
-									"label":"Uganda",
-									"value":"UG"
-								}, {
-									"label":"Ukraine",
-									"value":"UA"
-								}, {
-									"label":"United Arab Emirates",
-									"value":"AE"
-								}, {
-									"label":"United Kingdom",
-									"value":"GB"
-								}, {
-									"label":"United States",
-									"value":"US"
-								}, {
-									"label":"Uruguay",
-									"value":"UY"
-								}, {
-									"label":"Uzbekistan",
-									"value":"UZ"
-								}, {
-									"label":"Vanuatu",
-									"value":"VU"
-								}, {
-									"label":"Venezuela",
-									"value":"VE"
-								}, {
-									"label":"Vietnam",
-									"value":"VN"
-								}, {
-									"label":"Virgin Islands (British)",
-									"value":"VG"
-								}, {
-									"label":"Virgin Islands (U.S.)",
-									"value":"VI"
-								}, {
-									"label":"Wallis and Futuna Islands",
-									"value":"WF"
-								}, {
-									"label":"Western Sahara",
-									"value":"EH"
-								}, {
-									"label":"Yemen",
-									"value":"YE"
-								}, {
-									"label":"Zambia",
-									"value":"ZM"
-								}, {
-									"label":"Zimbabwe",
-									"value":"ZW"
-								}
-							]
-						}
+						"label": "Angola",
+						"value": "AO"
 					}, {
-						"name" : "cloudConnector1",
-						"type" : "Microsoft.Common.DropDown",
-						"label" : "Target connector",
-						"defaultValue" : "Azure SQL DB",
-						"toolTip" : "",
-						"constraints" : {
-							"required" : true,
-							"allowedValues" : [{
-									"label" : "Azure SQL DB",
-									"value" : "0b0ad503-1c2c-4514-95ac-85a5adb71b3b"
-								}, {
-									"label" : "Azure SQL DW",
-									"value" : "554a67aa-7f07-42f8-bfad-c927cf4d7f28"
-								}, {
-									"label" : "Azure Blob Storage",
-									"value" : "45d431c2-9474-40de-bcf1-409dc56faa3f"
-								}, {
-									"label" : "Azure Data Lake Store",
-									"value" : "92d6c3db-bfca-4b96-a492-e1b3dea2351e"
-								}, {
-									"label" : "Azure Document DB",
-									"value" : "f443ee4a-88bf-4b57-a19a-5c79a6ff0633"
-								}
-							]
-						}
+						"label": "Anguilla",
+						"value": "AI"
 					}, {
-						"name" : "cloudConnector2",
-						"type" : "Microsoft.Common.DropDown",
-						"label" : "Source connector",
-						"defaultValue" : "Avature",
-						"toolTip" : "",
-						"constraints" : {
-							"required" : true,
-							"allowedValues" : [{
-									"label" : "Avature",
-									"value" : "8136bc27-5c96-4012-998c-b9e3549f12b6"
-								}, {
-									"label" : "BigMachines",
-									"value" : "fe7462ed-ef80-4f7d-a783-51bca5782e57"
-								}, {
-									"label" : "Box",
-									"value" : "fc504191-bdda-4f2f-82db-f7d30473c750"
-								}, {
-									"label" : "Concur",
-									"value" : "c68397fd-b600-4896-b014-3aea8908f251"
-								}, {
-									"label" : "Coupa",
-									"value" : "7791b183-222c-4cc8-b5dc-cd1992bd8ede"
-								}, {
-									"label" : "CVent",
-									"value" : "758b1e11-0444-4c27-87bd-da79606caa6d"
-								}, {
-									"label" : "Dropbox",
-									"value" : "afd3b70d-d8e2-424b-94b9-7ba1f22d5af2"
-								}, {
-									"label" : "Eloqua",
-									"value" : "b45a89f6-e5b4-43b1-87c5-c02cb11151c0"
-								}, {
-									"label" : "File",
-									"value" : "fed2a26e-bb41-4d50-9d25-20a27e8c8781"
-								}, {
-									"label" : "FileProcessor",
-									"value" : "e1a84535-6101-4bf7-9702-5ae889cfc0b0"
-								}, {
-									"label" : "GoogleAPI",
-									"value" : "f386355c-51bb-43ca-ac5d-e7abd15a79d5"
-								}, {
-									"label" : "Jira",
-									"value" : "e1788807-ffaf-4cb0-848e-b09e36558b05"
-								}, {
-									"label" : "JSON",
-									"value" : "34686c55-4bd8-4733-9b19-d1d4b1b72784"
-								}, {
-									"label" : "Marketo",
-									"value" : "0ea71f00-949c-11e4-b4a9-0800200c9a66"
-								}, {
-									"label" : "Microsoft Sharepoint 2010",
-									"value" : "b631f215-1589-4fe7-bbac-eaee2080f29b"
-								}, {
-									"label" : "Microsoft team foundation server",
-									"value" : "6b5341c0-9992-4d00-8183-afc82b5ae4f0"
-								}, {
-									"label" : "Odata",
-									"value" : "b93e0491-8bb5-41a0-ba60-50cfb4102180"
-								}, {
-									"label" : "OpenAir",
-									"value" : "6fbec006-291a-4a3a-8cba-2d39c8039990"
-								}, {
-									"label" : "Quickbooks",
-									"value" : "e45e263e-f99c-41ff-a10f-9e06c5963c7f"
-								}, {
-									"label" : "REST",
-									"value" : "cf03505e-01fc-4c35-914d-a6c18cd1f286"
-								}, {
-									"label" : "Xactly",
-									"value" : "5b7e0388-fad8-433e-8b0b-2c9d947c9b29"
-								}, {
-									"label" : "XML source",
-									"value" : "b4d9c90e-8aa7-4d0c-8ed1-d0ffedb04e5c"
-								}, {
-									"label" : "XML Target",
-									"value" : "060a02a7-94e4-402c-bb24-d08519d82c44"
-								}, {
-									"label" : "Zoura",
-									"value" : "0302f0c6-c852-438b-a3e5-51ab11222d1f"
-								}
-							]
-						}
-					}
-				]
-			}
-		],
-		"outputs" : {
-			"location" : "[location()]",
-			"adminUsername" : "[basics('adminUsername')]",
-			"adminPassword" : "[basics('adminPassword')]",
-			"os" : "[basics('os')]",
-			"domainName" : "[steps('vmDetails').domainName]",
-			"windowsVmSize" : "[steps('vmDetails').windowsVmSize]",
-			"linuxVmSize" : "[steps('vmDetails').linuxVmSize]",
-			"storageAccountNewOrExisting" : "[steps('vmDetails').storageAccount.storageAccountNewOrExisting]",
-			"storageAccountName" : "[steps('vmDetails').storageAccount.storageAccountName]",
-			"storageAccountType" : "[steps('vmDetails').storageAccount.storageAccountType]",
-			"existingStorageAccountRG" : "[steps('vmDetails').storageAccount.existingStorageAccountRG]",
-			"dnsNameForPublicIP" : "[steps('vmDetails').dnsAndPublicIP.domainNameLabel]",
-			"existingIPRGName" : "[steps('vmDetails').dnsAndPublicIP.resourceGroup]",
-			"publicIPNewOrExisting" : "[steps('vmDetails').dnsAndPublicIP.newOrExistingOrNone]",
-			"dnsNameForPublicIP" : "[steps('vmDetails').dnsAndPublicIP.domainNameLabel]",
-			"cloudEmail" : "[steps('cloudRegDetails').cloudEmail]",
-			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
-			"cloudName" : "[steps('cloudRegDetails').cloudName]",
-			"cloudTitle" : "[steps('cloudRegDetails').cloudTitle]",
-			"cloudPhone" : "[steps('cloudRegDetails').cloudPhone]",
-			"cloudOrgName" : "[steps('cloudRegDetails').cloudOrgName]",
-			"cloudCountry" : "[steps('cloudRegDetails').cloudCountry]",
-			"cloudConnector1" : "[steps('cloudRegDetails').cloudConnector1]",
-			"cloudConnector2" : "[steps('cloudRegDetails').cloudConnector2]"
+						"label": "Antarctica",
+						"value": "AQ"
+					}, {
+						"label": "Antigua and Barbuda",
+						"value": "AG"
+					}, {
+						"label": "Argentina",
+						"value": "AR"
+					}, {
+						"label": "Armenia",
+						"value": "AM"
+					}, {
+						"label": "Aruba",
+						"value": "AW"
+					}, {
+						"label": "Australia",
+						"value": "AU"
+					}, {
+						"label": "Austria",
+						"value": "AT"
+					}, {
+						"label": "Azerbaijan",
+						"value": "AZ"
+					}, {
+						"label": "Bahamas",
+						"value": "BS"
+					}, {
+						"label": "Bahrain",
+						"value": "BH"
+					}, {
+						"label": "Bangladesh",
+						"value": "BD"
+					}, {
+						"label": "Barbados",
+						"value": "BB"
+					}, {
+						"label": "Belarus",
+						"value": "BY"
+					}, {
+						"label": "Belgium",
+						"value": "BE"
+					}, {
+						"label": "Belize",
+						"value": "BZ"
+					}, {
+						"label": "Benin",
+						"value": "BJ"
+					}, {
+						"label": "Bermuda",
+						"value": "BM"
+					}, {
+						"label": "Bhutan",
+						"value": "BT"
+					}, {
+						"label": "Bolivia",
+						"value": "BO"
+					}, {
+						"label": "Bosnia and Herzegovina",
+						"value": "BA"
+					}, {
+						"label": "Botswana",
+						"value": "BW"
+					}, {
+						"label": "Bouvet Island",
+						"value": "BV"
+					}, {
+						"label": "Brazil",
+						"value": "BR"
+					}, {
+						"label": "British Indian Ocean Territory",
+						"value": "IO"
+					}, {
+						"label": "Brunei Darussalam",
+						"value": "BN"
+					}, {
+						"label": "Bulgaria",
+						"value": "BG"
+					}, {
+						"label": "Burkina Faso",
+						"value": "BF"
+					}, {
+						"label": "Burundi",
+						"value": "BI"
+					}, {
+						"label": "Cambodia",
+						"value": "KH"
+					}, {
+						"label": "Cameroon",
+						"value": "CM"
+					}, {
+						"label": "Canada",
+						"value": "CA"
+					}, {
+						"label": "Cape Verde",
+						"value": "CV"
+					}, {
+						"label": "Cayman Islands",
+						"value": "KY"
+					}, {
+						"label": "Central African Republic",
+						"value": "CF"
+					}, {
+						"label": "Chad",
+						"value": "TD"
+					}, {
+						"label": "Chile",
+						"value": "CL"
+					}, {
+						"label": "China",
+						"value": "CN"
+					}, {
+						"label": "Christmas Island",
+						"value": "CX"
+					}, {
+						"label": "Cocos (Keeling) Islands",
+						"value": "CC"
+					}, {
+						"label": "Colombia",
+						"value": "CO"
+					}, {
+						"label": "Comoros",
+						"value": "KM"
+					}, {
+						"label": "Congo",
+						"value": "CG"
+					}, {
+						"label": "Congo, Democratic Republic of the",
+						"value": "CD"
+					}, {
+						"label": "Cook Islands",
+						"value": "CK"
+					}, {
+						"label": "Costa Rica",
+						"value": "CR"
+					}, {
+						"label": "Cote D'Ivoire",
+						"value": "CI"
+					}, {
+						"label": "Croatia",
+						"value": "HR"
+					}, {
+						"label": "Cuba",
+						"value": "CU"
+					}, {
+						"label": "Cyprus",
+						"value": "CY"
+					}, {
+						"label": "Czech Republic",
+						"value": "CZ"
+					}, {
+						"label": "Denmark",
+						"value": "DK"
+					}, {
+						"label": "Djibouti",
+						"value": "DJ"
+					}, {
+						"label": "Dominica",
+						"value": "DM"
+					}, {
+						"label": "Dominican Republic",
+						"value": "DO"
+					}, {
+						"label": "Ecuador",
+						"value": "EC"
+					}, {
+						"label": "Egypt",
+						"value": "EG"
+					}, {
+						"label": "El Salvador",
+						"value": "SV"
+					}, {
+						"label": "Equatorial Guinea",
+						"value": "GQ"
+					}, {
+						"label": "Eritrea",
+						"value": "ER"
+					}, {
+						"label": "Estonia",
+						"value": "EE"
+					}, {
+						"label": "Ethiopia",
+						"value": "ET"
+					}, {
+						"label": "Falkland Islands (Malvinas)",
+						"value": "FK"
+					}, {
+						"label": "Faroe Islands",
+						"value": "FO"
+					}, {
+						"label": "Fiji",
+						"value": "FJ"
+					}, {
+						"label": "Finland",
+						"value": "FI"
+					}, {
+						"label": "France",
+						"value": "FR"
+					}, {
+						"label": "French Guiana",
+						"value": "GF"
+					}, {
+						"label": "French Polynesia",
+						"value": "PF"
+					}, {
+						"label": "French Southern Territories",
+						"value": "TF"
+					}, {
+						"label": "Gabon",
+						"value": "GA"
+					}, {
+						"label": "Gambia",
+						"value": "GM"
+					}, {
+						"label": "Georgia",
+						"value": "GE"
+					}, {
+						"label": "Germany",
+						"value": "DE"
+					}, {
+						"label": "Ghana",
+						"value": "GH"
+					}, {
+						"label": "Gibraltar",
+						"value": "GI"
+					}, {
+						"label": "Greece",
+						"value": "GR"
+					}, {
+						"label": "Greenland",
+						"value": "GL"
+					}, {
+						"label": "Grenada",
+						"value": "GD"
+					}, {
+						"label": "Guadeloupe",
+						"value": "GP"
+					}, {
+						"label": "Guam",
+						"value": "GU"
+					}, {
+						"label": "Guatemala",
+						"value": "GT"
+					}, {
+						"label": "Guernsey",
+						"value": "GG"
+					}, {
+						"label": "Guinea",
+						"value": "GN"
+					}, {
+						"label": "Guinea-Bissau",
+						"value": "GW"
+					}, {
+						"label": "Guyana",
+						"value": "GY"
+					}, {
+						"label": "Haiti",
+						"value": "HT"
+					}, {
+						"label": "Heard Island and Mcdonald Islands",
+						"value": "HM"
+					}, {
+						"label": "Holy See (Vatican City State)",
+						"value": "VA"
+					}, {
+						"label": "Honduras",
+						"value": "HN"
+					}, {
+						"label": "Hong Kong",
+						"value": "HK"
+					}, {
+						"label": "Hungary",
+						"value": "HU"
+					}, {
+						"label": "Iceland",
+						"value": "IS"
+					}, {
+						"label": "India",
+						"value": "IN"
+					}, {
+						"label": "Indonesia",
+						"value": "ID"
+					}, {
+						"label": "Iran (Islamic Republic Of)",
+						"value": "IR"
+					}, {
+						"label": "Iraq",
+						"value": "IQ"
+					}, {
+						"label": "Ireland",
+						"value": "IE"
+					}, {
+						"label": "Israel",
+						"value": "IL"
+					}, {
+						"label": "Italy",
+						"value": "IT"
+					}, {
+						"label": "Jamaica",
+						"value": "JM"
+					}, {
+						"label": "Japan",
+						"value": "JP"
+					}, {
+						"label": "Jordan",
+						"value": "JO"
+					}, {
+						"label": "Kazakhstan",
+						"value": "KZ"
+					}, {
+						"label": "Kenya",
+						"value": "KE"
+					}, {
+						"label": "Kiribati",
+						"value": "KI"
+					}, {
+						"label": "Korea, Democratic People's Rep",
+						"value": "KP"
+					}, {
+						"label": "Korea, Republic of",
+						"value": "KR"
+					}, {
+						"label": "Kuwait",
+						"value": "KW"
+					}, {
+						"label": "Kyrgyzstan",
+						"value": "KG"
+					}, {
+						"label": "Lao People's Democratic Rep",
+						"value": "LA"
+					}, {
+						"label": "Latvia",
+						"value": "LV"
+					}, {
+						"label": "Lebanon",
+						"value": "LB"
+					}, {
+						"label": "Lesotho",
+						"value": "LS"
+					}, {
+						"label": "Liberia",
+						"value": "LR"
+					}, {
+						"label": "Libyan Arab Jamahiriya",
+						"value": "LY"
+					}, {
+						"label": "Liechtenstein",
+						"value": "LI"
+					}, {
+						"label": "Lithuania",
+						"value": "LT"
+					}, {
+						"label": "Luxembourg",
+						"value": "LU"
+					}, {
+						"label": "Macao",
+						"value": "MO"
+					}, {
+						"label": "Macedonia, The Former Yugoslav",
+						"value": "MK"
+					}, {
+						"label": "Madagascar",
+						"value": "MG"
+					}, {
+						"label": "Malawi",
+						"value": "MW"
+					}, {
+						"label": "Malaysia",
+						"value": "MY"
+					}, {
+						"label": "Maldives",
+						"value": "MV"
+					}, {
+						"label": "Mali",
+						"value": "ML"
+					}, {
+						"label": "Malta",
+						"value": "MT"
+					}, {
+						"label": "Marshall Islands",
+						"value": "MH"
+					}, {
+						"label": "Martinique",
+						"value": "MQ"
+					}, {
+						"label": "Mauritania",
+						"value": "MR"
+					}, {
+						"label": "Mauritius",
+						"value": "MU"
+					}, {
+						"label": "Mayotte",
+						"value": "YT"
+					}, {
+						"label": "Mexico",
+						"value": "MX"
+					}, {
+						"label": "Micronesia, Federated States",
+						"value": "FM"
+					}, {
+						"label": "Moldova, Republic of",
+						"value": "MD"
+					}, {
+						"label": "Monaco",
+						"value": "MC"
+					}, {
+						"label": "Mongolia",
+						"value": "MN"
+					}, {
+						"label": "Montenegro",
+						"value": "ME"
+					}, {
+						"label": "Montserrat",
+						"value": "MS"
+					}, {
+						"label": "Morocco",
+						"value": "MA"
+					}, {
+						"label": "Mozambique",
+						"value": "MZ"
+					}, {
+						"label": "Myanmar",
+						"value": "MM"
+					}, {
+						"label": "Namibia",
+						"value": "NA"
+					}, {
+						"label": "Nauru",
+						"value": "NR"
+					}, {
+						"label": "Nepal",
+						"value": "NP"
+					}, {
+						"label": "Netherlands",
+						"value": "NL"
+					}, {
+						"label": "New Caledonia",
+						"value": "NC"
+					}, {
+						"label": "New Zealand",
+						"value": "NZ"
+					}, {
+						"label": "Nicaragua",
+						"value": "NI"
+					}, {
+						"label": "Niger",
+						"value": "NE"
+					}, {
+						"label": "Nigeria",
+						"value": "NG"
+					}, {
+						"label": "Niue",
+						"value": "NU"
+					}, {
+						"label": "Norfolk Island",
+						"value": "NF"
+					}, {
+						"label": "Northern Mariana Islands",
+						"value": "MP"
+					}, {
+						"label": "Norway",
+						"value": "NO"
+					}, {
+						"label": "Oman",
+						"value": "OM"
+					}, {
+						"label": "Pakistan",
+						"value": "PK"
+					}, {
+						"label": "Palau",
+						"value": "PW"
+					}, {
+						"label": "Palestinian Territory, Occupied",
+						"value": "PS"
+					}, {
+						"label": "Panama",
+						"value": "PA"
+					}, {
+						"label": "Papua New Guinea",
+						"value": "PG"
+					}, {
+						"label": "Paraguay",
+						"value": "PY"
+					}, {
+						"label": "Peru",
+						"value": "PE"
+					}, {
+						"label": "Philippines",
+						"value": "PH"
+					}, {
+						"label": "Pitcairn",
+						"value": "PN"
+					}, {
+						"label": "Poland",
+						"value": "PL"
+					}, {
+						"label": "Portugal",
+						"value": "PT"
+					}, {
+						"label": "Puerto Rico",
+						"value": "PR"
+					}, {
+						"label": "Qatar",
+						"value": "QA"
+					}, {
+						"label": "Reunion",
+						"value": "RE"
+					}, {
+						"label": "Romania",
+						"value": "RO"
+					}, {
+						"label": "Russian Federation",
+						"value": "RU"
+					}, {
+						"label": "Rwanda",
+						"value": "RW"
+					}, {
+						"label": "Saint Barthelemy",
+						"value": "BL"
+					}, {
+						"label": "Saint Helena",
+						"value": "SH"
+					}, {
+						"label": "Saint Kitts and Nevis",
+						"value": "KN"
+					}, {
+						"label": "Saint Lucia",
+						"value": "LC"
+					}, {
+						"label": "Saint Martin (French part)",
+						"value": "MF"
+					}, {
+						"label": "Saint Pierre and Miquelon",
+						"value": "PM"
+					}, {
+						"label": "Saint Vincent and Grenadines",
+						"value": "VC"
+					}, {
+						"label": "Samoa",
+						"value": "WS"
+					}, {
+						"label": "San Marino",
+						"value": "SM"
+					}, {
+						"label": "Sao Tome and Principe",
+						"value": "ST"
+					}, {
+						"label": "Saudi Arabia",
+						"value": "SA"
+					}, {
+						"label": "Senegal",
+						"value": "SN"
+					}, {
+						"label": "Serbia",
+						"value": "RS"
+					}, {
+						"label": "Seychelles",
+						"value": "SC"
+					}, {
+						"label": "Sierra Leone",
+						"value": "SL"
+					}, {
+						"label": "Singapore",
+						"value": "SG"
+					}, {
+						"label": "Slovakia",
+						"value": "SK"
+					}, {
+						"label": "Slovenia",
+						"value": "SI"
+					}, {
+						"label": "Solomon Islands",
+						"value": "SB"
+					}, {
+						"label": "Somalia",
+						"value": "SO"
+					}, {
+						"label": "South Africa",
+						"value": "ZA"
+					}, {
+						"label": "South Georgia and the South Sandwich Islands",
+						"value": "GS"
+					}, {
+						"label": "Spain",
+						"value": "ES"
+					}, {
+						"label": "Sri Lanka",
+						"value": "LK"
+					}, {
+						"label": "Sudan",
+						"value": "SD"
+					}, {
+						"label": "Suriname",
+						"value": "SR"
+					}, {
+						"label": "Svalbard and Jan Mayen Islands",
+						"value": "SJ"
+					}, {
+						"label": "Swaziland",
+						"value": "SZ"
+					}, {
+						"label": "Sweden",
+						"value": "SE"
+					}, {
+						"label": "Switzerland",
+						"value": "CH"
+					}, {
+						"label": "Syrian Arab Republic",
+						"value": "SY"
+					}, {
+						"label": "Taiwan",
+						"value": "TW"
+					}, {
+						"label": "Tajikistan",
+						"value": "TJ"
+					}, {
+						"label": "Tanzania, United Republic of",
+						"value": "TZ"
+					}, {
+						"label": "Thailand",
+						"value": "TH"
+					}, {
+						"label": "Timor-Leste",
+						"value": "TL"
+					}, {
+						"label": "Togo",
+						"value": "TG"
+					}, {
+						"label": "Tokelau",
+						"value": "TK"
+					}, {
+						"label": "Tonga",
+						"value": "TO"
+					}, {
+						"label": "Trinidad and Tobago",
+						"value": "TT"
+					}, {
+						"label": "Tunisia",
+						"value": "TN"
+					}, {
+						"label": "Turkey",
+						"value": "TR"
+					}, {
+						"label": "Turkmenistan",
+						"value": "TM"
+					}, {
+						"label": "Turks and Caicos Islands",
+						"value": "TC"
+					}, {
+						"label": "Tuvalu",
+						"value": "TV"
+					}, {
+						"label": "Uganda",
+						"value": "UG"
+					}, {
+						"label": "Ukraine",
+						"value": "UA"
+					}, {
+						"label": "United Arab Emirates",
+						"value": "AE"
+					}, {
+						"label": "United Kingdom",
+						"value": "GB"
+					}, {
+						"label": "United States",
+						"value": "US"
+					}, {
+						"label": "Uruguay",
+						"value": "UY"
+					}, {
+						"label": "Uzbekistan",
+						"value": "UZ"
+					}, {
+						"label": "Vanuatu",
+						"value": "VU"
+					}, {
+						"label": "Venezuela",
+						"value": "VE"
+					}, {
+						"label": "Vietnam",
+						"value": "VN"
+					}, {
+						"label": "Virgin Islands (British)",
+						"value": "VG"
+					}, {
+						"label": "Virgin Islands (U.S.)",
+						"value": "VI"
+					}, {
+						"label": "Wallis and Futuna Islands",
+						"value": "WF"
+					}, {
+						"label": "Western Sahara",
+						"value": "EH"
+					}, {
+						"label": "Yemen",
+						"value": "YE"
+					}, {
+						"label": "Zambia",
+						"value": "ZM"
+					}, {
+						"label": "Zimbabwe",
+						"value": "ZW"
+					}]
+				}
+			}, {
+				"name": "cloudConnector1",
+				"type": "Microsoft.Common.DropDown",
+				"label": "Target connector",
+				"defaultValue": "Azure SQL DB",
+				"toolTip": "",
+				"constraints": {
+					"required": true,
+					"allowedValues": [{
+						"label": "Azure SQL DB",
+						"value": "0b0ad503-1c2c-4514-95ac-85a5adb71b3b"
+					}, {
+						"label": "Azure SQL DW",
+						"value": "554a67aa-7f07-42f8-bfad-c927cf4d7f28"
+					}, {
+						"label": "Azure Blob Storage",
+						"value": "45d431c2-9474-40de-bcf1-409dc56faa3f"
+					}, {
+						"label": "Azure Data Lake Store",
+						"value": "92d6c3db-bfca-4b96-a492-e1b3dea2351e"
+					}, {
+						"label": "Azure Document DB",
+						"value": "f443ee4a-88bf-4b57-a19a-5c79a6ff0633"
+					}]
+				}
+			}, {
+				"name": "cloudConnector2",
+				"type": "Microsoft.Common.DropDown",
+				"label": "Source connector",
+				"defaultValue": "Avature",
+				"toolTip": "",
+				"constraints": {
+					"required": true,
+					"allowedValues": [{
+						"label": "Avature",
+						"value": "8136bc27-5c96-4012-998c-b9e3549f12b6"
+					}, {
+						"label": "BigMachines",
+						"value": "fe7462ed-ef80-4f7d-a783-51bca5782e57"
+					}, {
+						"label": "Box",
+						"value": "fc504191-bdda-4f2f-82db-f7d30473c750"
+					}, {
+						"label": "Concur",
+						"value": "c68397fd-b600-4896-b014-3aea8908f251"
+					}, {
+						"label": "Coupa",
+						"value": "7791b183-222c-4cc8-b5dc-cd1992bd8ede"
+					}, {
+						"label": "CVent",
+						"value": "758b1e11-0444-4c27-87bd-da79606caa6d"
+					}, {
+						"label": "Dropbox",
+						"value": "afd3b70d-d8e2-424b-94b9-7ba1f22d5af2"
+					}, {
+						"label": "Eloqua",
+						"value": "b45a89f6-e5b4-43b1-87c5-c02cb11151c0"
+					}, {
+						"label": "File",
+						"value": "fed2a26e-bb41-4d50-9d25-20a27e8c8781"
+					}, {
+						"label": "FileProcessor",
+						"value": "e1a84535-6101-4bf7-9702-5ae889cfc0b0"
+					}, {
+						"label": "GoogleAPI",
+						"value": "f386355c-51bb-43ca-ac5d-e7abd15a79d5"
+					}, {
+						"label": "Jira",
+						"value": "e1788807-ffaf-4cb0-848e-b09e36558b05"
+					}, {
+						"label": "JSON",
+						"value": "34686c55-4bd8-4733-9b19-d1d4b1b72784"
+					}, {
+						"label": "Marketo",
+						"value": "0ea71f00-949c-11e4-b4a9-0800200c9a66"
+					}, {
+						"label": "Microsoft Sharepoint 2010",
+						"value": "b631f215-1589-4fe7-bbac-eaee2080f29b"
+					}, {
+						"label": "Microsoft team foundation server",
+						"value": "6b5341c0-9992-4d00-8183-afc82b5ae4f0"
+					}, {
+						"label": "Odata",
+						"value": "b93e0491-8bb5-41a0-ba60-50cfb4102180"
+					}, {
+						"label": "OpenAir",
+						"value": "6fbec006-291a-4a3a-8cba-2d39c8039990"
+					}, {
+						"label": "Quickbooks",
+						"value": "e45e263e-f99c-41ff-a10f-9e06c5963c7f"
+					}, {
+						"label": "REST",
+						"value": "cf03505e-01fc-4c35-914d-a6c18cd1f286"
+					}, {
+						"label": "Xactly",
+						"value": "5b7e0388-fad8-433e-8b0b-2c9d947c9b29"
+					}, {
+						"label": "XML source",
+						"value": "b4d9c90e-8aa7-4d0c-8ed1-d0ffedb04e5c"
+					}, {
+						"label": "XML Target",
+						"value": "060a02a7-94e4-402c-bb24-d08519d82c44"
+					}, {
+						"label": "Zoura",
+						"value": "0302f0c6-c852-438b-a3e5-51ab11222d1f"
+					}]
+				}
+			}]
+		}],
+		"outputs": {
+			"location": "[location()]",
+			"adminUsername": "[basics('adminUsername')]",
+			"adminPassword": "[basics('adminPassword')]",
+			"os": "[basics('os')]",
+			"domainName": "[steps('vmDetails').domainName]",
+			"windowsVmSize": "[steps('vmDetails').windowsVmSize]",
+			"linuxVmSize": "[steps('vmDetails').linuxVmSize]",
+			"storageAccountNewOrExisting": "[steps('vmDetails').storageAccount.storageAccountNewOrExisting]",
+			"storageAccountName": "[steps('vmDetails').storageAccount.storageAccountName]",
+			"storageAccountType": "[steps('vmDetails').storageAccount.storageAccountType]",
+			"existingStorageAccountRG": "[steps('vmDetails').storageAccount.existingStorageAccountRG]",
+			"existingIPRGName": "[steps('vmDetails').dnsAndPublicIP.resourceGroup]",
+			"publicIPNewOrExisting": "[steps('vmDetails').dnsAndPublicIP.newOrExistingOrNone]",
+			"dnsNameForPublicIP": "[steps('vmDetails').dnsAndPublicIP.domainNameLabel]",
+			"cloudEmail": "[steps('cloudRegDetails').cloudEmail]",
+			"cloudPassword": "[steps('cloudRegDetails').cloudPassword]",
+			"cloudName": "[steps('cloudRegDetails').cloudName]",
+			"cloudTitle": "[steps('cloudRegDetails').cloudTitle]",
+			"cloudPhone": "[steps('cloudRegDetails').cloudPhone]",
+			"cloudOrgName": "[steps('cloudRegDetails').cloudOrgName]",
+			"cloudCountry": "[steps('cloudRegDetails').cloudCountry]",
+			"cloudConnector1": "[steps('cloudRegDetails').cloudConnector1]",
+			"cloudConnector2": "[steps('cloudRegDetails').cloudConnector2]"
 		}
 	}
 }
