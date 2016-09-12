@@ -21,13 +21,13 @@
 			"type": "string"
 		}               
     },
-    "variables": {},
+    "variables": {"apiVersion" : "2015-05-01"},
     "resources": [
     {
-		"apiVersion": "2015-06-15",
-		"type": "Microsoft.Network/virtualNetworks",
-		"name": "[parameters('vnetName')]",
-		"location": "[parameters('location')]",
+		"apiVersion": "[variables('apiVersion')]",
+		"type": "Microsoft.Compute/virtualMachines",
+		"name": "[parameters('vmName')]",
+		"location": "[resourceGroup().location]",
 		"properties": {
 			"hardwareProfile" : {
 				"vmSize" : "[parameters('vmSize')]"
