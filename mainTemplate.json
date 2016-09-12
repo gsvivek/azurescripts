@@ -14,18 +14,11 @@
 				"description" : "Admin password of the VM"
 			}
 		},
-		"windowsVmSize" : {
+		"vmSize" : {
 			"type" : "string",
 			"defaultValue" : "",
 			"metadata" : {
-				"description" : "Size of the Windows VM"
-			}
-		},
-		"linuxVmSize" : {
-			"type" : "string",
-			"defaultValue" : "",
-			"metadata" : {
-				"description" : "Size of the Linux VM"
+				"description" : "Size of the VM"
 			}
 		},
 		"storageAccountName" : {
@@ -165,6 +158,7 @@
 		}
 	},
 	"variables" : {
+		"apiVersion" : "2015-05-01",
 		"scriptsUri" : "[concat(parameters('artifactsBaseUrl'),'/')]",
 		"nicName" : "myVMNic",
 		"addressPrefix" : "10.0.0.0/16",
@@ -175,7 +169,6 @@
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
 		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
-		"apiVersion" : "2015-05-01",
 		"storageAccountSetupURL" : "[concat(parameters('scriptsUri'),'storageAccount-',parameters('storageAccountNewOrExisting'),'.json')]",
 		"publicIPAdressSetupURL" : "[concat(parameters('scriptsUri'),'publicip-',parameters('publicIPNewOrExisting'),'.json')]",
 		"vmSetupURL" : "[concat(parameters('scriptsUri'), 'vm_script_', parameters('os'), '.json')]",
