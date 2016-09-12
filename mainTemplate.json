@@ -14,19 +14,50 @@
 				"description" : "Admin password of the VM"
 			}
 		},
-		"vmSize" : {
+		"windowsVmSize" : {
 			"type" : "string",
-			"defaultValue" : "Standard_D1",
+			"defaultValue" : "",
 			"metadata" : {
-				"description" : "Size of the VM"
+				"description" : "Size of the Windows VM"
 			}
 		},
-		"publicIPAddressName" : {
+		"linuxVmSize" : {
 			"type" : "string",
-			"defaultValue" : "myPublicIP",
+			"defaultValue" : "",
 			"metadata" : {
-				"description" : "Public IP Name of the VM"
+				"description" : "Size of the Linux VM"
 			}
+		},
+		"storageAccountName" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "Name of storage account"
+			}
+		},
+		"storageAccountNewOrExisting" : {
+			"type" : "string",
+			"defaultValue" : "new",
+			"allowedValues" : [
+				"new",
+				"existing"
+			],
+			"metadata" : {
+				"Description" : "Indicates whether the Storage Account is new or existing"
+			}
+		},
+		"storageAccountType" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "The type of the Storage Account created"
+			},
+			"defaultValue" : "Standard_LRS"
+		},
+		"existingStorageAccountRG" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "Resource Group of the Existing storage."
+			},
+			"defaultValue" : ""
 		},
 		"dnsNameForPublicIP" : {
 			"type" : "string",
@@ -34,15 +65,33 @@
 				"description" : "Unique DNS Name for the Public IP used to access the Virtual Machine."
 			}
 		},
-		"osDropdown" : {
+		"existingIPRGName" : {
 			"type" : "string",
-			"defaultValue" : "win2012R2",
+			"defaultValue" : ""
+		},
+		"publicIPAddressName" : {
+			"type" : "string"
+		},
+		"publicIPNewOrExisting" : {
+			"type" : "string",
+			"defaultValue" : "new",
 			"allowedValues" : [
-				"2012-R2-Datacenter",
-				"ubuntuLin12"
+				"new",
+				"existing"
 			],
 			"metadata" : {
-				"description" : "The OS type chosen by the user. Allowed values are Windows 2012 R2 and Ubuntu Linux 12.04"
+				"Description" : "Indicates whether the public IP is new or existing"
+			}
+		},
+		"os" : {
+			"type" : "string",
+			"defaultValue" : "windows",
+			"allowedValues" : [
+				"windows",
+				"linux"
+			],
+			"metadata" : {
+				"description" : "The OS type chosen by the user. Allowed values are Windows and Linux"
 			}
 		},
 		"cloudEmail" : {
@@ -107,45 +156,77 @@
 			"metadata" : {
 				"description" : "The source connector chosen by the user."
 			}
+		},
+		"artifactsBaseUrl" : {
+			"type" : "string",
+			"metadata" : {
+				"artifactsBaseUrl" : "Base URL of the Publisher Template gallery package"
+			}
 		}
 	},
 	"variables" : {
-		"OSImageURI" : "https://infacloudazure2351.blob.core.windows.net/vmcontainerda3f1e67-50eb-4389-9b97-a63fd83ab586/osDisk.da3f1e67-50eb-4389-9b97-a63fd83ab586.vhd",
+		"scriptsUri" : "[concat(parameters('artifactsBaseUrl'),'/')]",
 		"nicName" : "myVMNic",
 		"addressPrefix" : "10.0.0.0/16",
 		"subnetName" : "Subnet",
 		"subnetPrefix" : "10.0.0.0/24",
-		"storageAccountType": "Standard_LRS",
-		"publicIPAddressType" : "Dynamic",
-		"vmStorageAccountContainerName" : "vhds",
-		"vmName" : "ics-payg-win1",
+		"vmName" : "[concat('ics-payg-',parameters('os'))]",
 		"virtualNetworkName" : "MyVNET",
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-		"vhdStorageAccountName" : "infacloudazure2351",
-		"dnsNameForPublicIP" : "[uniqueString(resourceGroup().id)]",
 		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
-		"apiVersion": "2015-05-01-preview"
+		"apiVersion" : "2015-05-01",
+		"storageAccountSetupURL" : "[concat(parameters('scriptsUri'),'storageAccount-',parameters('storageAccountNewOrExisting'),'.json')]",
+		"publicIPAdressSetupURL" : "[concat(parameters('scriptsUri'),'publicip-',parameters('publicIPNewOrExisting'),'.json')]",
+		"vmSetupURL" : "[concat(parameters('scriptsUri'), 'vm_script_', parameters('os'), '.json')]",
+		"vmCustonScriptSetupURL" : "[concat(parameters('scriptsUri'), 'vm_custom_script_', parameters('os'), '.json')]"
 	},
 	"resources" : [
 		{
-            "type": "Microsoft.Storage/storageAccounts",
-            "name": "[variables('vhdStorageAccountName')]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "accountType": "[variables('storageAccountType')]"
-            }
-        },
-		{
-			"apiVersion" : "[variables('apiVersion')]",
-			"type" : "Microsoft.Network/publicIPAddresses",
-			"name" : "[parameters('publicIPAddressName')]",
-			"location" : "[resourceGroup().location]",
-			"properties" : {
-				"publicIPAllocationMethod" : "[variables('publicIPAddressType')]",
-				"dnsSettings" : {
-					"domainNameLabel" : "[parameters('dnsNameForPublicIP')]"
+			"name": "storageAcountSetup",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "[variables('apiVersion')]",
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('storageAccountSetupURL')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"storageAccountType": {
+						"value": "[parameters('storageAccountType')]"
+					},
+					"storageAccountName": {
+						"value": "[parameters('storageAccountName')]"
+					},
+					"storageAccountExistingRG": {
+						"value": "[parameters('existingStorageAccountRG')]"
+					}
+				}
+			}
+		}, {
+			"name": "publicIPSetup",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "[variables('apiVersion')]",
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('publicIPAdressSetupURL')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"publicIPAddressName": {
+						"value": "[parameters('publicIPAddressName')]"
+					},
+					"publicIPAddressType": {
+						"value": "Dynamic"
+					},
+					"dnsPrefix": {
+						"value": "[parameters('dnsNameForPublicIP')]"
+					},
+					"publicIpRGName": {
+						"value": "[parameters('existingIPRGName')]"
+					}
 				}
 			}
 		}, {
@@ -197,37 +278,34 @@
 			"name" : "[variables('vmName')]",
 			"location" : "[resourceGroup().location]",
 			"dependsOn" : [
-				"[variables('vhdStorageAccountName')]",
+				"storageAcountSetup",
 				"[variables('nicName')]"
 			],
 			"properties" : {
-				"hardwareProfile" : {
-					"vmSize" : "[parameters('vmSize')]"
+				"mode" : "Incremental",
+				"templateLink" : {
+					"uri" : "variables['vmSetupURL']",
+					"contentVersion" : "1.0.0.0"
 				},
-				"osProfile" : {
-					"computerName" : "[variables('vmName')]",
-					"adminUsername" : "[parameters('adminUsername')]",
-					"adminPassword" : "[parameters('adminPassword')]"
-				},
-				"storageProfile" : {
-					"osDisk": {
-						"name": "[concat(variables('vmName'),'-osDisk')]",
-						"osType": "windows",
-						"caching": "ReadWrite",
-						"createOption": "FromImage",
-						"image": {
-						  "uri": "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-payg/win2012r2-osDisk.fa619ee2-cb71-428e-9e9c-26163b3a6ab3.vhd"
-						},
-						"vhd": {
-						  "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('vhdStorageAccountName')), variables('apiVersion')).primaryEndpoints.blob, 'vhds/',variables('vmName'), uniquestring(resourceGroup().id), 'osDisk.vhd')]"
-						}
+				"parameters" : {
+					"vmName" : {
+						"value" : "[variables('vmName')]"
+					},
+					"adminUsername" : {
+						"value" : "[parameters('adminUsername')]"
+					},
+					"adminPassword" : {
+						"value" : "[parameters('adminPassword')]"
+					},
+					"vmSize" : {
+						"value" : "[parameters('vmSize')]"
+					},
+					"nicName" : {
+						"value" : "[variables('nicName')]"
+					},
+					"vhdStorageAccountName" : {
+						"value" : "[parameters('storageAccountName')]"
 					}
-				},
-				"networkProfile" : {
-					"networkInterfaces" : [{
-							"id" : "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
-						}
-					]
 				}
 			},
 			"resources" : [{
@@ -239,13 +317,33 @@
 						"[variables('vmName')]"
 					],
 					"properties" : {
-						"publisher" : "Microsoft.Compute",
-						"type" : "CustomScriptExtension",
-						"typeHandlerVersion" : "1.8",
-						"autoUpgradeMinorVersion" : true,
-						"settings" : {
-							"fileUris" : ["https://github.com/gsvivek/azurescripts/raw/master/InfaCloudExtProvision.ps1"],
-							"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', parameters('cloudEmail'),' ',parameters('cloudPassword'),' ',parameters('cloudName'),' ',parameters('cloudTitle'),' ',parameters('cloudPhone'),' ',parameters('cloudOrgName'),' ',parameters('cloudCountry'),' ',variables('connectorUUIDList'))]"
+						"mode" : "Incremental",
+						"templateLink" : {
+							"uri" : "[variables('vmCustonScriptSetupURL')]",
+							"contentVersion" : "1.0.0.0"
+						},
+						"parameters" : {
+							"cloudEmail" : {
+								"value" : "[parameters('cloudEmail')]"
+							},
+							"cloudPassword" : {
+								"value" : "[parameters('cloudPassword')]"
+							},
+							"cloudTitle" : {
+								"value" : "[parameters('cloudTitle')]"
+							},
+							"cloudPhone" : {
+								"value" : "[parameters('cloudPhone')]"
+							},
+							"cloudOrgName" : {
+								"value" : "[parameters('cloudOrgName')]"
+							},
+							"cloudCountry" : {
+								"value" : "[parameters('cloudCountry')]"
+							},
+							"connectorUUIDList" : {
+								"value" : "[variables('connectorUUIDList')]"
+							}
 						}
 					}
 				}
