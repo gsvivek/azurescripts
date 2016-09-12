@@ -77,12 +77,11 @@
 						"count" : 1,
 						"visible": "[equals(basics('Basics').os, 'Linux')]"        
 					}, {
-						"name": "element1",
+						"name": "storageAccount",
 						"type": "Microsoft.Storage.StorageAccountSelector",
 						"label": "Storage account",
 						"toolTip": "",
 						"defaultValue": {
-							"name": "storageaccount01",
 							"type": "Standard_LRS"
 						},
 						"constraints": {
@@ -1032,10 +1031,14 @@
 			"location" : "[location()]",
 			"adminUsername" : "[basics('adminUsername')]",
 			"adminPassword" : "[basics('adminPassword')]",
+			"os" : "[basics('os')]",
 			"domainName" : "[steps('vmDetails').domainName]",
-			"os" : "[steps('vmDetails').os]",
 			"windowsVmSize" : "[steps('vmDetails').windowsVmSize]",
 			"linuxVmSize" : "[steps('vmDetails').linuxVmSize]",
+			"storageAccountNewOrExisting" : "[steps('vmDetails').storageAccount.storageAccountNewOrExisting]",
+			"storageAccountName" : "[steps('vmDetails').storageAccount.storageAccountName]",
+			"storageAccountType" : "[steps('vmDetails').storageAccount.storageAccountType]",
+			"existingStorageAccountRG" : "[steps('vmDetails').storageAccount.existingStorageAccountRG]",
 			"dnsNameForPublicIP" : "[steps('vmDetails').dnsAndPublicIP.domainNameLabel]",
 			"existingIPRGName" : "[steps('vmDetails').dnsAndPublicIP.resourceGroup]",
 			"publicIPNewOrExisting" : "[steps('vmDetails').dnsAndPublicIP.newOrExistingOrNone]",
