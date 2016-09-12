@@ -149,7 +149,7 @@
 				"name": "cloudName",
 				"type": "Microsoft.Common.TextBox",
 				"label": "Name",
-				"toolTip": "Your name.",
+				"toolTip": "",
 				"constraints": {
 					"required": true
 				}
@@ -157,7 +157,7 @@
 				"name": "cloudTitle",
 				"type": "Microsoft.Common.TextBox",
 				"label": "Title",
-				"toolTip": "Your title.",
+				"toolTip": "",
 				"constraints": {
 					"required": true
 				}
@@ -165,7 +165,7 @@
 				"name": "cloudPhone",
 				"type": "Microsoft.Common.TextBox",
 				"label": "Phone Number",
-				"toolTip": "Your phone number.",
+				"toolTip": "",
 				"constraints": {
 					"required": true,
 					"regex": "^([a-zA-Z0-9@*#]{6,15})$",
@@ -175,7 +175,7 @@
 				"name": "cloudOrgName",
 				"type": "Microsoft.Common.TextBox",
 				"label": "Organization Name",
-				"toolTip": "Your organization name.",
+				"toolTip": "",
 				"constraints": {
 					"required": true
 				}
@@ -184,7 +184,7 @@
 				"type": "Microsoft.Common.DropDown",
 				"label": "Country",
 				"defaultValue": "United States",
-				"toolTip": "Your country.",
+				"toolTip": "",
 				"constraints": {
 					"required": true,
 					"allowedValues": [{
