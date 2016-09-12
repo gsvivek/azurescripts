@@ -57,7 +57,7 @@
 					},
 					"osPlatform": "Windows",
 					"count": 1,
-					"visible": "[equals(basics('Basics').os, 'Windows')]"
+					"visible": "[equals(basics('os'), 'Windows')]"
 				}, {
 					"name": "linuxVmSize",
 					"type": "Microsoft.Compute.SizeSelector",
@@ -72,7 +72,7 @@
 					},
 					"osPlatform": "Linux",
 					"count": 1,
-					"visible": "[equals(basics('Basics').os, 'Linux')]"
+					"visible": "[equals(basics('os'), 'Linux')]"
 				}, {
 					"name": "storageAccount",
 					"type": "Microsoft.Storage.StorageAccountSelector",
