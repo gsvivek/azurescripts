@@ -19,6 +19,22 @@
 					"password" : "Admin password for the virtual machines."
 				},
 				"osPlatform" : "Windows"
+			}, {
+				"name" : "os",
+				"type" : "Microsoft.Common.DropDown",
+				"label" : "Select the OS for the VM",
+				"defaultValue" : "Windows Server 2012 R2 Datacenter",
+				"toolTip" : "",
+				"constraints" : {
+					"allowedValues" : [{
+							"label" : "Windows Server 2012 R2 Datacenter",
+							"value" : "Windows"
+						}, {
+							"label" : "Ubuntu Linux 16.04",
+							"value" : "Linux"
+						}
+					]
+				}
 			}
 		],
 		"steps" : [{
@@ -30,8 +46,8 @@
 				},
 				"bladeTitle" : "VM Details",
 				"elements" : [
-				{
-						"name" : "vmSize",
+					{
+						"name" : "windowsVmSize",
 						"type" : "Microsoft.Compute.SizeSelector",
 						"label" : "Virtual machine size",
 						"toolTip" : "The size of the virtual machine for the domain controller.",
@@ -43,12 +59,40 @@
 							"excludedSizes" : []
 						},
 						"osPlatform" : "Windows",
-						"imageReference" : {
-							"publisher" : "MicrosoftWindowsServer",
-							"offer" : "WindowsServer",
-							"sku" : "2012-R2-Datacenter"
+						"count" : 1,
+						"visible": "[equals(basics('Basics').os, 'Windows')]"        
+					},{
+						"name" : "linuxVmSize",
+						"type" : "Microsoft.Compute.SizeSelector",
+						"label" : "Virtual machine size",
+						"toolTip" : "The size of the virtual machine for the domain controller.",
+						"recommendedSizes" : [
+							"Standard_D2"
+						],
+						"constraints" : {
+							"allowedSizes" : ["Standard_D2"],
+							"excludedSizes" : []
 						},
-						"count" : 1
+						"osPlatform" : "Linux",
+						"count" : 1,
+						"visible": "[equals(basics('Basics').os, 'Linux')]"        
+					}, {
+						"name": "element1",
+						"type": "Microsoft.Storage.StorageAccountSelector",
+						"label": "Storage account",
+						"toolTip": "",
+						"defaultValue": {
+							"name": "storageaccount01",
+							"type": "Standard_LRS"
+						},
+						"constraints": {
+							"allowedTypes": [],
+							"excludedTypes": []
+						},
+						"options": {
+							"hideExisting": false
+						},
+						"visible": true
 					}, {
 						"name" : "dnsAndPublicIP",
 						"type" : "Microsoft.Network.PublicIpAddressCombo",
@@ -64,22 +108,6 @@
 						},
 						"options" : {
 							"hideNone" : true
-						}
-					}, {
-						"name" : "osDropdown",
-						"type" : "Microsoft.Common.DropDown",
-						"label" : "Select the OS for the VM",
-						"defaultValue" : "Windows Server 2012 R2 Datacenter",
-						"toolTip" : "",
-						"constraints" : {
-							"allowedValues" : [{
-									"label" : "Windows Server 2012 R2 Datacenter",
-									"value" : "win2012R2"
-								}, {
-									"label" : "Ubuntu Linux 16.04",
-									"value" : "ubuntuLin16"
-								}
-							]
 						}
 					}
 				]
@@ -1005,11 +1033,13 @@
 			"adminUsername" : "[basics('adminUsername')]",
 			"adminPassword" : "[basics('adminPassword')]",
 			"domainName" : "[steps('vmDetails').domainName]",
-			"vmSize" : "[steps('vmDetails').vmSize]",
+			"os" : "[steps('vmDetails').os]",
+			"windowsVmSize" : "[steps('vmDetails').windowsVmSize]",
+			"linuxVmSize" : "[steps('vmDetails').linuxVmSize]",
 			"dnsNameForPublicIP" : "[steps('vmDetails').dnsAndPublicIP.domainNameLabel]",
 			"existingIPRGName" : "[steps('vmDetails').dnsAndPublicIP.resourceGroup]",
 			"publicIPNewOrExisting" : "[steps('vmDetails').dnsAndPublicIP.newOrExistingOrNone]",
-			"osDropdown" : "[steps('vmDetails').osDropdown]",
+			"dnsNameForPublicIP" : "[steps('vmDetails').dnsAndPublicIP.domainNameLabel]",
 			"cloudEmail" : "[steps('cloudRegDetails').cloudEmail]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
 			"cloudName" : "[steps('cloudRegDetails').cloudName]",
