@@ -236,15 +236,10 @@
 			"location": "[location()]",
 			"adminUsername": "[basics('adminUsername')]",
 			"adminPassword": "[basics('adminPassword')]",
-			"os": "[basics('os')]",
+			"os": "[steps('vmDetails').os]",
 			"vmSize": "[coalesce(steps('vmDetails').windowsVmSize, steps('vmDetails').linuxVmSize)]",
 			"cloudEmail": "[steps('cloudRegDetails').cloudEmail]",
 			"cloudPassword": "[steps('cloudRegDetails').cloudPassword]",
-			"cloudName": "[steps('cloudRegDetails').cloudName]",
-			"cloudTitle": "[steps('cloudRegDetails').cloudTitle]",
-			"cloudPhone": "[steps('cloudRegDetails').cloudPhone]",
-			"cloudOrgName": "[steps('cloudRegDetails').cloudOrgName]",
-			"cloudCountry": "[steps('cloudRegDetails').cloudCountry]",
 			"cloudConnector1": "[steps('cloudRegDetails').cloudConnector1]",
 			"cloudConnector2": "[steps('cloudRegDetails').cloudConnector2]"
 		}
