@@ -221,7 +221,7 @@
 			"location": "[location()]",
 			"adminUsername": "[basics('adminUsername')]",
 			"adminPassword": "[basics('adminPassword')]",
-			"os": "[basics('os')]",
+			"os": "[steps('vmDetails').os]",
 			"vmSize": "[coalesce(steps('vmDetails').windowsVmSize, steps('vmDetails').linuxVmSize)]",
 			"cloudEmail": "[steps('cloudRegDetails').cloudEmail]",
 			"cloudPassword": "[steps('cloudRegDetails').cloudPassword]",
