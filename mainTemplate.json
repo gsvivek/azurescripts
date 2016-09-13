@@ -84,8 +84,8 @@
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
 		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
-		"vmSetupURL" : "[concat(parameters('scriptsUri'), 'vm_script_', parameters('os'), '.json')]",
-		"vmCustonScriptSetupURL" : "[concat(parameters('scriptsUri'), 'vm_custom_script_', parameters('os'), '.json')]"
+		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '.json')]",
+		"vmCustonScriptSetupURL" : "[concat(variables('scriptsUri'), 'vm_custom_script_', parameters('os'), '.json')]"
 	},
 	"resources" : [
 		{
@@ -158,7 +158,7 @@
 			"name" : "[variables('vmName')]",
 			"location" : "[resourceGroup().location]",
 			"dependsOn" : [
-				"storageAcountSetup",
+				"[variables('storageAccountName')]",
 				"[variables('nicName')]"
 			],
 			"properties" : {
