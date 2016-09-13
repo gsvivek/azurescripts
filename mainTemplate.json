@@ -21,61 +21,6 @@
 				"description" : "Size of the VM"
 			}
 		},
-		"storageAccountName" : {
-			"type" : "string",
-			"metadata" : {
-				"description" : "Name of storage account"
-			}
-		},
-		"storageAccountNewOrExisting" : {
-			"type" : "string",
-			"defaultValue" : "new",
-			"allowedValues" : [
-				"new",
-				"existing"
-			],
-			"metadata" : {
-				"Description" : "Indicates whether the Storage Account is new or existing"
-			}
-		},
-		"storageAccountType" : {
-			"type" : "string",
-			"metadata" : {
-				"description" : "The type of the Storage Account created"
-			},
-			"defaultValue" : "Standard_LRS"
-		},
-		"existingStorageAccountRG" : {
-			"type" : "string",
-			"metadata" : {
-				"description" : "Resource Group of the Existing storage."
-			},
-			"defaultValue" : ""
-		},
-		"dnsNameForPublicIP" : {
-			"type" : "string",
-			"metadata" : {
-				"description" : "Unique DNS Name for the Public IP used to access the Virtual Machine."
-			}
-		},
-		"existingIPRGName" : {
-			"type" : "string",
-			"defaultValue" : ""
-		},
-		"publicIPAddressName" : {
-			"type" : "string"
-		},
-		"publicIPNewOrExisting" : {
-			"type" : "string",
-			"defaultValue" : "new",
-			"allowedValues" : [
-				"new",
-				"existing"
-			],
-			"metadata" : {
-				"Description" : "Indicates whether the public IP is new or existing"
-			}
-		},
 		"os" : {
 			"type" : "string",
 			"defaultValue" : "windows",
@@ -99,41 +44,6 @@
 			"defaultValue" : "",
 			"metadata" : {
 				"description" : "The password for the Informatica Cloud user account."
-			}
-		},
-		"cloudName" : {
-			"type" : "string",
-			"defaultValue" : "",
-			"metadata" : {
-				"description" : "The name of the Informatica Cloud user."
-			}
-		},
-		"cloudTitle" : {
-			"type" : "string",
-			"defaultValue" : "",
-			"metadata" : {
-				"description" : "The title of the Informatica Cloud user."
-			}
-		},
-		"cloudPhone" : {
-			"type" : "string",
-			"defaultValue" : "",
-			"metadata" : {
-				"description" : "The phone number of the Informatica Cloud user."
-			}
-		},
-		"cloudOrgName" : {
-			"type" : "string",
-			"defaultValue" : "",
-			"metadata" : {
-				"description" : "The organization name of the Informatica Cloud user."
-			}
-		},
-		"cloudCountry" : {
-			"type" : "string",
-			"defaultValue" : "",
-			"metadata" : {
-				"description" : "The country of the Informatica Cloud user."
 			}
 		},
 		"cloudConnector1" : {
@@ -160,66 +70,43 @@
 	"variables" : {
 		"apiVersion" : "2015-05-01",
 		"scriptsUri" : "[concat(parameters('artifactsBaseUrl'),'/')]",
-		"nicName" : "myVMNic",
+		"storageAccountName" : "[concat(uniquestring(resourceGroup().id), 'icspayg')]",
+		"storageAccountType": "Standard_LRS",
+		"nicName" : "IcsPaygNic",
 		"addressPrefix" : "10.0.0.0/16",
 		"subnetName" : "Subnet",
 		"subnetPrefix" : "10.0.0.0/24",
 		"vmName" : "[concat('ics-payg-',parameters('os'))]",
-		"virtualNetworkName" : "MyVNET",
+		"virtualNetworkName" : "IcsPaygVNET",
+		"publicIPAddressName": "icspaygIP",
+		"IPAddressType": "Dynamic",
+		"dnsNameForPublicIP" : "icspayg",
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
 		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
-		"storageAccountSetupURL" : "[concat(parameters('scriptsUri'),'storageAccount-',parameters('storageAccountNewOrExisting'),'.json')]",
-		"publicIPAdressSetupURL" : "[concat(parameters('scriptsUri'),'publicip-',parameters('publicIPNewOrExisting'),'.json')]",
 		"vmSetupURL" : "[concat(parameters('scriptsUri'), 'vm_script_', parameters('os'), '.json')]",
 		"vmCustonScriptSetupURL" : "[concat(parameters('scriptsUri'), 'vm_custom_script_', parameters('os'), '.json')]"
 	},
 	"resources" : [
 		{
-			"name": "storageAcountSetup",
-			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "[variables('apiVersion')]",
-			"properties": {
-				"mode": "Incremental",
-				"templateLink": {
-					"uri": "[variables('storageAccountSetupURL')]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"storageAccountType": {
-						"value": "[parameters('storageAccountType')]"
-					},
-					"storageAccountName": {
-						"value": "[parameters('storageAccountName')]"
-					},
-					"storageAccountExistingRG": {
-						"value": "[parameters('existingStorageAccountRG')]"
-					}
-				}
-			}
+			"type": "Microsoft.Storage/storageAccounts",
+			"name": "[variables('storageAccountName')]",
+			"location": "[resourceGroup().location]",
+			"sku": {
+				"name": "[variables('storageAccountType')]"
+			},
+			"kind": "Storage",
+			"properties": {}
 		}, {
-			"name": "publicIPSetup",
-			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "[variables('apiVersion')]",
+			"type": "Microsoft.Network/publicIPAddresses",
+			"name": "[variables('publicIPAddressName')]",
+			"location": "[resourceGroup().location]",
 			"properties": {
-				"mode": "Incremental",
-				"templateLink": {
-					"uri": "[variables('publicIPAdressSetupURL')]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"publicIPAddressName": {
-						"value": "[parameters('publicIPAddressName')]"
-					},
-					"publicIPAddressType": {
-						"value": "Dynamic"
-					},
-					"dnsPrefix": {
-						"value": "[parameters('dnsNameForPublicIP')]"
-					},
-					"publicIpRGName": {
-						"value": "[parameters('existingIPRGName')]"
-					}
+				"publicIPAllocationMethod": "[variables('IPAddressType')]",
+				"dnsSettings": {
+					"domainNameLabel": "[variables('dnsNameForPublicIP')]"
 				}
 			}
 		}, {
@@ -247,16 +134,16 @@
 			"name" : "[variables('nicName')]",
 			"location" : "[resourceGroup().location]",
 			"dependsOn" : [
-				"[parameters('publicIPAddressName')]",
+				"[variables('publicIPAddressName')]",
 				"[variables('virtualNetworkName')]"
 			],
 			"properties" : {
 				"ipConfigurations" : [{
 						"name" : "ipconfig1",
 						"properties" : {
-							"privateIPAllocationMethod" : "Dynamic",
+							"privateIPAllocationMethod" : "[variables('IPAddressType')]",
 							"publicIPAddress" : {
-								"id" : "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIPAddressName'))]"
+								"id" : "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
 							},
 							"subnet" : {
 								"id" : "[variables('subnetRef')]"
@@ -297,7 +184,7 @@
 						"value" : "[variables('nicName')]"
 					},
 					"vhdStorageAccountName" : {
-						"value" : "[parameters('storageAccountName')]"
+						"value" : "[variables('storageAccountName')]"
 					}
 				}
 			},
@@ -321,18 +208,6 @@
 							},
 							"cloudPassword" : {
 								"value" : "[parameters('cloudPassword')]"
-							},
-							"cloudTitle" : {
-								"value" : "[parameters('cloudTitle')]"
-							},
-							"cloudPhone" : {
-								"value" : "[parameters('cloudPhone')]"
-							},
-							"cloudOrgName" : {
-								"value" : "[parameters('cloudOrgName')]"
-							},
-							"cloudCountry" : {
-								"value" : "[parameters('cloudCountry')]"
 							},
 							"connectorUUIDList" : {
 								"value" : "[variables('connectorUUIDList')]"
