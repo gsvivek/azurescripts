@@ -68,7 +68,7 @@
 		}
 	},
 	"variables" : {
-		"apiVersion" : "2015-05-01",
+		"apiVersion" : "2015-05-01-preview",
 		"scriptsUri" : "[concat(parameters('artifactsBaseUrl'),'/')]",
 		"storageAccountName" : "[concat(uniquestring(resourceGroup().id), 'icspayg')]",
 		"storageAccountType": "Standard_LRS",
@@ -93,11 +93,9 @@
 			"type": "Microsoft.Storage/storageAccounts",
 			"name": "[variables('storageAccountName')]",
 			"location": "[resourceGroup().location]",
-			"sku": {
-				"name": "[variables('storageAccountType')]"
-			},
-			"kind": "Storage",
-			"properties": {}
+			"properties": {
+				"accountType": "[variables('storageAccountType')]"
+			}
 		}, {
 			"apiVersion": "[variables('apiVersion')]",
 			"type": "Microsoft.Network/publicIPAddresses",
@@ -154,9 +152,8 @@
 			}
 		}, {
 			"apiVersion" : "[variables('apiVersion')]",
-			"type" : "Microsoft.Compute/virtualMachines",
+			"type" : "Microsoft.Resources/deployments",
 			"name" : "[variables('vmName')]",
-			"location" : "[resourceGroup().location]",
 			"dependsOn" : [
 				"[variables('storageAccountName')]",
 				"[variables('nicName')]"
@@ -185,37 +182,18 @@
 					},
 					"vhdStorageAccountName" : {
 						"value" : "[variables('storageAccountName')]"
+					},
+					"cloudEmail" : {
+						"value" : "[parameters('cloudEmail')]"
+					},
+					"cloudPassword" : {
+						"value" : "[parameters('cloudPassword')]"
+					},
+					"connectorUUIDList" : {
+						"value" : "[variables('connectorUUIDList')]"
 					}
 				}
-			},
-			"resources" : [{
-					"type" : "extensions",
-					"name" : "CustomScriptExtension",
-					"apiVersion" : "[variables('apiVersion')]",
-					"location" : "[resourceGroup().location]",
-					"dependsOn" : [
-						"[variables('vmName')]"
-					],
-					"properties" : {
-						"mode" : "Incremental",
-						"templateLink" : {
-							"uri" : "[variables('vmCustonScriptSetupURL')]",
-							"contentVersion" : "1.0.0.0"
-						},
-						"parameters" : {
-							"cloudEmail" : {
-								"value" : "[parameters('cloudEmail')]"
-							},
-							"cloudPassword" : {
-								"value" : "[parameters('cloudPassword')]"
-							},
-							"connectorUUIDList" : {
-								"value" : "[variables('connectorUUIDList')]"
-							}
-						}
-					}
-				}
-			]
+			}
 		}
 	]
 }
