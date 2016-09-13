@@ -68,7 +68,7 @@
 					},
 					"osPlatform": "Linux",
 					"count": 1,
-					"visible": "[equalssteps('vmDetails').os, 'linux')]"
+					"visible": "[equals(steps('vmDetails').os, 'linux')]"
 				}
 			]
 		}, {
