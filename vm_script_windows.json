@@ -9,7 +9,7 @@
 			"type": "string"
 		},
 		"adminPassword": {
-			"type": "string"
+			"type": "secureString"
 		},
 		"vmSize": {
 			"type": "string"
@@ -19,7 +19,16 @@
 		},
 		"vhdStorageAccountName": {
 			"type": "string"
-		}               
+		},
+		"cloudEmail" : {
+			"type" : "string"
+		},
+		"cloudPassword" : {
+			"type" : "secureString"
+		},
+		"connectorUUIDList" : {
+			"type" : "string"
+		}
     },
     "variables": {"apiVersion" : "2015-05-01"},
     "resources": [
