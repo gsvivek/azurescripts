@@ -94,7 +94,7 @@
 				"type": "Microsoft.Common.OptionsGroup",
 				"label": "Informatica Cloud username",
 				"defaultValue": "emailUsername@azure.emailDomain",
-				"toolTip": "",
+				"toolTip": "If your email is name@gmail.com, your Informatica Cloud username would be name@azure.gmail.com.",
 				"constraints": {
 					"allowedValues": [
 					{
