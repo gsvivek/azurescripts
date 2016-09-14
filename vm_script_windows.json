@@ -29,7 +29,7 @@
 		"name": "[parameters('vmName')]",
 		"location": "[resourceGroup().location]",
 		"dependsOn" : [
-			"[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), '-vm')]"
+			"[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
 		],
 		"properties": {
 			"hardwareProfile" : {
