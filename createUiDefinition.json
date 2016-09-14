@@ -3,14 +3,6 @@
 	"version" : "0.0.1-preview",
 	"parameters" : {
 		"basics" : [{
-				"name" : "cloudEmail",
-				"type" : "Microsoft.Common.TextBox",
-				"label" : "Email Address",
-				"toolTip" : "Primary email address.",
-				"constraints" : {
-					"required" : true
-				}
-			},	{
 				"name" : "adminUsername",
 				"type" : "Microsoft.Compute.UserNameTextBox",
 				"label" : "VM Username",
@@ -93,15 +85,23 @@
 				"bladeTitle" : "Informatica Cloud Registration",
 				"bladeSubtitle" : "Create an account on Informatica Cloud",
 				"elements" : [{
+						"name" : "cloudEmail",
+						"type" : "Microsoft.Common.TextBox",
+						"label" : "Email Address",
+						"toolTip" : "Primary email address.",
+						"constraints" : {
+							"required" : true
+						}
+					},	{
 						"name" : "cloudUsername",
 						"type" : "Microsoft.Common.OptionsGroup",
 						"label" : "Informatica Cloud username",
-						"defaultValue" : "[concat(basics('cloudEmail'), '.azure')]",
+						"defaultValue" : "[concat(steps('cloudRegDetails').cloudEmail, '.azure')]",
 						"toolTip" : "If your email is name@informatica.com, your Informatica Cloud username would be <b>name@informatica.com.azure</b>.",
 						"constraints" : {
 							"allowedValues" : [{
-									"label" : "[concat(basics('cloudEmail'), '.azure')]",
-									"value" : "[concat(basics('cloudEmail'), '.azure')]"
+									"label" : "[concat(steps('cloudRegDetails').cloudEmail, '.azure')]",
+									"value" : "[concat(steps('cloudRegDetails').cloudEmail, '.azure')]"
 								}
 							]
 						},
