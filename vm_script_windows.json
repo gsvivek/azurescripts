@@ -28,6 +28,9 @@
 		"type": "Microsoft.Compute/virtualMachines",
 		"name": "[parameters('vmName')]",
 		"location": "[resourceGroup().location]",
+		"dependsOn" : [
+			"[concat('Microsoft.Resources/deployments/', variables('vmName'), '-vm')]"
+		],
 		"properties": {
 			"hardwareProfile" : {
 				"vmSize" : "[parameters('vmSize')]"

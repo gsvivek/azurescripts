@@ -153,7 +153,7 @@
 		}, {
 			"apiVersion" : "[variables('apiVersion')]",
 			"type" : "Microsoft.Resources/deployments",
-			"name" : "[variables('vmName')-vm]",
+			"name" : "[concat(variables('vmName'),'-vm')]",
 			"dependsOn" : [
 				"[variables('storageAccountName')]",
 				"[variables('nicName')]"
@@ -189,9 +189,6 @@
 			"apiVersion" : "[variables('apiVersion')]",
 			"type" : "Microsoft.Resources/deployments",
 			"name" : "CustomScript",
-			"dependsOn" : [
-				"[variables('vmName')]"
-			],
 			"properties" : {
 				"mode" : "Incremental",
 				"templateLink" : {
