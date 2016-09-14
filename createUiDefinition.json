@@ -6,6 +6,7 @@
 				"name" : "cloudEmail",
 				"type" : "Microsoft.Common.TextBox",
 				"label" : "Email Address",
+				"toolTip" : "Primary email address.",
 				"constraints" : {
 					"required" : true
 				}
@@ -14,7 +15,10 @@
 				"type" : "Microsoft.Compute.UserNameTextBox",
 				"label" : "VM Username",
 				"toolTip" : "Admin username for the virtual machines.",
-				"osPlatform" : "Windows"
+				"osPlatform" : "Windows",
+				"constraints" : {
+					"required" : true
+				}
 			}, {
 				"name" : "adminPassword",
 				"type" : "Microsoft.Compute.CredentialsCombo",
@@ -25,7 +29,10 @@
 				"toolTip" : {
 					"password" : "Admin password for the virtual machines. The value must be between 12 and 123 characters long."
 				},
-				"osPlatform" : "Windows"
+				"osPlatform" : "Windows",
+				"constraints" : {
+					"required" : true
+				}
 			}
 		],
 		"steps" : [{
