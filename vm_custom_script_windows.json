@@ -19,6 +19,9 @@
 		"type" : "CustomScriptExtension",
 		"typeHandlerVersion" : "1.8",
 		"autoUpgradeMinorVersion" : true,
+		"dependsOn" : [
+			"[concat('Microsoft.Resources/deployments/', variables('vmName'), '-vm')]"
+		],
 		"settings" : {
 			"fileUris" : ["https://github.com/gsvivek/azurescripts/raw/master/InfaCloudExtProvision.ps1"],
 			"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', parameters('cloudEmail'),' ',parameters('cloudPassword'),' ',parameters('connectorUUIDList'))]"
