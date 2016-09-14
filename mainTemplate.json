@@ -85,7 +85,7 @@
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
 		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
 		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '.json')]",
-		"vmCustonScriptSetupURL" : "[concat(variables('scriptsUri'), 'vm_custom_script_', parameters('os'), '.json')]"
+		"vmCustomScriptSetupURL" : "[concat(variables('scriptsUri'), 'vm_custom_script_', parameters('os'), '.json')]"
 	},
 	"resources" : [
 		{
@@ -189,10 +189,13 @@
 			"apiVersion" : "[variables('apiVersion')]",
 			"type" : "Microsoft.Resources/deployments",
 			"name" : "CustomScript",
+			"dependsOn" : [
+				"[variables('vmName')]"
+			],
 			"properties" : {
 				"mode" : "Incremental",
 				"templateLink" : {
-					"uri" : "variables['vmCustonScriptSetupURL']",
+					"uri" : "variables['vmCustomScriptSetupURL']",
 					"contentVersion" : "1.0.0.0"
 				},
 				"parameters" : {
