@@ -68,7 +68,7 @@
 			}
 		}
     }, {
-		"type": "extensions",
+		"type": "Microsoft.Compute/virtualMachines/extensions",
 		"name": "CustomScriptExtension",
 		"apiVersion": "[variables('apiVersion')]",
 		"location": "[resourceGroup().location]",
