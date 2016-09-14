@@ -96,12 +96,12 @@
 						"name" : "cloudUsername",
 						"type" : "Microsoft.Common.OptionsGroup",
 						"label" : "Informatica Cloud username",
-						"defaultValue" : "[concat(steps('cloudEmail'), '.azure')]",
+						"defaultValue" : "[concat(basics('cloudEmail'), '.azure')]",
 						"toolTip" : "If your email is name@informatica.com, your Informatica Cloud username would be <b>name@informatica.com.azure</b>.",
 						"constraints" : {
 							"allowedValues" : [{
-									"label" : "[concat(steps('cloudEmail'), '.azure')]",
-									"value" : "[concat(steps('cloudEmail'), '.azure')]"
+									"label" : "[concat(basics('cloudEmail'), '.azure')]",
+									"value" : "[concat(basics('cloudEmail'), '.azure')]"
 								}
 							]
 						},
