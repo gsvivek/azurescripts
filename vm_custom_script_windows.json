@@ -8,18 +8,6 @@
 		"cloudPassword": {
 			"type": "secureString"
 		},
-		"cloudTitle": {
-			"type": "string"
-		},
-		"cloudPhone": {
-			"type": "string"
-		},
-		"cloudOrgName": {
-			"type": "string"
-		},
-		"cloudCountry": {
-			"type": "string"
-		},
 		"connectorUUIDList": {
 			"type": "string"
 		}               
@@ -33,7 +21,7 @@
 		"autoUpgradeMinorVersion" : true,
 		"settings" : {
 			"fileUris" : ["https://github.com/gsvivek/azurescripts/raw/master/InfaCloudExtProvision.ps1"],
-			"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', parameters('cloudEmail'),' ',parameters('cloudPassword'),' ',parameters('cloudName'),' ',parameters('cloudTitle'),' ',parameters('cloudPhone'),' ',parameters('cloudOrgName'),' ',parameters('cloudCountry'),' ',parameters('connectorUUIDList'))]"
+			"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', parameters('cloudEmail'),' ',parameters('cloudPassword'),' ',parameters('connectorUUIDList'))]"
 		}
     }
     ]

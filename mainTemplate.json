@@ -1,83 +1,215 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json# ",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "vmName": {
-			"type": "string"
+	"$schema" : "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+	"contentVersion" : "1.0.0.0",
+	"parameters" : {
+		"adminUsername" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "Admin username of the VM"
+			}
 		},
-		"adminUsername": {
-			"type": "string"
+		"adminPassword" : {
+			"type" : "securestring",
+			"metadata" : {
+				"description" : "Admin password of the VM"
+			}
 		},
-		"adminPassword": {
-			"type": "secureString"
+		"vmSize" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "Size of the VM"
+			}
 		},
-		"vmSize": {
-			"type": "string"
-		},
-		"nicName": {
-			"type": "string"
-		},
-		"vhdStorageAccountName": {
-			"type": "string"
+		"os" : {
+			"type" : "string",
+			"defaultValue" : "windows",
+			"allowedValues" : [
+				"windows",
+				"linux"
+			],
+			"metadata" : {
+				"description" : "The OS type chosen by the user. Allowed values are Windows and Linux"
+			}
 		},
 		"cloudEmail" : {
-			"type" : "string"
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The email of the Informatica Cloud user."
+			}
 		},
 		"cloudPassword" : {
-			"type" : "secureString"
+			"type" : "secureString",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The password for the Informatica Cloud user account."
+			}
 		},
-		"connectorUUIDList" : {
-			"type" : "string"
+		"cloudConnector1" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The target connector chosen by the user."
+			}
+		},
+		"cloudConnector2" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "The source connector chosen by the user."
+			}
+		},
+		"artifactsBaseUrl" : {
+			"type" : "string",
+			"metadata" : {
+				"artifactsBaseUrl" : "Base URL of the Publisher Template gallery package"
+			}
 		}
-    },
-    "variables": {"apiVersion" : "2015-05-01"},
-    "resources": [
-    {
-		"apiVersion": "[variables('apiVersion')]",
-		"type": "Microsoft.Compute/virtualMachines",
-		"name": "[parameters('vmName')]",
-		"location": "[resourceGroup().location]",
-		"properties": {
-			"hardwareProfile" : {
-				"vmSize" : "[parameters('vmSize')]"
-			},
-			"osProfile" : {
-				"computerName" : "[parameters('vmName')]",
-				"adminUsername" : "[parameters('adminUsername')]",
-				"adminPassword" : "[parameters('adminPassword')]"
-			},
-			"storageProfile" : {
-				"osDisk": {
-					"name": "[concat(parameters('vmName'),'-osDisk')]",
-					"osType": "windows",
-					"caching": "ReadWrite",
-					"createOption": "FromImage",
-					"image": {
-					  "uri": "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-payg/win2012r2-osDisk.fa619ee2-cb71-428e-9e9c-26163b3a6ab3.vhd"
-					},
-					"vhd": {
-					  "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', parameters('vhdStorageAccountName')), variables('apiVersion')).primaryEndpoints.blob, 'vhds/',parameters('vmName'), uniquestring(resourceGroup().id), 'osDisk.vhd')]"
-					}
+	},
+	"variables" : {
+		"apiVersion" : "2015-05-01-preview",
+		"scriptsUri" : "[concat(parameters('artifactsBaseUrl'),'/')]",
+		"storageAccountName" : "[concat(uniquestring(resourceGroup().id), 'icspayg')]",
+		"storageAccountType": "Standard_LRS",
+		"nicName" : "IcsPaygNic",
+		"addressPrefix" : "10.0.0.0/16",
+		"subnetName" : "Subnet",
+		"subnetPrefix" : "10.0.0.0/24",
+		"vmName" : "[concat('ics-payg-',parameters('os'))]",
+		"virtualNetworkName" : "IcsPaygVNET",
+		"publicIPAddressName": "icspaygIP",
+		"IPAddressType": "Dynamic",
+		"dnsNameForPublicIP" : "icspayg",
+		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
+		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '.json')]",
+		"vmCustonScriptSetupURL" : "[concat(variables('scriptsUri'), 'vm_custom_script_', parameters('os'), '.json')]"
+	},
+	"resources" : [
+		{
+			"apiVersion": "[variables('apiVersion')]",
+			"type": "Microsoft.Storage/storageAccounts",
+			"name": "[variables('storageAccountName')]",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"accountType": "[variables('storageAccountType')]"
+			}
+		}, {
+			"apiVersion": "[variables('apiVersion')]",
+			"type": "Microsoft.Network/publicIPAddresses",
+			"name": "[variables('publicIPAddressName')]",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"publicIPAllocationMethod": "[variables('IPAddressType')]",
+				"dnsSettings": {
+					"domainNameLabel": "[variables('dnsNameForPublicIP')]"
 				}
-			},
-			"networkProfile" : {
-				"networkInterfaces" : [{
-						"id" : "[resourceId('Microsoft.Network/networkInterfaces',parameters('nicName'))]"
+			}
+		}, {
+			"apiVersion" : "[variables('apiVersion')]",
+			"type" : "Microsoft.Network/virtualNetworks",
+			"name" : "[variables('virtualNetworkName')]",
+			"location" : "[resourceGroup().location]",
+			"properties" : {
+				"addressSpace" : {
+					"addressPrefixes" : [
+						"[variables('addressPrefix')]"
+					]
+				},
+				"subnets" : [{
+						"name" : "[variables('subnetName')]",
+						"properties" : {
+							"addressPrefix" : "[variables('subnetPrefix')]"
+						}
 					}
 				]
 			}
-		},
-		"resources": [{
-			"publisher" : "Microsoft.Compute",
-			"type" : "CustomScriptExtension",
-			"typeHandlerVersion" : "1.8",
-			"autoUpgradeMinorVersion" : true,
-			"settings" : {
-				"fileUris" : ["https://github.com/gsvivek/azurescripts/raw/master/InfaCloudExtProvision.ps1"],
-				"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', parameters('cloudEmail'),' ',parameters('cloudPassword'),' ',parameters('connectorUUIDList'))]"
+		}, {
+			"apiVersion" : "[variables('apiVersion')]",
+			"type" : "Microsoft.Network/networkInterfaces",
+			"name" : "[variables('nicName')]",
+			"location" : "[resourceGroup().location]",
+			"dependsOn" : [
+				"[variables('publicIPAddressName')]",
+				"[variables('virtualNetworkName')]"
+			],
+			"properties" : {
+				"ipConfigurations" : [{
+						"name" : "ipconfig1",
+						"properties" : {
+							"privateIPAllocationMethod" : "[variables('IPAddressType')]",
+							"publicIPAddress" : {
+								"id" : "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+							},
+							"subnet" : {
+								"id" : "[variables('subnetRef')]"
+							}
+						}
+					}
+				]
+			}
+		}, {
+			"apiVersion" : "[variables('apiVersion')]",
+			"type" : "Microsoft.Resources/deployments",
+			"name" : "[variables('vmName')-vm]",
+			"dependsOn" : [
+				"[variables('storageAccountName')]",
+				"[variables('nicName')]"
+			],
+			"properties" : {
+				"mode" : "Incremental",
+				"templateLink" : {
+					"uri" : "variables['vmSetupURL']",
+					"contentVersion" : "1.0.0.0"
+				},
+				"parameters" : {
+					"vmName" : {
+						"value" : "[variables('vmName')]"
+					},
+					"adminUsername" : {
+						"value" : "[parameters('adminUsername')]"
+					},
+					"adminPassword" : {
+						"value" : "[parameters('adminPassword')]"
+					},
+					"vmSize" : {
+						"value" : "[parameters('vmSize')]"
+					},
+					"nicName" : {
+						"value" : "[variables('nicName')]"
+					},
+					"vhdStorageAccountName" : {
+						"value" : "[variables('storageAccountName')]"
+					}
+				}
+			}
+		}, {
+			"apiVersion" : "[variables('apiVersion')]",
+			"type" : "Microsoft.Resources/deployments",
+			"name" : "CustomScript",
+			"dependsOn" : [
+				"[variables('vmName')]"
+			],
+			"properties" : {
+				"mode" : "Incremental",
+				"templateLink" : {
+					"uri" : "variables['vmCustonScriptSetupURL']",
+					"contentVersion" : "1.0.0.0"
+				},
+				"parameters" : {
+					"cloudEmail" : {
+						"value" : "[parameters('cloudEmail')]"
+					},
+					"cloudPassword" : {
+						"value" : "[parameters('cloudPassword')]"
+					},
+					"connectorUUIDList" : {
+						"value" : "[variables('connectorUUIDList')]"
+					}
+				}
 			}
 		}
-		]
-    }
-    ]
+	]
 }
