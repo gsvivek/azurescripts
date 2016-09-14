@@ -48,7 +48,7 @@
 					"type": "Microsoft.Compute.SizeSelector",
 					"label": "Virtual machine size",
 					"toolTip": "The size of the virtual machine.",
-					"recommendedSizes": ["Standard_D12", "Standard_D12_v2"],
+					"recommendedSizes": ["Standard_D12_v2"],
 					"constraints": {
 						"allowedSizes": ["Standard_D12", "Standard_D12_v2"],
 						"excludedSizes": []
@@ -61,7 +61,7 @@
 					"type": "Microsoft.Compute.SizeSelector",
 					"label": "Virtual machine size",
 					"toolTip": "The size of the virtual machine.",
-					"recommendedSizes": ["Standard_D12", "Standard_D12_v2"],
+					"recommendedSizes": ["Standard_D12_v2"],
 					"constraints": {
 						"allowedSizes": ["Standard_D12", "Standard_D12_v2"],
 						"excludedSizes": []
