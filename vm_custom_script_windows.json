@@ -19,6 +19,9 @@
 		"name": "CustomScriptExtension",
 		"apiVersion": "[variables('apiVersion')]",
 		"location": "[resourceGroup().location]",
+		"dependsOn" : [
+			"[concat('Microsoft.Resources/deployments/', variables('vmName'), '-vm')]"
+		],
 		"properties": {
 			"publisher": "Microsoft.Compute",
 			"type": "CustomScriptExtension",
