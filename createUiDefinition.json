@@ -88,6 +88,7 @@
 						"name" : "cloudEmail",
 						"type" : "Microsoft.Common.TextBox",
 						"label" : "Email Address",
+						"defaultValue" : "email@informatica.com",
 						"toolTip" : "Primary email address.",
 						"constraints" : {
 							"required" : true
@@ -97,7 +98,7 @@
 						"type" : "Microsoft.Common.OptionsGroup",
 						"label" : "Informatica Cloud username",
 						"defaultValue" : "[concat(steps('cloudRegDetails').cloudEmail, '.azure')]",
-						"toolTip" : "If your email is name@informatica.com, your Informatica Cloud username would be <b>name@informatica.com.azure</b>.",
+						"toolTip" : "If your email is email@informatica.com, your Informatica Cloud username would be <b>email@informatica.com.azure</b>.",
 						"constraints" : {
 							"allowedValues" : [{
 									"label" : "[concat(steps('cloudRegDetails').cloudEmail, '.azure')]",
