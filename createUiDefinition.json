@@ -1,232 +1,253 @@
 {
-	"handler": "Microsoft.Compute.MultiVm",
-	"version": "0.0.1-preview",
-	"parameters": {
-		"basics": [{
-			"name": "adminUsername",
-			"type": "Microsoft.Compute.UserNameTextBox",
-			"label": "VM Username",
-			"toolTip": "Admin username for the virtual machines.",
-			"osPlatform": "Windows"
-		}, {
-			"name": "adminPassword",
-			"type": "Microsoft.Compute.CredentialsCombo",
-			"label": {
-				"password": "VM Password",
-				"confirmPassword": "Confirm password"
-			},
-			"toolTip": {
-				"password": "Admin password for the virtual machines. The value must be between 12 and 123 characters long."
-			},
-			"osPlatform": "Windows"
-		}],
-		"steps": [{
-			"name": "vmDetails",
-			"label": "VM Details",
-			"subLabel": {
-				"preValidation": "Configure the VM details",
-				"postValidation": "Done"
-			},
-			"bladeTitle": "VM Details",
-			"elements": [{
-					"name": "os",
-					"type": "Microsoft.Common.DropDown",
-					"label": "Select the OS for the VM",
-					"defaultValue": "Windows Server 2012 R2 Datacenter",
-					"toolTip": "OS platform of the VM.",
-					"constraints": {
-						"allowedValues": [{
-							"label": "Windows Server 2012 R2 Datacenter",
-							"value": "windows"
-						}, {
-							"label": "Ubuntu Linux 16.04",
-							"value": "linux"
-						}]
+	"handler" : "Microsoft.Compute.MultiVm",
+	"version" : "0.0.1-preview",
+	"parameters" : {
+		"basics" : [{
+				"name" : "adminUsername",
+				"type" : "Microsoft.Compute.UserNameTextBox",
+				"label" : "VM Username",
+				"toolTip" : "Admin username for the virtual machines.",
+				"osPlatform" : "Windows"
+			}, {
+				"name" : "adminPassword",
+				"type" : "Microsoft.Compute.CredentialsCombo",
+				"label" : {
+					"password" : "VM Password",
+					"confirmPassword" : "Confirm password"
+				},
+				"toolTip" : {
+					"password" : "Admin password for the virtual machines. The value must be between 12 and 123 characters long."
+				},
+				"osPlatform" : "Windows"
+			}
+		],
+		"steps" : [{
+				"name" : "vmDetails",
+				"label" : "VM Details",
+				"subLabel" : {
+					"preValidation" : "Configure the VM details",
+					"postValidation" : "Done"
+				},
+				"bladeTitle" : "VM Details",
+				"elements" : [{
+						"name" : "os",
+						"type" : "Microsoft.Common.DropDown",
+						"label" : "Select the OS for the VM",
+						"defaultValue" : "Windows Server 2012 R2 Datacenter",
+						"toolTip" : "OS platform of the VM.",
+						"constraints" : {
+							"allowedValues" : [{
+									"label" : "Windows Server 2012 R2 Datacenter",
+									"value" : "windows"
+								}, {
+									"label" : "Ubuntu Linux 16.04",
+									"value" : "linux"
+								}
+							]
+						}
+					}, {
+						"name" : "windowsVmSize",
+						"type" : "Microsoft.Compute.SizeSelector",
+						"label" : "Virtual machine size",
+						"toolTip" : "The size of the virtual machine.",
+						"recommendedSizes" : ["Standard_D12_v2"],
+						"constraints" : {
+							"allowedSizes" : ["Standard_D12", "Standard_D12_v2"],
+							"excludedSizes" : []
+						},
+						"osPlatform" : "Windows",
+						"count" : 1,
+						"visible" : "[equals(steps('vmDetails').os, 'windows')]"
+					}, {
+						"name" : "linuxVmSize",
+						"type" : "Microsoft.Compute.SizeSelector",
+						"label" : "Virtual machine size",
+						"toolTip" : "The size of the virtual machine.",
+						"recommendedSizes" : ["Standard_D12_v2"],
+						"constraints" : {
+							"allowedSizes" : ["Standard_D12", "Standard_D12_v2"],
+							"excludedSizes" : []
+						},
+						"osPlatform" : "Linux",
+						"count" : 1,
+						"visible" : "[equals(steps('vmDetails').os, 'linux')]"
 					}
-				},	{
-					"name": "windowsVmSize",
-					"type": "Microsoft.Compute.SizeSelector",
-					"label": "Virtual machine size",
-					"toolTip": "The size of the virtual machine.",
-					"recommendedSizes": ["Standard_D12_v2"],
-					"constraints": {
-						"allowedSizes": ["Standard_D12", "Standard_D12_v2"],
-						"excludedSizes": []
-					},
-					"osPlatform": "Windows",
-					"count": 1,
-					"visible": "[equals(steps('vmDetails').os, 'windows')]"
-				}, {
-					"name": "linuxVmSize",
-					"type": "Microsoft.Compute.SizeSelector",
-					"label": "Virtual machine size",
-					"toolTip": "The size of the virtual machine.",
-					"recommendedSizes": ["Standard_D12_v2"],
-					"constraints": {
-						"allowedSizes": ["Standard_D12", "Standard_D12_v2"],
-						"excludedSizes": []
-					},
-					"osPlatform": "Linux",
-					"count": 1,
-					"visible": "[equals(steps('vmDetails').os, 'linux')]"
-				}
-			]
-		}, {
-			"name": "cloudRegDetails",
-			"type": "Microsoft.Common.Selector",
-			"label": "Informatica Cloud Registration",
-			"subLabel": {
-				"preValidation": "Fill details for an Informatica Cloud account",
-				"postValidation": "Done"
-			},
-			"toolTip": "Fill details for an Informatica Cloud Account",
-			"bladeTitle": "Informatica Cloud Registration",
-			"bladeSubtitle": "Create an account on Informatica Cloud",
-			"elements": [{
-				"name": "cloudEmail",
-				"type": "Microsoft.Common.TextBox",
-				"label": "Email Address<br/><br/>Your Informatica Cloud username would be <b>emailUsername@azure.emailDomain</b>.<br/>For e.g. if your email is name@gmail.com, your Informatica Cloud username would be name@azure.gmail.com.<br/><br/>",
-				"constraints": {
-					"required": true
-				}
+				]
 			}, {
-				"name": "cloudPassword",
-				"type": "Microsoft.Common.PasswordBox",
-				"label": {
-					"password": "Informatica Cloud Password",
-					"confirmPassword": "Confirm password"
+				"name" : "cloudRegDetails",
+				"type" : "Microsoft.Common.Selector",
+				"label" : "Informatica Cloud Registration",
+				"subLabel" : {
+					"preValidation" : "Fill details for an Informatica Cloud account",
+					"postValidation" : "Done"
 				},
-				"toolTip": {
-					"password": "Password for your Informatica Cloud account. Password must be 6-15 characters long and can contain the special characters @*#"
-				},
-				"constraints": {
-					"required": true,
-					"regex": "^([a-zA-Z0-9@*#]{6,15})$",
-					"validationMessage": "Password must be 6-15 characters long and can contain the special characters @*#"
-				},
-				"options": {
-					"hideConfirmation": false
-				},
-				"visible": true
-			}, {
-				"name": "cloudConnector1",
-				"type": "Microsoft.Common.DropDown",
-				"label": "Connector #1",
-				"defaultValue": "Azure SQL DB",
-				"toolTip": "Primary connector for your data transformation.",
-				"constraints": {
-					"required": true,
-					"allowedValues": [{
-						"label": "Azure SQL DB",
-						"value": "0b0ad503-1c2c-4514-95ac-85a5adb71b3b"
+				"toolTip" : "Fill details for an Informatica Cloud Account",
+				"bladeTitle" : "Informatica Cloud Registration",
+				"bladeSubtitle" : "Create an account on Informatica Cloud",
+				"elements" : [{
+						"name" : "cloudEmail",
+						"type" : "Microsoft.Common.TextBox",
+						"label" : "Email Address",
+						"constraints" : {
+							"required" : true
+						}
 					}, {
-						"label": "Azure SQL DW",
-						"value": "554a67aa-7f07-42f8-bfad-c927cf4d7f28"
+						"name" : "cloudUsername",
+						"type" : "Microsoft.Common.OptionsGroup",
+						"label" : "Informatica Cloud username",
+						"defaultValue" : "[concat(steps('cloudRegDetails').cloudEmail, '.azure')]",
+						"toolTip" : "If your email is name@informatica.com, your Informatica Cloud username would be <b>name@informatica.com.azure</b>.",
+						"constraints" : {
+							"allowedValues" : [{
+									"label" : "[concat(steps('cloudRegDetails').cloudEmail, '.azure')]",
+									"value" : "[concat(steps('cloudRegDetails').cloudEmail, '.azure')]"
+								}
+							]
+						},
+						"visible" : true
 					}, {
-						"label": "Azure Blob Storage",
-						"value": "45d431c2-9474-40de-bcf1-409dc56faa3f"
+						"name" : "cloudPassword",
+						"type" : "Microsoft.Common.PasswordBox",
+						"label" : {
+							"password" : "Informatica Cloud Password",
+							"confirmPassword" : "Confirm password"
+						},
+						"toolTip" : {
+							"password" : "Password for your Informatica Cloud account. Password must be 6-15 characters long and can contain the special characters @*#"
+						},
+						"constraints" : {
+							"required" : true,
+							"regex" : "^([a-zA-Z0-9@*#]{6,15})$",
+							"validationMessage" : "Password must be 6-15 characters long and can contain the special characters @*#"
+						},
+						"options" : {
+							"hideConfirmation" : false
+						},
+						"visible" : true
 					}, {
-						"label": "Azure Data Lake Store",
-						"value": "92d6c3db-bfca-4b96-a492-e1b3dea2351e"
+						"name" : "cloudConnector1",
+						"type" : "Microsoft.Common.DropDown",
+						"label" : "Connector #1",
+						"defaultValue" : "Azure SQL DB",
+						"toolTip" : "Primary connector for your data transformation.",
+						"constraints" : {
+							"required" : true,
+							"allowedValues" : [{
+									"label" : "Azure SQL DB",
+									"value" : "0b0ad503-1c2c-4514-95ac-85a5adb71b3b"
+								}, {
+									"label" : "Azure SQL DW",
+									"value" : "554a67aa-7f07-42f8-bfad-c927cf4d7f28"
+								}, {
+									"label" : "Azure Blob Storage",
+									"value" : "45d431c2-9474-40de-bcf1-409dc56faa3f"
+								}, {
+									"label" : "Azure Data Lake Store",
+									"value" : "92d6c3db-bfca-4b96-a492-e1b3dea2351e"
+								}, {
+									"label" : "Azure Document DB",
+									"value" : "f443ee4a-88bf-4b57-a19a-5c79a6ff0633"
+								}
+							]
+						}
 					}, {
-						"label": "Azure Document DB",
-						"value": "f443ee4a-88bf-4b57-a19a-5c79a6ff0633"
-					}]
-				}
-			}, {
-				"name": "cloudConnector2",
-				"type": "Microsoft.Common.DropDown",
-				"label": "Connector #2",
-				"defaultValue": "Avature",
-				"toolTip": "Secondary connector for your data transformation.",
-				"constraints": {
-					"required": true,
-					"allowedValues": [{
-						"label": "Avature",
-						"value": "8136bc27-5c96-4012-998c-b9e3549f12b6"
-					}, {
-						"label": "BigMachines",
-						"value": "fe7462ed-ef80-4f7d-a783-51bca5782e57"
-					}, {
-						"label": "Box",
-						"value": "fc504191-bdda-4f2f-82db-f7d30473c750"
-					}, {
-						"label": "Concur",
-						"value": "c68397fd-b600-4896-b014-3aea8908f251"
-					}, {
-						"label": "Coupa",
-						"value": "7791b183-222c-4cc8-b5dc-cd1992bd8ede"
-					}, {
-						"label": "CVent",
-						"value": "758b1e11-0444-4c27-87bd-da79606caa6d"
-					}, {
-						"label": "Dropbox",
-						"value": "afd3b70d-d8e2-424b-94b9-7ba1f22d5af2"
-					}, {
-						"label": "Eloqua",
-						"value": "b45a89f6-e5b4-43b1-87c5-c02cb11151c0"
-					}, {
-						"label": "File",
-						"value": "fed2a26e-bb41-4d50-9d25-20a27e8c8781"
-					}, {
-						"label": "FileProcessor",
-						"value": "e1a84535-6101-4bf7-9702-5ae889cfc0b0"
-					}, {
-						"label": "GoogleAPI",
-						"value": "f386355c-51bb-43ca-ac5d-e7abd15a79d5"
-					}, {
-						"label": "Jira",
-						"value": "e1788807-ffaf-4cb0-848e-b09e36558b05"
-					}, {
-						"label": "JSON",
-						"value": "34686c55-4bd8-4733-9b19-d1d4b1b72784"
-					}, {
-						"label": "Marketo",
-						"value": "0ea71f00-949c-11e4-b4a9-0800200c9a66"
-					}, {
-						"label": "Microsoft Sharepoint 2010",
-						"value": "b631f215-1589-4fe7-bbac-eaee2080f29b"
-					}, {
-						"label": "Microsoft team foundation server",
-						"value": "6b5341c0-9992-4d00-8183-afc82b5ae4f0"
-					}, {
-						"label": "Odata",
-						"value": "b93e0491-8bb5-41a0-ba60-50cfb4102180"
-					}, {
-						"label": "OpenAir",
-						"value": "6fbec006-291a-4a3a-8cba-2d39c8039990"
-					}, {
-						"label": "Quickbooks",
-						"value": "e45e263e-f99c-41ff-a10f-9e06c5963c7f"
-					}, {
-						"label": "REST",
-						"value": "cf03505e-01fc-4c35-914d-a6c18cd1f286"
-					}, {
-						"label": "Xactly",
-						"value": "5b7e0388-fad8-433e-8b0b-2c9d947c9b29"
-					}, {
-						"label": "XML source",
-						"value": "b4d9c90e-8aa7-4d0c-8ed1-d0ffedb04e5c"
-					}, {
-						"label": "XML Target",
-						"value": "060a02a7-94e4-402c-bb24-d08519d82c44"
-					}, {
-						"label": "Zoura",
-						"value": "0302f0c6-c852-438b-a3e5-51ab11222d1f"
-					}]
-				}
-			}]
-		}],
-		"outputs": {
-			"location": "[location()]",
-			"adminUsername": "[basics('adminUsername')]",
-			"adminPassword": "[basics('adminPassword')]",
-			"os": "[steps('vmDetails').os]",
-			"vmSize": "[coalesce(steps('vmDetails').windowsVmSize, steps('vmDetails').linuxVmSize)]",
-			"cloudEmail": "[steps('cloudRegDetails').cloudEmail]",
-			"cloudPassword": "[steps('cloudRegDetails').cloudPassword]",
-			"cloudConnector1": "[steps('cloudRegDetails').cloudConnector1]",
-			"cloudConnector2": "[steps('cloudRegDetails').cloudConnector2]"
+						"name" : "cloudConnector2",
+						"type" : "Microsoft.Common.DropDown",
+						"label" : "Connector #2",
+						"defaultValue" : "Avature",
+						"toolTip" : "Secondary connector for your data transformation.",
+						"constraints" : {
+							"required" : true,
+							"allowedValues" : [{
+									"label" : "Avature",
+									"value" : "8136bc27-5c96-4012-998c-b9e3549f12b6"
+								}, {
+									"label" : "BigMachines",
+									"value" : "fe7462ed-ef80-4f7d-a783-51bca5782e57"
+								}, {
+									"label" : "Box",
+									"value" : "fc504191-bdda-4f2f-82db-f7d30473c750"
+								}, {
+									"label" : "Concur",
+									"value" : "c68397fd-b600-4896-b014-3aea8908f251"
+								}, {
+									"label" : "Coupa",
+									"value" : "7791b183-222c-4cc8-b5dc-cd1992bd8ede"
+								}, {
+									"label" : "CVent",
+									"value" : "758b1e11-0444-4c27-87bd-da79606caa6d"
+								}, {
+									"label" : "Dropbox",
+									"value" : "afd3b70d-d8e2-424b-94b9-7ba1f22d5af2"
+								}, {
+									"label" : "Eloqua",
+									"value" : "b45a89f6-e5b4-43b1-87c5-c02cb11151c0"
+								}, {
+									"label" : "File",
+									"value" : "fed2a26e-bb41-4d50-9d25-20a27e8c8781"
+								}, {
+									"label" : "FileProcessor",
+									"value" : "e1a84535-6101-4bf7-9702-5ae889cfc0b0"
+								}, {
+									"label" : "GoogleAPI",
+									"value" : "f386355c-51bb-43ca-ac5d-e7abd15a79d5"
+								}, {
+									"label" : "Jira",
+									"value" : "e1788807-ffaf-4cb0-848e-b09e36558b05"
+								}, {
+									"label" : "JSON",
+									"value" : "34686c55-4bd8-4733-9b19-d1d4b1b72784"
+								}, {
+									"label" : "Marketo",
+									"value" : "0ea71f00-949c-11e4-b4a9-0800200c9a66"
+								}, {
+									"label" : "Microsoft Sharepoint 2010",
+									"value" : "b631f215-1589-4fe7-bbac-eaee2080f29b"
+								}, {
+									"label" : "Microsoft team foundation server",
+									"value" : "6b5341c0-9992-4d00-8183-afc82b5ae4f0"
+								}, {
+									"label" : "Odata",
+									"value" : "b93e0491-8bb5-41a0-ba60-50cfb4102180"
+								}, {
+									"label" : "OpenAir",
+									"value" : "6fbec006-291a-4a3a-8cba-2d39c8039990"
+								}, {
+									"label" : "Quickbooks",
+									"value" : "e45e263e-f99c-41ff-a10f-9e06c5963c7f"
+								}, {
+									"label" : "REST",
+									"value" : "cf03505e-01fc-4c35-914d-a6c18cd1f286"
+								}, {
+									"label" : "Xactly",
+									"value" : "5b7e0388-fad8-433e-8b0b-2c9d947c9b29"
+								}, {
+									"label" : "XML source",
+									"value" : "b4d9c90e-8aa7-4d0c-8ed1-d0ffedb04e5c"
+								}, {
+									"label" : "XML Target",
+									"value" : "060a02a7-94e4-402c-bb24-d08519d82c44"
+								}, {
+									"label" : "Zoura",
+									"value" : "0302f0c6-c852-438b-a3e5-51ab11222d1f"
+								}
+							]
+						}
+					}
+				]
+			}
+		],
+		"outputs" : {
+			"location" : "[location()]",
+			"adminUsername" : "[basics('adminUsername')]",
+			"adminPassword" : "[basics('adminPassword')]",
+			"os" : "[steps('vmDetails').os]",
+			"vmSize" : "[coalesce(steps('vmDetails').windowsVmSize, steps('vmDetails').linuxVmSize)]",
+			"cloudEmail" : "[steps('cloudRegDetails').cloudEmail]",
+			"cloudUsername" : "[steps('cloudRegDetails').cloudUsername]",
+			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
+			"cloudConnector1" : "[steps('cloudRegDetails').cloudConnector1]",
+			"cloudConnector2" : "[steps('cloudRegDetails').cloudConnector2]"
 		}
 	}
 }
