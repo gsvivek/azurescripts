@@ -56,7 +56,7 @@
 					  "uri": "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-payg/win2012r2-osDisk.fa619ee2-cb71-428e-9e9c-26163b3a6ab3.vhd"
 					},
 					"vhd": {
-					  "uri": "[concat('https://',parameters('vhdStorageAccountName'),'.blob.core.windows.net/vhds/ics-payg/','osdisk.vhd')]"
+					  "uri": "[concat('https://',parameters('vhdStorageAccountName'),'.blob.core.windows.net/vhds/icspayg/','osdisk.vhd')]"
 					}
 				}
 			},
