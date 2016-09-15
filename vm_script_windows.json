@@ -56,7 +56,7 @@
 					  "uri": "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-payg/win2012r2-osDisk.fa619ee2-cb71-428e-9e9c-26163b3a6ab3.vhd"
 					},
 					"vhd": {
-					  "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', parameters('vhdStorageAccountName')), variables('apiVersion')).primaryEndpoints.blob, 'vhds/',parameters('vmName'), uniquestring(resourceGroup().id), 'osDisk.vhd')]"
+					  "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', parameters('vhdStorageAccountName')), '2015-06-15').primaryEndpoints.blob, 'vhds/',parameters('vmName'), uniquestring(resourceGroup().id), 'osDisk.vhd')]"
 					}
 				}
 			},
