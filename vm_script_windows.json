@@ -30,10 +30,10 @@
 			"type": "string"
 		}
     },
-    "variables": {"apiVersion" : "2015-05-01"},
+    "variables": {},
     "resources": [
     {
-		"apiVersion": "[variables('apiVersion')]",
+		"apiVersion": "2015-05-01-preview",
 		"type": "Microsoft.Compute/virtualMachines",
 		"name": "[parameters('vmName')]",
 		"location": "[resourceGroup().location]",
@@ -70,7 +70,7 @@
     }, {
 		"type": "Microsoft.Compute/virtualMachines/extensions",
 		"name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
-		"apiVersion": "[variables('apiVersion')]",
+		"apiVersion": "2015-05-01-preview",
 		"location": "[resourceGroup().location]",
 		"dependsOn" : [
 			"[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
