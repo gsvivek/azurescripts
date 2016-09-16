@@ -62,34 +62,33 @@
 		},
 		"artifactsBaseUrl" : {
 			"type" : "string",
+			"defaultValue": "https://raw.githubusercontent.com/gsvivek/azurescripts/master",
 			"metadata" : {
 				"artifactsBaseUrl" : "Base URL of the Publisher Template gallery package"
 			}
 		}
 	},
 	"variables" : {
-		"apiVersion" : "2015-05-01-preview",
 		"scriptsUri" : "[concat(parameters('artifactsBaseUrl'),'/')]",
-		"storageAccountName" : "[concat(uniquestring(resourceGroup().id), 'icspayg')]",
+		"storageAccountName" : "infacloudazure2351",
 		"storageAccountType": "Standard_LRS",
 		"nicName" : "IcsPaygNic",
 		"addressPrefix" : "10.0.0.0/16",
 		"subnetName" : "Subnet",
 		"subnetPrefix" : "10.0.0.0/24",
-		"vmName" : "[concat('ics-payg-',parameters('os'))]",
+		"vmName" : "[concat('icspayg',parameters('os'))]",
 		"virtualNetworkName" : "IcsPaygVNET",
 		"publicIPAddressName": "icspaygIP",
 		"IPAddressType": "Dynamic",
 		"dnsNameForPublicIP" : "icspayg",
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
-		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '.json')]",
-		"vmCustomScriptSetupURL" : "[concat(variables('scriptsUri'), 'vm_custom_script_', parameters('os'), '.json')]"
+		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'^|',parameters('cloudConnector2'))]",
+		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '.json')]"
 	},
 	"resources" : [
 		{
-			"apiVersion": "[variables('apiVersion')]",
+			"apiVersion": "2015-06-15",
 			"type": "Microsoft.Storage/storageAccounts",
 			"name": "[variables('storageAccountName')]",
 			"location": "[resourceGroup().location]",
@@ -97,7 +96,7 @@
 				"accountType": "[variables('storageAccountType')]"
 			}
 		}, {
-			"apiVersion": "[variables('apiVersion')]",
+			"apiVersion": "2015-05-01-preview",
 			"type": "Microsoft.Network/publicIPAddresses",
 			"name": "[variables('publicIPAddressName')]",
 			"location": "[resourceGroup().location]",
@@ -108,7 +107,7 @@
 				}
 			}
 		}, {
-			"apiVersion" : "[variables('apiVersion')]",
+			"apiVersion" : "2015-05-01-preview",
 			"type" : "Microsoft.Network/virtualNetworks",
 			"name" : "[variables('virtualNetworkName')]",
 			"location" : "[resourceGroup().location]",
@@ -127,7 +126,7 @@
 				]
 			}
 		}, {
-			"apiVersion" : "[variables('apiVersion')]",
+			"apiVersion" : "2015-05-01-preview",
 			"type" : "Microsoft.Network/networkInterfaces",
 			"name" : "[variables('nicName')]",
 			"location" : "[resourceGroup().location]",
@@ -151,7 +150,7 @@
 				]
 			}
 		}, {
-			"apiVersion" : "[variables('apiVersion')]",
+			"apiVersion" : "2015-01-01",
 			"type" : "Microsoft.Resources/deployments",
 			"name" : "[concat(variables('vmName'),'-vm')]",
 			"dependsOn" : [
@@ -161,7 +160,7 @@
 			"properties" : {
 				"mode" : "Incremental",
 				"templateLink" : {
-					"uri" : "variables['vmSetupURL']",
+					"uri" : "[variables('vmSetupURL')]",
 					"contentVersion" : "1.0.0.0"
 				},
 				"parameters" : {
@@ -182,23 +181,7 @@
 					},
 					"vhdStorageAccountName" : {
 						"value" : "[variables('storageAccountName')]"
-					}
-				}
-			}
-		}, {
-			"apiVersion" : "[variables('apiVersion')]",
-			"type" : "Microsoft.Resources/deployments",
-			"name" : "CustomScript",
-			"dependsOn" : [
-				"[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-			],
-			"properties" : {
-				"mode" : "Incremental",
-				"templateLink" : {
-					"uri" : "variables['vmCustomScriptSetupURL']",
-					"contentVersion" : "1.0.0.0"
-				},
-				"parameters" : {
+					},
 					"cloudEmail" : {
 						"value" : "[parameters('cloudEmail')]"
 					},
@@ -207,6 +190,9 @@
 					},
 					"connectorUUIDList" : {
 						"value" : "[variables('connectorUUIDList')]"
+					},
+					"scriptsUri" : {
+						"value" : "[variables('scriptsUri')]"
 					}
 				}
 			}
