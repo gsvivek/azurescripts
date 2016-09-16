@@ -88,7 +88,6 @@
 						"name" : "cloudEmail",
 						"type" : "Microsoft.Common.TextBox",
 						"label" : "Email Address",
-						"defaultValue" : "email@informatica.com",
 						"toolTip" : "Primary email address.",
 						"constraints" : {
 							"required" : true
@@ -106,7 +105,7 @@
 								}
 							]
 						},
-						"visible" : true
+						"visible" : "[not(empty(steps('cloudRegDetails').cloudEmail))]"
 					}, {
 						"name" : "cloudPassword",
 						"type" : "Microsoft.Common.PasswordBox",
