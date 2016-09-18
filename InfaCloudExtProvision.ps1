@@ -4,8 +4,8 @@ $result = & "C:\Program Files\Informatica Cloud Secure Agent\jre\bin\java.exe" -
 $status = $result.response.status
 if($status.CompareTo("success")) {
 Remove-Item "C:\Program Files\Informatica Cloud Secure Agent\InfaCloudExtProvision.jar"
-& "C:\Program Files\Informatica Cloud Secure Agent\main\agentcore\consoleAgentManager.bat" configure "$cloudUsername" "$cloudPassword"
-& "C:\Program Files\Informatica Cloud Secure Agent\agent_start.bat"
+cmd.exe /C "C:\Program Files\Informatica Cloud Secure Agent\main\agentcore\consoleAgentManager.bat configure '$cloudUsername' '$cloudPassword'"
+cmd.exe /C "C:\Program Files\Informatica Cloud Secure Agent\agent_start.bat"
 }
 else {
 Remove-Item "C:\Program Files\Informatica Cloud Secure Agent\InfaCloudExtProvision.jar"
