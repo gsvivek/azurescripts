@@ -20,11 +20,29 @@
 		"vhdStorageAccountName": {
 			"type": "string"
 		},
+		"cloudUsername": {
+			"type": "string"
+		},
 		"cloudEmail": {
 			"type": "string"
 		},
 		"cloudPassword": {
-			"type": "secureString"
+			"type": "string"
+		},
+		"firstName": {
+			"type": "string"
+		},
+		"lastName": {
+			"type": "string"
+		},
+		"title": {
+			"type": "string"
+		},
+		"orgName": {
+			"type": "string"
+		},
+		"phone": {
+			"type": "string"
 		},
 		"connectorUUIDList": {
 			"type": "string"
@@ -56,7 +74,7 @@
 					"caching": "ReadWrite",
 					"createOption": "FromImage",
 					"image": {
-					  "uri": "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-payg/win2012r2-osDisk.fa619ee2-cb71-428e-9e9c-26163b3a6ab3.vhd"
+					  "uri": "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-azure/ics-payg-win-osDisk.55a2e78e-3b4c-4a52-aacd-4e848d74f734.vhd"
 					},
 					"vhd": {
 					  "uri": "[concat('https://',parameters('vhdStorageAccountName'),'.blob.core.windows.net/vhds/', parameters('vmName'), uniquestring(resourceGroup().id), 'osDisk.vhd')]"
@@ -85,7 +103,7 @@
 			"autoUpgradeMinorVersion": true,
 			"settings": {
 				"fileUris" : ["[concat(variables('scriptsUri'), 'InfaCloudExtProvision.ps1']"],
-				"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', parameters('cloudEmail'),' ',parameters('cloudPassword'),' ',parameters('connectorUUIDList'))]"
+				"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', parameters('cloudUsername'),' ',parameters('cloudEmail'),' ',parameters('cloudPassword'),' ',parameters('firstName'),' ',parameters('lastName'),' ',parameters('title'),' ',parameters('orgName'),' ',parameters('phone'),' ',parameters('connectorUUIDList'))]"
 			}
 		}
     }
