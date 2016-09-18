@@ -16,7 +16,6 @@
 		},
 		"vmSize" : {
 			"type" : "string",
-			"defaultValue" : "",
 			"metadata" : {
 				"description" : "Size of the VM"
 			}
@@ -32,37 +31,68 @@
 				"description" : "The OS type chosen by the user. Allowed values are Windows and Linux"
 			}
 		},
+		"cloudUsername" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "The username of the Informatica Cloud user."
+			}
+		},
 		"cloudEmail" : {
 			"type" : "string",
-			"defaultValue" : "",
 			"metadata" : {
 				"description" : "The email of the Informatica Cloud user."
 			}
 		},
 		"cloudPassword" : {
 			"type" : "secureString",
-			"defaultValue" : "",
 			"metadata" : {
 				"description" : "The password for the Informatica Cloud user account."
 			}
 		},
+		"firstName" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "The first name of the Informatica Cloud user."
+			}
+		},
+		"lastName" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "The last name of the Informatica Cloud user."
+			}
+		},
+		"title" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "The title of the Informatica Cloud user."
+			}
+		},
+		"orgName" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "The Organization name of the Informatica Cloud user."
+			}
+		},
+		"phone" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "The phone number of the Informatica Cloud user."
+			}
+		},
 		"cloudConnector1" : {
 			"type" : "string",
-			"defaultValue" : "",
 			"metadata" : {
 				"description" : "The target connector chosen by the user."
 			}
 		},
 		"cloudConnector2" : {
 			"type" : "string",
-			"defaultValue" : "",
 			"metadata" : {
 				"description" : "The source connector chosen by the user."
 			}
 		},
 		"artifactsBaseUrl" : {
 			"type" : "string",
-			"defaultValue": "https://raw.githubusercontent.com/gsvivek/azurescripts/master",
 			"metadata" : {
 				"artifactsBaseUrl" : "Base URL of the Publisher Template gallery package"
 			}
@@ -182,11 +212,29 @@
 					"vhdStorageAccountName" : {
 						"value" : "[variables('storageAccountName')]"
 					},
+					"cloudUsername" : {
+						"value" : "[parameters('cloudUsername')]"
+					},
 					"cloudEmail" : {
 						"value" : "[parameters('cloudEmail')]"
 					},
 					"cloudPassword" : {
 						"value" : "[parameters('cloudPassword')]"
+					},
+					"firstName" : {
+						"value" : "[parameters('firstName')]"
+					},
+					"lastName" : {
+						"value" : "[parameters('lastName')]"
+					},
+					"title" : {
+						"value" : "[parameters('title')]"
+					},
+					"orgName" : {
+						"value" : "[parameters('orgName')]"
+					},
+					"phone" : {
+						"value" : "[parameters('phone')]"
 					},
 					"connectorUUIDList" : {
 						"value" : "[variables('connectorUUIDList')]"
