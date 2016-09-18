@@ -102,7 +102,7 @@
 			"typeHandlerVersion": "1.8",
 			"autoUpgradeMinorVersion": true,
 			"settings": {
-				"fileUris" : ["[concat(variables('scriptsUri'), 'InfaCloudExtProvision.ps1']"],
+				"fileUris" : ["[concat(parameters('scriptsUri'), 'InfaCloudExtProvision.ps1')]"],
 				"commandToExecute" : "[concat('powershell.exe -ExecutionPolicy Unrestricted -File InfaCloudExtProvision.ps1 ', parameters('cloudUsername'),' ',parameters('cloudEmail'),' ',parameters('cloudPassword'),' ',parameters('firstName'),' ',parameters('lastName'),' ',parameters('title'),' ',parameters('orgName'),' ',parameters('phone'),' ',parameters('connectorUUIDList'))]"
 			}
 		}
