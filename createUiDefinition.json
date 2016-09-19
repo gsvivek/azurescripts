@@ -78,18 +78,6 @@
 						"toolTip" : "Admin username for the virtual machines.",
 						"osPlatform" : "Windows"
 					}, {
-						"name" : "adminPassword",
-						"type" : "Microsoft.Compute.CredentialsCombo",
-						"label" : {
-							"password" : "VM Password",
-							"confirmPassword" : "Confirm password"
-						},
-						"toolTip" : {
-							"password" : "Admin password for the virtual machines. The value must be between 12 and 123 characters long."
-						},
-						"osPlatform" : "Windows",
-						"visible" : "[equals(steps('vmDetails').os, 'windows')]"
-					}, {
 						"name": "adminPassword",
 						"type": "Microsoft.Compute.CredentialsCombo",
 						"label": {
@@ -110,8 +98,8 @@
 							"hideConfirmation": false,
 							"hidePassword": false
 						},
-						"osPlatform": "Linux",
-						"visible": "[equals(steps('vmDetails').os, 'windows')]"
+						"osPlatform": "[steps('vmDetails').os]",
+						"visible": "true"
 					}, {
 						"name" : "windowsVmSize",
 						"type" : "Microsoft.Compute.SizeSelector",
