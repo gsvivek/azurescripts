@@ -78,7 +78,7 @@
 						"toolTip" : "Admin username for the virtual machines.",
 						"osPlatform" : "Windows"
 					}, {
-						"name": "adminPassword",
+						"name": "adminPasswordWin",
 						"type": "Microsoft.Compute.CredentialsCombo",
 						"label": {
 							"password": "Password",
@@ -96,7 +96,7 @@
 						"osPlatform": "Windows",
 						"visible": "[equals(steps('vmDetails').os, 'windows')]"
 					}, {
-						"name": "adminPassword",
+						"name": "adminPasswordLin",
 						"type": "Microsoft.Compute.CredentialsCombo",
 						"label": {
 							"authenticationType": "Authentication type",
