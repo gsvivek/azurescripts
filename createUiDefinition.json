@@ -81,6 +81,24 @@
 						"name": "adminPassword",
 						"type": "Microsoft.Compute.CredentialsCombo",
 						"label": {
+							"password": "Password",
+							"confirmPassword": "Confirm password"
+						},
+						"toolTip": {
+							"password": ""
+						},
+						"constraints": {
+							"required": true
+						},
+						"options": {
+							"hideConfirmation": false
+						},
+						"osPlatform": "Windows",
+						"visible": "[equals(steps('vmDetails').os, 'windows')]"
+					}, {
+						"name": "adminPassword",
+						"type": "Microsoft.Compute.CredentialsCombo",
+						"label": {
 							"authenticationType": "Authentication type",
 							"password": "Password",
 							"confirmPassword": "Confirm password",
@@ -98,8 +116,8 @@
 							"hideConfirmation": false,
 							"hidePassword": false
 						},
-						"osPlatform": "[steps('vmDetails').os]",
-						"visible": "true"
+						"osPlatform": "linux",
+						"visible": "[equals(steps('vmDetails').os, 'linux')]"
 					}, {
 						"name" : "windowsVmSize",
 						"type" : "Microsoft.Compute.SizeSelector",
@@ -295,7 +313,7 @@
 			"orgName" : "[basics('orgName')]",
 			"os" : "[steps('vmDetails').os]",
 			"adminUsername" : "[steps('vmDetails').adminUsername]",
-			"authenticationType" : "[steps('vmDetails').authenticationType]",
+			"authType" : "[steps('vmDetails').authenticationType]",
 			"adminPassword" : "[steps('vmDetails').adminPassword]",
 			"sshPublicKey" : "[steps('vmDetails').sshPublicKey]",
 			"vmSize" : "[coalesce(steps('vmDetails').windowsVmSize, steps('vmDetails').linuxVmSize)]",
