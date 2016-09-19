@@ -3,31 +3,49 @@
 	"version" : "0.0.1-preview",
 	"parameters" : {
 		"basics" : [{
-				"name" : "cloudEmail",
-				"type" : "Microsoft.Common.TextBox",
-				"label" : "Email Address",
-				"toolTip" : "Primary email address.",
-				"constraints" : {
-					"required" : true
-				}
-			},	{
-				"name" : "adminUsername",
-				"type" : "Microsoft.Compute.UserNameTextBox",
-				"label" : "VM Username",
-				"toolTip" : "Admin username for the virtual machines.",
-				"osPlatform" : "Windows"
-			}, {
-				"name" : "adminPassword",
-				"type" : "Microsoft.Compute.CredentialsCombo",
-				"label" : {
-					"password" : "VM Password",
-					"confirmPassword" : "Confirm password"
-				},
-				"toolTip" : {
-					"password" : "Admin password for the virtual machines. The value must be between 12 and 123 characters long."
-				},
-				"osPlatform" : "Windows"
-			}
+						"name" : "firstName",
+						"type" : "Microsoft.Common.TextBox",
+						"label" : "First Name",
+						"constraints" : {
+							"required" : true
+						}
+					}, {
+						"name" : "lastName",
+						"type" : "Microsoft.Common.TextBox",
+						"label" : "Last Name",
+						"constraints" : {
+							"required" : true
+						}
+					}, {
+						"name" : "cloudEmail",
+						"type" : "Microsoft.Common.TextBox",
+						"label" : "Email Address",
+						"toolTip" : "Primary email address.",
+						"constraints" : {
+							"required" : true
+						}
+					}, {
+						"name" : "phone",
+						"type" : "Microsoft.Common.TextBox",
+						"label" : "Phone Number",
+						"constraints" : {
+							"required" : true
+						}
+					}, {
+						"name" : "title",
+						"type" : "Microsoft.Common.TextBox",
+						"label" : "Title",
+						"constraints" : {
+							"required" : true
+						}
+					}, {
+						"name" : "orgName",
+						"type" : "Microsoft.Common.TextBox",
+						"label" : "Organization Name",
+						"constraints" : {
+							"required" : true
+						}
+					}
 		],
 		"steps" : [{
 				"name" : "vmDetails",
@@ -53,6 +71,47 @@
 								}
 							]
 						}
+					}, {
+						"name" : "adminUsername",
+						"type" : "Microsoft.Compute.UserNameTextBox",
+						"label" : "VM Username",
+						"toolTip" : "Admin username for the virtual machines.",
+						"osPlatform" : "Windows"
+					}, {
+						"name" : "adminPassword",
+						"type" : "Microsoft.Compute.CredentialsCombo",
+						"label" : {
+							"password" : "VM Password",
+							"confirmPassword" : "Confirm password"
+						},
+						"toolTip" : {
+							"password" : "Admin password for the virtual machines. The value must be between 12 and 123 characters long."
+						},
+						"osPlatform" : "Windows",
+						"visible" : "[equals(steps('vmDetails').os, 'windows')]"
+					}, {
+						"name": "adminPassword",
+						"type": "Microsoft.Compute.CredentialsCombo",
+						"label": {
+							"authenticationType": "Authentication type",
+							"password": "Password",
+							"confirmPassword": "Confirm password",
+							"sshPublicKey": "SSH public key"
+						},
+						"toolTip": {
+							"authenticationType": "",
+							"password": "",
+							"sshPublicKey": ""
+						},
+						"constraints": {
+							"required": true
+						},
+						"options": {
+							"hideConfirmation": false,
+							"hidePassword": false
+						},
+						"osPlatform": "Linux",
+						"visible": "[equals(steps('vmDetails').os, 'windows')]"
 					}, {
 						"name" : "windowsVmSize",
 						"type" : "Microsoft.Compute.SizeSelector",
@@ -240,10 +299,17 @@
 		],
 		"outputs" : {
 			"location" : "[location()]",
-			"adminUsername" : "[basics('adminUsername')]",
-			"adminPassword" : "[basics('adminPassword')]",
+			"firstName" : "[basics('firstName')]",
+			"lastName" : "[basics('lastName')]",
 			"cloudEmail" : "[basics('cloudEmail')]",
+			"phone" : "[basics('phone')]",
+			"title" : "[basics('title')]",
+			"orgName" : "[basics('orgName')]",
 			"os" : "[steps('vmDetails').os]",
+			"adminUsername" : "[steps('vmDetails').adminUsername]",
+			"authenticationType" : "[steps('vmDetails').authenticationType]",
+			"adminPassword" : "[steps('vmDetails').adminPassword]",
+			"sshPublicKey" : "[steps('vmDetails').sshPublicKey]",
 			"vmSize" : "[coalesce(steps('vmDetails').windowsVmSize, steps('vmDetails').linuxVmSize)]",
 			"cloudUsername" : "[steps('cloudRegDetails').cloudUsername]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
