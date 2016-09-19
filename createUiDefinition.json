@@ -314,7 +314,7 @@
 			"os" : "[steps('vmDetails').os]",
 			"adminUsername" : "[steps('vmDetails').adminUsername]",
 			"authType" : "[steps('vmDetails').authenticationType]",
-			"adminPassword" : "[steps('vmDetails').adminPassword]",
+			"adminPassword" : "[coalesce(steps('vmDetails').adminPasswordWin, steps('vmDetails').adminPasswordLin)]",
 			"sshPublicKey" : "[steps('vmDetails').sshPublicKey]",
 			"vmSize" : "[coalesce(steps('vmDetails').windowsVmSize, steps('vmDetails').linuxVmSize)]",
 			"cloudUsername" : "[steps('cloudRegDetails').cloudUsername]",
