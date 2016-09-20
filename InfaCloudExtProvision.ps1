@@ -4,14 +4,14 @@ $result = & "C:\Program Files\Informatica Cloud Secure Agent\jre\bin\java.exe" -
 $status = $result.response.status
 Write-Host "API Status: " $status
 Write-Host "API Msg: " $result.response.msg
-if($status.CompareTo("success")) {
+if($status.CompareTo("success") -eq 0) {
 Write-Host "Inside success"
-Remove-Item "C:\Program Files\Informatica Cloud Secure Agent\InfaCloudExtProvision.jar"
+Remove-Item """C:\Program Files\Informatica Cloud Secure Agent\InfaCloudExtProvision.jar"""
 cmd.exe "/C ""C:\Program Files\Informatica Cloud Secure Agent\main\agentcore\consoleAgentManager.bat"" configure $cloudUsername $cloudPassword"
 cmd.exe "/C ""C:\Program Files\Informatica Cloud Secure Agent\agent_start.bat\"""
 }
 else {
 Write-Host "Inside failure"
-Remove-Item "C:\Program Files\Informatica Cloud Secure Agent\InfaCloudExtProvision.jar"
+Remove-Item """C:\Program Files\Informatica Cloud Secure Agent\InfaCloudExtProvision.jar"""
 Stop-Computer -force
 }
