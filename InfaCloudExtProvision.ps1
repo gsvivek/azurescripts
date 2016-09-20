@@ -6,8 +6,8 @@ Write-Host "API Status: " | $status
 Write-Host "API Msg: " | $result.response.msg
 if($status.CompareTo("success")) {
 Remove-Item "C:\Program Files\Informatica Cloud Secure Agent\InfaCloudExtProvision.jar"
-cmd.exe /C "C:\Program Files\Informatica Cloud Secure Agent\main\agentcore\consoleAgentManager.bat configure '$cloudUsername' '$cloudPassword'"
-cmd.exe /C "C:\Program Files\Informatica Cloud Secure Agent\agent_start.bat"
+cmd.exe "/C 'C:\Program Files\Informatica Cloud Secure Agent\main\agentcore\consoleAgentManager.bat' configure '$cloudUsername' '$cloudPassword'"
+cmd.exe "/C 'C:\Program Files\Informatica Cloud Secure Agent\agent_start.bat'"
 }
 else {
 Remove-Item "C:\Program Files\Informatica Cloud Secure Agent\InfaCloudExtProvision.jar"
