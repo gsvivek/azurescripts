@@ -8,10 +8,23 @@
 				"description" : "Admin username of the VM"
 			}
 		},
+		"authType" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "Type of authentication for the VM - Password for Windows, Password or SSH key for Linux."
+			}
+		},
 		"adminPassword" : {
 			"type" : "securestring",
 			"metadata" : {
 				"description" : "Admin password of the VM"
+			}
+		},
+		"sshPublicKey" : {
+			"type" : "string",
+			"defaultValue" : "",
+			"metadata" : {
+				"description" : "SSH rsa public key file as a string."
 			}
 		},
 		"vmSize" : {
@@ -110,11 +123,11 @@
 		"virtualNetworkName" : "IcsPaygVNET",
 		"publicIPAddressName": "icspaygIP",
 		"IPAddressType": "Dynamic",
-		"dnsNameForPublicIP" : "icspayg",
+		"dnsNameForPublicIP" : "[concat('icspayg', uniqueString(subscription().subscriptionId))]",
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'^|',parameters('cloudConnector2'))]",
-		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '.json')]"
+		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
+		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '_', parameters('authType'), '.json')]"
 	},
 	"resources" : [
 		{
@@ -202,6 +215,9 @@
 					},
 					"adminPassword" : {
 						"value" : "[parameters('adminPassword')]"
+					},
+					"sshPublicKey" : {
+						"value" : "[parameters('sshPublicKey')]"
 					},
 					"vmSize" : {
 						"value" : "[parameters('vmSize')]"
