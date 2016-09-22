@@ -3,49 +3,49 @@
 	"version" : "0.0.1-preview",
 	"parameters" : {
 		"basics" : [{
-						"name" : "firstName",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "First Name",
-						"constraints" : {
-							"required" : true
-						}
-					}, {
-						"name" : "lastName",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "Last Name",
-						"constraints" : {
-							"required" : true
-						}
-					}, {
-						"name" : "cloudEmail",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "Email Address",
-						"toolTip" : "Primary email address.",
-						"constraints" : {
-							"required" : true
-						}
-					}, {
-						"name" : "phone",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "Phone Number",
-						"constraints" : {
-							"required" : true
-						}
-					}, {
-						"name" : "title",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "Title",
-						"constraints" : {
-							"required" : true
-						}
-					}, {
-						"name" : "orgName",
-						"type" : "Microsoft.Common.TextBox",
-						"label" : "Organization Name",
-						"constraints" : {
-							"required" : true
-						}
-					}
+				"name" : "firstName",
+				"type" : "Microsoft.Common.TextBox",
+				"label" : "First Name",
+				"constraints" : {
+					"required" : true
+				}
+			}, {
+				"name" : "lastName",
+				"type" : "Microsoft.Common.TextBox",
+				"label" : "Last Name",
+				"constraints" : {
+					"required" : true
+				}
+			}, {
+				"name" : "cloudEmail",
+				"type" : "Microsoft.Common.TextBox",
+				"label" : "Email Address",
+				"toolTip" : "Primary email address.",
+				"constraints" : {
+					"required" : true
+				}
+			}, {
+				"name" : "phone",
+				"type" : "Microsoft.Common.TextBox",
+				"label" : "Phone Number",
+				"constraints" : {
+					"required" : true
+				}
+			}, {
+				"name" : "title",
+				"type" : "Microsoft.Common.TextBox",
+				"label" : "Title",
+				"constraints" : {
+					"required" : true
+				}
+			}, {
+				"name" : "orgName",
+				"type" : "Microsoft.Common.TextBox",
+				"label" : "Organization Name",
+				"constraints" : {
+					"required" : true
+				}
+			}
 		],
 		"steps" : [{
 				"name" : "vmDetails",
@@ -78,46 +78,46 @@
 						"toolTip" : "Admin username for the virtual machines.",
 						"osPlatform" : "Windows"
 					}, {
-						"name": "adminPasswordWin",
-						"type": "Microsoft.Compute.CredentialsCombo",
-						"label": {
-							"password": "Password",
-							"confirmPassword": "Confirm password"
+						"name" : "adminPasswordWin",
+						"type" : "Microsoft.Compute.CredentialsCombo",
+						"label" : {
+							"password" : "Password",
+							"confirmPassword" : "Confirm password"
 						},
-						"toolTip": {
-							"password": ""
+						"toolTip" : {
+							"password" : ""
 						},
-						"constraints": {
-							"required": true
+						"constraints" : {
+							"required" : true
 						},
-						"options": {
-							"hideConfirmation": false
+						"options" : {
+							"hideConfirmation" : false
 						},
-						"osPlatform": "Windows",
-						"visible": "[equals(steps('vmDetails').os, 'windows')]"
+						"osPlatform" : "Windows",
+						"visible" : "[equals(steps('vmDetails').os, 'windows')]"
 					}, {
-						"name": "adminPasswordLin",
-						"type": "Microsoft.Compute.CredentialsCombo",
-						"label": {
-							"authenticationType": "Authentication type",
-							"password": "Password",
-							"confirmPassword": "Confirm password",
-							"sshPublicKey": "SSH public key"
+						"name" : "adminPasswordLin",
+						"type" : "Microsoft.Compute.CredentialsCombo",
+						"label" : {
+							"authenticationType" : "Authentication type",
+							"password" : "Password",
+							"confirmPassword" : "Confirm password",
+							"sshPublicKey" : "SSH public key"
 						},
-						"toolTip": {
-							"authenticationType": "",
-							"password": "",
-							"sshPublicKey": ""
+						"toolTip" : {
+							"authenticationType" : "",
+							"password" : "",
+							"sshPublicKey" : ""
 						},
-						"constraints": {
-							"required": true
+						"constraints" : {
+							"required" : true
 						},
-						"options": {
-							"hideConfirmation": false,
-							"hidePassword": false
+						"options" : {
+							"hideConfirmation" : false,
+							"hidePassword" : false
 						},
-						"osPlatform": "linux",
-						"visible": "[equals(steps('vmDetails').os, 'linux')]"
+						"osPlatform" : "linux",
+						"visible" : "[equals(steps('vmDetails').os, 'linux')]"
 					}, {
 						"name" : "windowsVmSize",
 						"type" : "Microsoft.Compute.SizeSelector",
@@ -225,77 +225,89 @@
 						"constraints" : {
 							"required" : true,
 							"allowedValues" : [{
-									"label" : "Avature",
-									"value" : "8136bc27-5c96-4012-998c-b9e3549f12b6"
+									"label" : "Amazon DynamoDB",
+									"value" : "45d431c2-9474-40de-bcf1-409dc56faa3f"
 								}, {
-									"label" : "BigMachines",
-									"value" : "fe7462ed-ef80-4f7d-a783-51bca5782e57"
+									"label" : "Amazon RedShift",
+									"value" : "0b0ad503-1c2c-4514-95ac-85a5adb71b3b"
+								}, {
+									"label" : "Amazon S3",
+									"value" : "554a67aa-7f07-42f8-bfad-c927cf4d7f28"
 								}, {
 									"label" : "Box",
-									"value" : "fc504191-bdda-4f2f-82db-f7d30473c750"
+									"value" : "ef75055a-3197-4e79-ba70-6dfd03f7c1ac"
 								}, {
 									"label" : "Concur",
 									"value" : "c68397fd-b600-4896-b014-3aea8908f251"
 								}, {
-									"label" : "Coupa",
-									"value" : "7791b183-222c-4cc8-b5dc-cd1992bd8ede"
-								}, {
-									"label" : "CVent",
-									"value" : "758b1e11-0444-4c27-87bd-da79606caa6d"
-								}, {
-									"label" : "Dropbox",
-									"value" : "afd3b70d-d8e2-424b-94b9-7ba1f22d5af2"
-								}, {
-									"label" : "Eloqua",
-									"value" : "b45a89f6-e5b4-43b1-87c5-c02cb11151c0"
-								}, {
-									"label" : "File",
-									"value" : "fed2a26e-bb41-4d50-9d25-20a27e8c8781"
-								}, {
-									"label" : "FileProcessor",
-									"value" : "e1a84535-6101-4bf7-9702-5ae889cfc0b0"
-								}, {
-									"label" : "GoogleAPI",
-									"value" : "f386355c-51bb-43ca-ac5d-e7abd15a79d5"
-								}, {
-									"label" : "Jira",
-									"value" : "e1788807-ffaf-4cb0-848e-b09e36558b05"
-								}, {
-									"label" : "JSON",
-									"value" : "34686c55-4bd8-4733-9b19-d1d4b1b72784"
+									"label" : "JDBC",
+									"value" : "33ec8fc7-dc6d-4d2e-9f6f-a950669a62d1"
 								}, {
 									"label" : "Marketo",
-									"value" : "0ea71f00-949c-11e4-b4a9-0800200c9a66"
+									"value" : "0ea72f00-949c-11e4-b4a9-0800200c9a67"
 								}, {
-									"label" : "Microsoft Sharepoint 2010",
-									"value" : "b631f215-1589-4fe7-bbac-eaee2080f29b"
+									"label" : "Microsoft Azure Blob Storage",
+									"value" : "0db52dc0-49c5-11e4-916c-0800200c9a66"
 								}, {
-									"label" : "Microsoft team foundation server",
-									"value" : "6b5341c0-9992-4d00-8183-afc82b5ae4f0"
+									"label" : "Microsoft Azure Data Lake Storage",
+									"value" : "27a9f87a-7ae1-4b96-b53c-c3ad7f61c3fa"
 								}, {
-									"label" : "Odata",
-									"value" : "b93e0491-8bb5-41a0-ba60-50cfb4102180"
+									"label" : "Microsoft Azure Data Lake Store",
+									"value" : "27a9f87a-7ae1-4b96-b53c-c3ad7f61c3fa"
 								}, {
-									"label" : "OpenAir",
-									"value" : "6fbec006-291a-4a3a-8cba-2d39c8039990"
+									"label" : "Microsoft Azure DocumentDB",
+									"value" : "c2587bb0-992f-4d36-ab38-0547f76490b4"
 								}, {
-									"label" : "Quickbooks",
-									"value" : "e45e263e-f99c-41ff-a10f-9e06c5963c7f"
+									"label" : "Microsoft Azure SQL Data Warehouse",
+									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
 								}, {
-									"label" : "REST",
-									"value" : "cf03505e-01fc-4c35-914d-a6c18cd1f286"
+									"label" : "Microsoft Dynamics AX 2xxx",
+									"value" : "f443ee4a-88bf-4b57-a19a-5c79a6ff0633"
 								}, {
-									"label" : "Xactly",
-									"value" : "5b7e0388-fad8-433e-8b0b-2c9d947c9b29"
+									"label" : "Microsoft Dynamics GP 2xxx",
+									"value" : "47ca4b25-e21d-4d86-a8c6-7f59e495bc44"
 								}, {
-									"label" : "XML source",
-									"value" : "b4d9c90e-8aa7-4d0c-8ed1-d0ffedb04e5c"
+									"label" : "Microsoft Dynamics NAV 2xxx",
+									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
 								}, {
-									"label" : "XML Target",
-									"value" : "060a02a7-94e4-402c-bb24-d08519d82c44"
+									"label" : "NetSuite",
+									"value" : "e977b246-8cd4-4ed9-94ab-e534353e87ff"
 								}, {
-									"label" : "Zoura",
-									"value" : "0302f0c6-c852-438b-a3e5-51ab11222d1f"
+									"label" : "Salesforce Analytics",
+									"value" : "d4e564a0-4042-11e4-916c-0800200c9a66"
+								}, {
+									"label" : "Salesforce Analytics (Wave)",
+									"value" : "d4e564a0-4042-11e4-916c-0800200c9a66"
+								}, {
+									"label" : "Salesforce Marketing Cloud",
+									"value" : "4848f1de-b6e0-4c2e-9a6a-186332db6591"
+								}, {
+									"label" : "SAP BW",
+									"value" : "ff5896e2-b56f-482c-ae1f-4ac483bbd6ea"
+								}, {
+									"label" : "SAP Concur",
+									"value" : "4aa062e2-fada-11e4-a322-1697f925ec7b"
+								}, {
+									"label" : "SAP Table Connector",
+									"value" : "71247120-1cdd-11e2-892e-0800200c9a66"
+								}, {
+									"label" : "SAP Table Reader/ Writer (Cloud)",
+									"value" : "71247120-1cdd-11e2-892e-0800200c9a66"
+								}, {
+									"label" : "Sugar CRM",
+									"value" : "860cf54a-895e-4e47-a3bb-6c35f098ee08"
+								}, {
+									"label" : "Tableau",
+									"value" : "cb852a22-876d-11e4-b116-123b93f75cba"
+								}, {
+									"label" : "Tableau V2",
+									"value" : "cb852a22-876d-11e4-b116-123b93f75cba"
+								}, {
+									"label" : "Workday",
+									"value" : "78ea38f4-06e8-44d6-b4ce-ff5b651f06e9"
+								}, {
+									"label" : "Workday",
+									"value" : "bf39a0dd-4b9d-4ec1-ac9f-c39e2712ece8"
 								}
 							]
 						}
