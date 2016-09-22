@@ -11,17 +11,20 @@
 		"authType": {
             "value": "password"
         },
+		"sshPublicKey": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDVfEW6zhs4WGKn9aNYEDpf3j97WAfdvVRd4eU7jaUNSa9K5oFDkjs6XVsKQ3iPZoOv5xyq4ulhL6KVnnX9UPN7SDpL+J82u0Akp+5GkNxmsTkW0yv3J1nGlTrYLKzwSVn0Q28YSLEyEY0ObUmBFtXsgadpMAUqy7vEF6bEgsF/dQ=="
+        },
 		"vmSize" : {
 			"value": "Standard_D12"
 		},
 		"os" : {
-			"value": "windows"
+			"value": "linux"
 		},
 		"cloudUsername" : {
-			"value": "sgopalak@infa.com.azure"
+			"value": "sgopalakwin@infa.com.azure"
 		},
 		"cloudEmail" : {
-			"value": "sgopalak@infa.com"
+			"value": "sgopalakwin@infa.com"
 		},
 		"cloudPassword" : {
 			"value": "Infa1234"
