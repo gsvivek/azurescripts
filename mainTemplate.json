@@ -123,7 +123,6 @@
 		"virtualNetworkName" : "IcsPaygVNET",
 		"publicIPAddressName": "icspaygIP",
 		"IPAddressType": "Dynamic",
-		"dnsNameForPublicIP" : "[concat('icspayg', uniqueString(subscription().subscriptionId))]",
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
 		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
@@ -144,10 +143,7 @@
 			"name": "[variables('publicIPAddressName')]",
 			"location": "[resourceGroup().location]",
 			"properties": {
-				"publicIPAllocationMethod": "[variables('IPAddressType')]",
-				"dnsSettings": {
-					"domainNameLabel": "[variables('dnsNameForPublicIP')]"
-				}
+				"publicIPAllocationMethod": "[variables('IPAddressType')]"
 			}
 		}, {
 			"apiVersion" : "2015-05-01-preview",

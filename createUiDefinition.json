@@ -41,7 +41,7 @@
 			}, {
 				"name" : "orgName",
 				"type" : "Microsoft.Common.TextBox",
-				"label" : "Organization Name",
+				"label" : "Company Name",
 				"constraints" : {
 					"required" : true
 				}
@@ -194,25 +194,22 @@
 						"name" : "cloudConnector1",
 						"type" : "Microsoft.Common.DropDown",
 						"label" : "Connector #1",
-						"defaultValue" : "Azure SQL DB",
-						"toolTip" : "Primary connector for your data transformation.",
+						"defaultValue" : "Microsoft Azure SQL Data Warehouse",
+						"toolTip" : "Select the connector for your Microsoft Azure service.",
 						"constraints" : {
 							"required" : true,
 							"allowedValues" : [{
-									"label" : "Azure SQL DB",
-									"value" : "0b0ad503-1c2c-4514-95ac-85a5adb71b3b"
+									"label" : "Microsoft Azure Blob Storage",
+									"value" : "0db52dc0-49c5-11e4-916c-0800200c9a66"
 								}, {
-									"label" : "Azure SQL DW",
-									"value" : "554a67aa-7f07-42f8-bfad-c927cf4d7f28"
+									"label" : "Microsoft Azure Data Lake Store",
+									"value" : "27a9f87a-7ae1-4b96-b53c-c3ad7f61c3fa"
 								}, {
-									"label" : "Azure Blob Storage",
-									"value" : "45d431c2-9474-40de-bcf1-409dc56faa3f"
+									"label" : "Microsoft Azure DocumentDB",
+									"value" : "c2587bb0-992f-4d36-ab38-0547f76490b4"
 								}, {
-									"label" : "Azure Data Lake Store",
-									"value" : "92d6c3db-bfca-4b96-a492-e1b3dea2351e"
-								}, {
-									"label" : "Azure Document DB",
-									"value" : "f443ee4a-88bf-4b57-a19a-5c79a6ff0633"
+									"label" : "Microsoft Azure SQL Data Warehouse",
+									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
 								}
 							]
 						}
@@ -221,7 +218,7 @@
 						"type" : "Microsoft.Common.DropDown",
 						"label" : "Connector #2",
 						"defaultValue" : "Avature",
-						"toolTip" : "Secondary connector for your data transformation.",
+						"toolTip" : "Select the connector for your other data source.",
 						"constraints" : {
 							"required" : true,
 							"allowedValues" : [{
@@ -237,20 +234,11 @@
 									"label" : "Box",
 									"value" : "ef75055a-3197-4e79-ba70-6dfd03f7c1ac"
 								}, {
-									"label" : "Concur",
-									"value" : "c68397fd-b600-4896-b014-3aea8908f251"
-								}, {
 									"label" : "JDBC",
 									"value" : "33ec8fc7-dc6d-4d2e-9f6f-a950669a62d1"
 								}, {
-									"label" : "Marketo",
-									"value" : "0ea72f00-949c-11e4-b4a9-0800200c9a67"
-								}, {
 									"label" : "Microsoft Azure Blob Storage",
 									"value" : "0db52dc0-49c5-11e4-916c-0800200c9a66"
-								}, {
-									"label" : "Microsoft Azure Data Lake Storage",
-									"value" : "27a9f87a-7ae1-4b96-b53c-c3ad7f61c3fa"
 								}, {
 									"label" : "Microsoft Azure Data Lake Store",
 									"value" : "27a9f87a-7ae1-4b96-b53c-c3ad7f61c3fa"
@@ -261,8 +249,11 @@
 									"label" : "Microsoft Azure SQL Data Warehouse",
 									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
 								}, {
-									"label" : "Microsoft Dynamics AX 2xxx",
-									"value" : "f443ee4a-88bf-4b57-a19a-5c79a6ff0633"
+									"label" : "Microsoft Dyanamics CRM",
+									"value" : ""
+								}, {
+									"label" : "Microsoft Dynamics AX 2012",
+									"value" : "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
 								}, {
 									"label" : "Microsoft Dynamics GP 2xxx",
 									"value" : "47ca4b25-e21d-4d86-a8c6-7f59e495bc44"
@@ -270,14 +261,23 @@
 									"label" : "Microsoft Dynamics NAV 2xxx",
 									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
 								}, {
+									"label" : "MySQL",
+									"value" : ""
+								}, {
 									"label" : "NetSuite",
 									"value" : "e977b246-8cd4-4ed9-94ab-e534353e87ff"
+								}, {
+									"label" : "ODBC",
+									"value" : ""
+								}, {
+									"label" : "Oracle DB (12c)",
+									"value" : ""
 								}, {
 									"label" : "Salesforce Analytics",
 									"value" : "d4e564a0-4042-11e4-916c-0800200c9a66"
 								}, {
-									"label" : "Salesforce Analytics (Wave)",
-									"value" : "d4e564a0-4042-11e4-916c-0800200c9a66"
+									"label" : "Salesforce CRM",
+									"value" : ""
 								}, {
 									"label" : "Salesforce Marketing Cloud",
 									"value" : "4848f1de-b6e0-4c2e-9a6a-186332db6591"
@@ -285,13 +285,10 @@
 									"label" : "SAP BW",
 									"value" : "ff5896e2-b56f-482c-ae1f-4ac483bbd6ea"
 								}, {
-									"label" : "SAP Concur",
-									"value" : "4aa062e2-fada-11e4-a322-1697f925ec7b"
+									"label" : "SAP SuccessFactors (Odata)",
+									"value" : "9ff13103-688b-42db-9d8a-081538918eb0"
 								}, {
 									"label" : "SAP Table Connector",
-									"value" : "71247120-1cdd-11e2-892e-0800200c9a66"
-								}, {
-									"label" : "SAP Table Reader/ Writer (Cloud)",
 									"value" : "71247120-1cdd-11e2-892e-0800200c9a66"
 								}, {
 									"label" : "Sugar CRM",
@@ -300,14 +297,11 @@
 									"label" : "Tableau",
 									"value" : "cb852a22-876d-11e4-b116-123b93f75cba"
 								}, {
-									"label" : "Tableau V2",
-									"value" : "cb852a22-876d-11e4-b116-123b93f75cba"
-								}, {
 									"label" : "Workday",
 									"value" : "78ea38f4-06e8-44d6-b4ce-ff5b651f06e9"
 								}, {
-									"label" : "Workday",
-									"value" : "bf39a0dd-4b9d-4ec1-ac9f-c39e2712ece8"
+									"label" : "Marketo",
+									"value" : "0ea72f00-949c-11e4-b4a9-0800200c9a67"
 								}
 							]
 						}
