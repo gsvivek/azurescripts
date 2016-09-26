@@ -83,7 +83,13 @@
 		"orgName" : {
 			"type" : "string",
 			"metadata" : {
-				"description" : "The Organization name of the Informatica Cloud user."
+				"description" : "The Company name of the Informatica Cloud user."
+			}
+		},
+		"country" : {
+			"type" : "string",
+			"metadata" : {
+				"description" : "The country of the Informatica Cloud user."
 			}
 		},
 		"phone" : {
@@ -125,6 +131,8 @@
 		"IPAddressType": "Dynamic",
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+		"stateDefaults": { "1" : "CA", "2": "-1" },
+		"state" : "[variables('stateDefaults')[length(replace(parameters('country'),'US','U'))]",
 		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
 		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '_', parameters('authType'), '.json')]"
 	},
@@ -247,6 +255,12 @@
 					},
 					"phone" : {
 						"value" : "[parameters('phone')]"
+					},
+					"country" : {
+						"value" : "[parameters('country')]"
+					},
+					"state" : {
+						"value" : "[variables('state')]"
 					},
 					"connectorUUIDList" : {
 						"value" : "[variables('connectorUUIDList')]"
