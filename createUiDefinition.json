@@ -354,7 +354,7 @@
 							"value" : "IS"
 						}, {
 							"label" : "India",
-							"value" : "IN" selected = "selected"
+							"value" : "IN"
 						}, {
 							"label" : "Indonesia",
 							"value" : "ID"
