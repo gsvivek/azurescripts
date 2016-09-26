@@ -953,7 +953,7 @@
 						"name" : "cloudConnector2",
 						"type" : "Microsoft.Common.DropDown",
 						"label" : "Connector #2",
-						"defaultValue" : "Avature",
+						"defaultValue" : "Workday",
 						"toolTip" : "Select the connector for your other data source.",
 						"constraints" : {
 							"required" : true,

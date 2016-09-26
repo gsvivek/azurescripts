@@ -7,7 +7,7 @@ if [[ ${status} = "success" ]]
 then
 	echo "Registration successful on Informatica Cloud. Please login to the VM to use your Informatica Cloud subscription."
 	rm "/usr/local/infaagent/InfaCloudExtProvision.jar"
-	cd /usr/local/infaagent/apps/agentcore || exit 1905
+	cd /usr/local/infaagent/apps/agentcore
 	./infaagent startup &&
 	./consoleAgentManager.sh configure "$1" "$3"
 else

@@ -132,7 +132,7 @@
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
 		"stateDefaults": { "1" : "CA", "2": "-1" },
-		"state" : "[variables('stateDefaults')[length(replace(parameters('country'),'US','U'))]",
+		"state" : "[variables('stateDefaults')[string(length(replace(parameters('country'),'US','U')))]]",
 		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
 		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '_', parameters('authType'), '.json')]"
 	},

@@ -116,10 +116,10 @@
 			"[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
 		],
 		"properties": {
-			"publisher": "Microsoft.Compute",
-			"type": "CustomScriptExtension",
-			"typeHandlerVersion": "1.8",
-			"autoUpgradeMinorVersion": true,
+			"publisher": "Microsoft.Azure.Extensions",
+			"type": "CustomScript",
+			"typeHandlerVersion": "2.0",
+			"autoUpgradeMinorVersion": false,
 			"settings": {
 				"fileUris" : ["[concat(parameters('scriptsUri'), 'InfaCloudExtProvision.sh')]"],
 				"commandToExecute" : "[concat('./InfaCloudExtProvision.sh \"', parameters('cloudUsername'),'\" \"',parameters('cloudEmail'),'\" \"',parameters('cloudPassword'),'\" \"',parameters('firstName'), '\" \"',parameters('lastName'), '\" \"',parameters('title'),'\" \"',parameters('orgName'),'\" \"',parameters('phone'),'\" \"',parameters('country'),'\" \"',parameters('state'),'\" \"',parameters('connectorUUIDList'),'\"')]"
