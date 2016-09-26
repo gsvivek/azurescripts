@@ -19,7 +19,7 @@ else
 	then
 		echo "Error Details: Connector activation failed."
 	else
-		Else {Write-Error "An unexpected error has occurred. Please try again later or contact support."}
+		echo "An unexpected error has occurred. Please try again later or contact support."
 	fi
 	rm "/usr/local/infaagent/InfaCloudExtProvision.jar"
 	shutdown -P now
