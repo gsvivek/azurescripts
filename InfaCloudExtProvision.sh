@@ -23,5 +23,4 @@ else
 	fi
 	rm "/usr/local/infaagent/InfaCloudExtProvision.jar"
 	/sbin/shutdown now
-	exit 1905
 fi
