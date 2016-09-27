@@ -2,6 +2,7 @@ UUID="$(sudo dmidecode | grep 'UUID' | sed -e 's/.*: //')"
 result="$(/usr/local/infaagent/jre/bin/java -jar /usr/local/infaagent/InfaCloudExtProvision.jar "cloudUsername" "$1" "cloudEmail" "$2" "cloudPassword" "$3" "firstName" "$4" "lastName" "$5" "title" "$6" "orgName" "$7" "phone" "$8" "orgCountry" "$9" "orgState" "${10}" "connectorUUIDs" "${11}" "identifier" "${UUID}" "orgAddress" "${UUID}")"
 status=$(echo "${result}" | jq '.response.status' | sed "s/\"//g")
 msg=$(echo "${result}" | jq '.response.msg'| sed "s/\"//g")
+echo "result: " ${result}
 if [[ ${status} = "success" ]]
 then
 	echo "Registration successful on Informatica Cloud. Please login to the VM to use your Informatica Cloud subscription."
