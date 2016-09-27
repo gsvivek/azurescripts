@@ -1,5 +1,5 @@
 UUID="$(sudo dmidecode | grep 'UUID' | sed -e 's/.*: //')"
-result="$(/usr/local/infaagent/jre/bin/java -jar /usr/local/infaagent/InfaCloudExtProvision.jar "cloudUsername" "$1" "cloudEmail" "$2" "cloudPassword" "$3" "firstName" "$4" "lastName" "$5" "title" "$6" "orgName" "$7" "phone" "$8" "orgCountry" "$9" "orgState" "($10)" "connectorUUIDs" "($11)" "identifier" "${UUID}" "orgAddress" "${UUID}")"
+result="$(/usr/local/infaagent/jre/bin/java -jar /usr/local/infaagent/InfaCloudExtProvision.jar "cloudUsername" "$1" "cloudEmail" "$2" "cloudPassword" "$3" "firstName" "$4" "lastName" "$5" "title" "$6" "orgName" "$7" "phone" "$8" "orgCountry" "$9" "orgState" "${10}" "connectorUUIDs" "${11}" "identifier" "${UUID}" "orgAddress" "${UUID}")"
 status=$(echo "${result}" | jq '.response.status' | sed "s/\"//g")
 msg=$(echo "${result}" | jq '.response.msg'| sed "s/\"//g")
 if [[ ${status} = "success" ]]
