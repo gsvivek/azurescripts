@@ -93,7 +93,7 @@
 					"caching": "ReadWrite",
 					"createOption": "FromImage",
 					"image": {
-					  "uri": "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-azure/ics-payg-lin-osDisk.5719562d-7d53-496f-a27d-506e74720302.vhd"
+					  "uri": "https://infacloudazure2351.blob.core.windows.net/system/Microsoft.Compute/Images/ics-azure/ics-payg-lin-osDisk.5162debb-3bf3-4686-913d-f117a2056f5e.vhd"
 					},
 					"vhd": {
 					  "uri": "[concat('https://',parameters('vhdStorageAccountName'),'.blob.core.windows.net/vhds/', parameters('vmName'), uniquestring(resourceGroup().id), 'osDisk.vhd')]"
