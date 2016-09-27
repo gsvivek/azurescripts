@@ -16,5 +16,5 @@ ElseIf ($msg -eq "ConnectorActivationFailed") {Write-Error "Error Details: Conne
 Else {Write-Error "An unexpected error has occurred. Please try again later or contact support."}
 Remove-Item "C:\Program Files\Informatica Cloud Secure Agent\InfaCloudExtProvision.jar"
 Stop-Computer -force
-exit 1905
+exit 195
 }
