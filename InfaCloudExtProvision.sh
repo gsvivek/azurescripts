@@ -8,7 +8,8 @@ then
 	echo "Registration successful on Informatica Cloud. Please login to the VM to use your Informatica Cloud subscription."
 	rm "/usr/local/infaagent/InfaCloudExtProvision.jar"
 	cd /usr/local/infaagent/apps/agentcore
-	./infaagent startup &&
+	./infaagent startup
+	sleep 3
 	./consoleAgentManager.sh configure "$1" "$3"
 else
 	echo "Error occurred while registering user on Informatica Cloud. VM has been shut down but not deallocated and you will incur charges. Please stop the VM from the Azure portal to stop incurring charges."
