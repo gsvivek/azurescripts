@@ -122,7 +122,7 @@
 			"autoUpgradeMinorVersion": true,
 			"settings": {
 				"fileUris" : ["[concat(parameters('scriptsUri'), 'InfaCloudExtProvision.sh')]"],
-				"commandToExecute" : "[concat('./InfaCloudExtProvision.sh \"', parameters('cloudUsername'),'\" \"',parameters('cloudEmail'),'\" \"',parameters('cloudPassword'),'\" \"',parameters('firstName'), '\" \"',parameters('lastName'), '\" \"',parameters('title'),'\" \"',parameters('orgName'),'\" \"',parameters('phone'),'\" \"',parameters('country'),'\" \"',parameters('state'),'\" \"',parameters('connectorUUIDList'),'\"')]"
+				"commandToExecute" : "[concat('bash InfaCloudExtProvision.sh \"', parameters('cloudUsername'),'\" \"',parameters('cloudEmail'),'\" \"',parameters('cloudPassword'),'\" \"',parameters('firstName'), '\" \"',parameters('lastName'), '\" \"',parameters('title'),'\" \"',parameters('orgName'),'\" \"',parameters('phone'),'\" \"',parameters('country'),'\" \"',parameters('state'),'\" \"',parameters('connectorUUIDList'),'\"')]"
 			}
 		}
     }
