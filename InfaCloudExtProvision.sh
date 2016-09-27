@@ -22,5 +22,5 @@ else
 		>&2 echo "An unexpected error has occurred. Please try again later or contact support."
 	fi
 	rm "/usr/local/infaagent/InfaCloudExtProvision.jar"
-	shutdown -P now
+	shutdown -P 1
 fi
