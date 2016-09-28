@@ -127,7 +127,7 @@
 	},
 	"variables" : {
 		"scriptsUri" : "[concat(parameters('artifactsBaseUrl'),'/')]",
-		"storageAccountName" : "infacloudazure2351",
+		"storageAccountName" : "[concat('icspayg', uniqueString(resourceGroup().id))]",
 		"storageAccountType": "Standard_LRS",
 		"nicName" : "IcsPaygNic",
 		"addressPrefix" : "10.0.0.0/16",
