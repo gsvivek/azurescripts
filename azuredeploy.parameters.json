@@ -21,10 +21,10 @@
 			"value": "linux"
 		},
 		"cloudUsername" : {
-			"value": "sgopalaklin2@infa.com.azure"
+			"value": "sgopalakwin3@infa.com.azure"
 		},
 		"cloudEmail" : {
-			"value": "sgopalaklin2@infa.com"
+			"value": "sgopalakwin3@infa.com"
 		},
 		"cloudPassword" : {
 			"value": "Infa1234"
@@ -45,7 +45,7 @@
 			"value": "1234567890"
 		},
 		"country" : {
-			"value": "US"
+			"value": "IN"
 		},
 		"cloudConnector1" : {
 			"value": "0302f0c6-c852-438b-a3e5-51ab11222d1f"

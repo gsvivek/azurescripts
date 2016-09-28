@@ -3,7 +3,7 @@
 	"contentVersion" : "1.0.0.0",
 	"parameters" : {
 		"adminUsername" : {
-			"type" : "string",
+			"type" : "securestring",
 			"metadata" : {
 				"description" : "Admin username of the VM"
 			}
@@ -16,12 +16,13 @@
 		},
 		"adminPassword" : {
 			"type" : "securestring",
+			"defaultValue" : "",
 			"metadata" : {
 				"description" : "Admin password of the VM"
 			}
 		},
 		"sshPublicKey" : {
-			"type" : "string",
+			"type" : "securestring",
 			"defaultValue" : "",
 			"metadata" : {
 				"description" : "SSH rsa public key file as a string."
@@ -110,6 +111,13 @@
 				"description" : "The source connector chosen by the user."
 			}
 		},
+		"location" : {
+			"type" : "string",
+			"defaultValue" : "eastus",
+			"metadata" : {
+				"description" : "Location in which the Azure resources will be deployed."
+			}
+		},
 		"artifactsBaseUrl" : {
 			"type" : "string",
 			"metadata" : {
@@ -127,26 +135,28 @@
 		"subnetPrefix" : "10.0.0.0/24",
 		"vmName" : "[concat('icspayg',parameters('os'))]",
 		"virtualNetworkName" : "IcsPaygVNET",
-		"publicIPAddressName": "icspaygIP",
+		"publicIPAddressName": "[concat('icspaygIP', uniqueString(resourceGroup().id))]",
 		"IPAddressType": "Dynamic",
 		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-		"stateDefaults": { "1" : "CA", "2": "-1" },
-		"state" : "[variables('stateDefaults')[string(length(replace(parameters('country'),'US','U')))]]",
+		"state" : "CA",
 		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
 		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '_', parameters('authType'), '.json')]"
 	},
 	"resources" : [
 		{
-			"apiVersion": "2015-06-15",
-			"type": "Microsoft.Storage/storageAccounts",
-			"name": "[variables('storageAccountName')]",
-			"location": "[resourceGroup().location]",
-			"properties": {
-				"accountType": "[variables('storageAccountType')]"
-			}
-		}, {
-			"apiVersion": "2015-05-01-preview",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('storageAccountName')]",
+            "apiVersion": "2016-01-01",
+            "location": "[parameters('location')]",
+            "properties": {
+            },
+            "sku": {
+                "name": "[variables('storageAccountType')]"
+            },  
+            "kind": "Storage"
+        }, {
+			"apiVersion": "2016-06-01",
 			"type": "Microsoft.Network/publicIPAddresses",
 			"name": "[variables('publicIPAddressName')]",
 			"location": "[resourceGroup().location]",
@@ -154,7 +164,7 @@
 				"publicIPAllocationMethod": "[variables('IPAddressType')]"
 			}
 		}, {
-			"apiVersion" : "2015-05-01-preview",
+			"apiVersion" : "2016-06-01",
 			"type" : "Microsoft.Network/virtualNetworks",
 			"name" : "[variables('virtualNetworkName')]",
 			"location" : "[resourceGroup().location]",
@@ -173,7 +183,7 @@
 				]
 			}
 		}, {
-			"apiVersion" : "2015-05-01-preview",
+			"apiVersion" : "2016-06-01",
 			"type" : "Microsoft.Network/networkInterfaces",
 			"name" : "[variables('nicName')]",
 			"location" : "[resourceGroup().location]",
@@ -197,7 +207,7 @@
 				]
 			}
 		}, {
-			"apiVersion" : "2015-01-01",
+			"apiVersion" : "2016-06-01",
 			"type" : "Microsoft.Resources/deployments",
 			"name" : "[concat(variables('vmName'),'-vm')]",
 			"dependsOn" : [

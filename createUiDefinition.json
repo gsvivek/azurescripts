@@ -830,6 +830,11 @@
 							"hideConfirmation" : false
 						},
 						"osPlatform" : "Windows",
+						"imageReference": {
+							"publisher": "informatica",
+							"offer": "ics-payg-windows",
+							"sku": "ICS-PAYG-WINDOWS"
+						},
 						"visible" : "[equals(steps('vmDetails').os, 'windows')]"
 					}, {
 						"name" : "adminPasswordLin",
@@ -853,6 +858,11 @@
 							"hidePassword" : false
 						},
 						"osPlatform" : "linux",
+						"imageReference": {
+							"publisher": "informatica",
+							"offer": "ics-payg-ubuntu",
+							"sku": "ICS-PAYG-UBUNTU"
+						},
 						"visible" : "[equals(steps('vmDetails').os, 'linux')]"
 					}, {
 						"name" : "windowsVmSize",

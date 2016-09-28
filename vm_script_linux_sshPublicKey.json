@@ -6,13 +6,13 @@
 			"type": "string"
 		},
 		"adminUsername": {
-			"type": "string"
+			"type": "secureString"
 		},
 		"adminPassword": {
 			"type": "secureString"
 		},
 		"sshPublicKey": {
-			"type": "string"
+			"type": "secureString"
 		},
 		"vmSize": {
 			"type": "string"
@@ -60,10 +60,10 @@
 			"type": "string"
 		}
     },
-    "variables": {"sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",},
+    "variables": {"sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]"},
     "resources": [
     {
-		"apiVersion": "2015-06-15",
+		"apiVersion": "2016-03-30",
 		"type": "Microsoft.Compute/virtualMachines",
 		"name": "[parameters('vmName')]",
 		"location": "[resourceGroup().location]",
@@ -110,7 +110,7 @@
     }, {
 		"type": "Microsoft.Compute/virtualMachines/extensions",
 		"name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
-		"apiVersion": "2015-05-01-preview",
+		"apiVersion": "2016-03-30",
 		"location": "[resourceGroup().location]",
 		"dependsOn" : [
 			"[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
@@ -121,7 +121,9 @@
 			"typeHandlerVersion": "2.0",
 			"autoUpgradeMinorVersion": true,
 			"settings": {
-				"fileUris" : ["[concat(parameters('scriptsUri'), 'InfaCloudExtProvision.sh')]"],
+				"fileUris" : ["[concat(parameters('scriptsUri'), 'InfaCloudExtProvision.sh')]"]
+			},
+			"protectedSettings": {
 				"commandToExecute" : "[concat('bash InfaCloudExtProvision.sh \"', parameters('cloudUsername'),'\" \"',parameters('cloudEmail'),'\" \"',parameters('cloudPassword'),'\" \"',parameters('firstName'), '\" \"',parameters('lastName'), '\" \"',parameters('title'),'\" \"',parameters('orgName'),'\" \"',parameters('phone'),'\" \"',parameters('country'),'\" \"',parameters('state'),'\" \"',parameters('connectorUUIDList'),'\"')]"
 			}
 		}
