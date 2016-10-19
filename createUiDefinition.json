@@ -956,7 +956,8 @@
 						},
 						"constraints": {
 							"required": {
-								"domainNameLabel": true
+								"domainNameLabel": true,
+								"publicIpAddressName": true
 							}
 						},
 						"options": {
@@ -1419,9 +1420,10 @@
 			"vnetSubnetName": "[steps('vmDetails').vnetSelector.subnets.subnet1.name]",
 			"vnetRGName": "[steps('vmDetails').vnetSelector.resourceGroup]",
 			"vnetSubnetAddressPrefix": "[steps('vmDetails').vnetSelector.subnets.subnet1.addressPrefix]",
-			"publicIpAddressName": "[steps('vmDetails').publicIpAddress.name]",
-			"publicIPAddressType": "[steps('vmDetails').publicIpAddress.publicIPAddressType]",
+			"publicIPNewOrExisting": "[steps('vmDetails').publicIpAddress.newOrExisting]",
 			"publicIPRGName": "[steps('vmDetails').publicIpAddress.resourceGroup]",
+			"publicIpAddressName": "[steps('vmDetails').publicIpAddress.name]",
+			"publicIPAddressType": "[steps('vmDetails').publicIpAddress.assignment]",
 			"domainNameLabel": "[steps('vmDetails').publicIpAddress.domainNameLabel]",
 			"cloudUsername" : "[concat(basics('cloudEmail'), '.azure')]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
