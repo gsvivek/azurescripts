@@ -22,14 +22,19 @@
 				"label" : "Email Address",
 				"toolTip" : "Primary email address.",
 				"constraints" : {
-					"required" : true
+					"required" : true,
+					"regex" : "^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$",
+					"validationMessage" : "Please enter a valid email address."
 				}
 			}, {
 				"name" : "phone",
 				"type" : "Microsoft.Common.TextBox",
 				"label" : "Phone Number",
+				"toolTip" : "Please provide your 10 digit mobile number or phone number with area code. Please DO NOT include Country code or the symbols <b>+</b> <b>(</b> <b>)</b> <b>-</b>.",
 				"constraints" : {
-					"required" : true
+					"required" : true,
+					"regex" : "^\\d{10}$",
+					"validationMessage" : "Please provide your 10 digit mobile number or phone number with area code. Please DO NOT include Country code or the symbols <b>+</b> <b>(</b> <b>)</b> <b>-</b>."
 				}
 			}, {
 				"name" : "title",
@@ -808,11 +813,19 @@
 							]
 						}
 					}, {
-						"name" : "adminUsername",
+						"name" : "adminUsernameWin",
 						"type" : "Microsoft.Compute.UserNameTextBox",
 						"label" : "VM Username",
 						"toolTip" : "Admin username for the virtual machines.",
-						"osPlatform" : "Windows"
+						"osPlatform" : "Windows",
+						"visible" : "[equals(steps('vmDetails').os, 'windows')]"
+					}, {
+						"name" : "adminUsernameLin",
+						"type" : "Microsoft.Compute.UserNameTextBox",
+						"label" : "VM Username",
+						"toolTip" : "Admin username for the virtual machines.",
+						"osPlatform" : "Linux",
+						"visible" : "[equals(steps('vmDetails').os, 'linux')]"
 					}, {
 						"name" : "adminPasswordWin",
 						"type" : "Microsoft.Compute.CredentialsCombo",
@@ -830,11 +843,6 @@
 							"hideConfirmation" : false
 						},
 						"osPlatform" : "Windows",
-						"imageReference": {
-							"publisher": "informatica",
-							"offer": "ics-payg-windows",
-							"sku": "ICS-PAYG-WINDOWS"
-						},
 						"visible" : "[equals(steps('vmDetails').os, 'windows')]"
 					}, {
 						"name" : "adminPasswordLin",
@@ -857,12 +865,7 @@
 							"hideConfirmation" : false,
 							"hidePassword" : false
 						},
-						"osPlatform" : "linux",
-						"imageReference": {
-							"publisher": "informatica",
-							"offer": "ics-payg-ubuntu",
-							"sku": "ICS-PAYG-UBUNTU"
-						},
+						"osPlatform" : "Linux",
 						"visible" : "[equals(steps('vmDetails').os, 'linux')]"
 					}, {
 						"name" : "windowsVmSize",
@@ -875,6 +878,11 @@
 							"excludedSizes" : []
 						},
 						"osPlatform" : "Windows",
+						"imageReference" : {
+							"publisher" : "informatica",
+							"offer" : "ics-payg-windows-preview",
+							"sku" : "ICS-PAYG-WINDOWS"
+						},
 						"count" : 1,
 						"visible" : "[equals(steps('vmDetails').os, 'windows')]"
 					}, {
@@ -888,8 +896,75 @@
 							"excludedSizes" : []
 						},
 						"osPlatform" : "Linux",
+						"imageReference" : {
+							"publisher" : "informatica",
+							"offer" : "ics-payg-ubuntu-preview",
+							"sku" : "ICS-PAYG-UBUNTU"
+						},
 						"count" : 1,
 						"visible" : "[equals(steps('vmDetails').os, 'linux')]"
+					}, {
+						"name": "publicIpAddress",
+						"type": "Microsoft.Network.PublicIpAddressCombo",
+						"label": {
+							"publicIpAddress": "Public IP address",
+							"domainNameLabel": "Domain name label"
+						},
+						"toolTip": {
+							"publicIpAddress": "",
+							"domainNameLabel": ""
+						},
+						"defaultValue": {
+							"publicIpAddressName": "icspaygIP",
+							"domainNameLabel": "icspaygDNS"
+						},
+						"constraints": {
+							"required": {
+								"domainNameLabel": true
+							}
+						},
+						"options": {
+							"hideNone": false,
+							"hideDomainNameLabel": false,
+							"hideExisting": false
+						},
+						"visible": true
+					}, {          
+						"name": "vnetSelector",
+						"type": "Microsoft.Network.VirtualNetworkCombo",
+						"label": {
+							"virtualNetwork": "Virtual network",
+							"subnets": "Subnets"
+						},
+						"toolTip": {
+							"virtualNetwork": "",
+							"subnets": ""
+						},
+						"defaultValue": {
+							"name": "vnet01",
+							"addressPrefixSize": "/16"
+						},
+						"constraints": {
+							"minAddressPrefixSize": "/16"
+						},
+						"options": {
+							"hideExisting": false
+						},
+						"subnets": {
+							"subnet1": {
+								"label": "Subnet",
+								"defaultValue": {
+									"name": "icspaygsubnet-1",
+									"addressPrefixSize": "/24"
+								},
+								"constraints": {
+									"minAddressPrefixSize": "/24",
+									"minAddressCount": 12,
+									"requireContiguousAddresses": true
+								}
+							}
+						},
+						"visible": true
 					}
 				]
 			}, {
@@ -925,12 +1000,12 @@
 							"confirmPassword" : "Confirm password"
 						},
 						"toolTip" : {
-							"password" : "Password for your Informatica Cloud account. Password must be 6-15 characters long and can contain the special characters @*#"
+							"password" : "Password for your Informatica Cloud account. Password must be 6-15 characters long and can contain the special characters <b>@</b> <b>*</b> <b>#</b> <b>_</b> <b>-</b>."
 						},
 						"constraints" : {
 							"required" : true,
-							"regex" : "^([a-zA-Z0-9@*#]{6,15})$",
-							"validationMessage" : "Password must be 6-15 characters long and can contain the special characters @*#"
+							"regex" : "^([a-zA-Z0-9@*#_-]{6,15})$",
+							"validationMessage" : "Password must be 6-15 characters long and can contain the special characters <b>@</b> <b>*</b> <b>#</b> <b>_</b> <b>-</b>."
 						},
 						"options" : {
 							"hideConfirmation" : false
@@ -995,13 +1070,13 @@
 									"label" : "Microsoft Dyanamics CRM",
 									"value" : ""
 								}, {
-									"label" : "Microsoft Dynamics AX 2012",
+									"label" : "Microsoft Dynamics AX",
 									"value" : "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
 								}, {
-									"label" : "Microsoft Dynamics GP 2xxx",
+									"label" : "Microsoft Dynamics GP",
 									"value" : "47ca4b25-e21d-4d86-a8c6-7f59e495bc44"
 								}, {
-									"label" : "Microsoft Dynamics NAV 2xxx",
+									"label" : "Microsoft Dynamics NAV",
 									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
 								}, {
 									"label" : "MySQL",
@@ -1085,13 +1160,13 @@
 									"label" : "Microsoft Dyanamics CRM",
 									"value" : ""
 								}, {
-									"label" : "Microsoft Dynamics AX 2012",
+									"label" : "Microsoft Dynamics AX",
 									"value" : "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
 								}, {
-									"label" : "Microsoft Dynamics GP 2xxx",
+									"label" : "Microsoft Dynamics GP",
 									"value" : "47ca4b25-e21d-4d86-a8c6-7f59e495bc44"
 								}, {
-									"label" : "Microsoft Dynamics NAV 2xxx",
+									"label" : "Microsoft Dynamics NAV",
 									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
 								}, {
 									"label" : "MySQL",
@@ -1175,13 +1250,13 @@
 									"label" : "Microsoft Dyanamics CRM",
 									"value" : ""
 								}, {
-									"label" : "Microsoft Dynamics AX 2012",
+									"label" : "Microsoft Dynamics AX",
 									"value" : "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
 								}, {
-									"label" : "Microsoft Dynamics GP 2xxx",
+									"label" : "Microsoft Dynamics GP",
 									"value" : "47ca4b25-e21d-4d86-a8c6-7f59e495bc44"
 								}, {
-									"label" : "Microsoft Dynamics NAV 2xxx",
+									"label" : "Microsoft Dynamics NAV",
 									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
 								}, {
 									"label" : "MySQL",
@@ -1265,13 +1340,13 @@
 									"label" : "Microsoft Dyanamics CRM",
 									"value" : ""
 								}, {
-									"label" : "Microsoft Dynamics AX 2012",
+									"label" : "Microsoft Dynamics AX",
 									"value" : "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
 								}, {
-									"label" : "Microsoft Dynamics GP 2xxx",
+									"label" : "Microsoft Dynamics GP",
 									"value" : "47ca4b25-e21d-4d86-a8c6-7f59e495bc44"
 								}, {
-									"label" : "Microsoft Dynamics NAV 2xxx",
+									"label" : "Microsoft Dynamics NAV",
 									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
 								}, {
 									"label" : "MySQL",
@@ -1333,12 +1408,12 @@
 			"orgName" : "[basics('orgName')]",
 			"country" : "[basics('country')]",
 			"os" : "[steps('vmDetails').os]",
-			"adminUsername" : "[steps('vmDetails').adminUsername]",
+			"adminUsername" : "[coalesce(steps('vmDetails').adminUsernameWin, steps('vmDetails').adminUsernameLin)]",
 			"authType" : "[coalesce(steps('vmDetails').adminPasswordWin.authenticationType, steps('vmDetails').adminPasswordLin.authenticationType)]",
 			"adminPassword" : "[coalesce(steps('vmDetails').adminPasswordWin.password, steps('vmDetails').adminPasswordLin.password)]",
 			"sshPublicKey" : "[steps('vmDetails').adminPasswordLin.sshPublicKey]",
 			"vmSize" : "[coalesce(steps('vmDetails').windowsVmSize, steps('vmDetails').linuxVmSize)]",
-			"cloudUsername" : "[steps('cloudRegDetails').cloudUsername]",
+			"cloudUsername" : "[concat(basics('cloudEmail'), '.azure')]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
 			"cloudConnector1" : "[steps('cloudRegDetails').cloudConnector1]",
 			"cloudConnector2" : "[coalesce(steps('cloudRegDetails').cloudConnector2_1,steps('cloudRegDetails').cloudConnector2_2,steps('cloudRegDetails').cloudConnector2_3,steps('cloudRegDetails').cloudConnector2_4)]"
