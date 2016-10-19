@@ -951,7 +951,7 @@
 							"domainNameLabel": ""
 						},
 						"defaultValue": {
-							"publicIpAddressName": "icspaygIP",
+							"publicIpAddressName": "icspaygPIP",
 							"domainNameLabel": "icspaygdns"
 						},
 						"constraints": {
@@ -1419,8 +1419,8 @@
 			"vnetSubnetName": "[steps('vmDetails').vnetSelector.subnets.subnet1.name]",
 			"vnetRGName": "[steps('vmDetails').vnetSelector.resourceGroup]",
 			"vnetSubnetAddressPrefix": "[steps('vmDetails').vnetSelector.subnets.subnet1.addressPrefix]",
-			"publicIpAddressName": "[steps('vmDetails').publicIpAddress.publicIpAddress.publicIpAddressName]",
-			"publicIPAddressType": "[steps('vmDetails').publicIpAddress.publicIpAddress.publicIPAddressType]",
+			"publicIpAddressName": "[steps('vmDetails').publicIpAddress.name]",
+			"publicIPAddressType": "[steps('vmDetails').publicIpAddress.type]",
 			"domainNameLabel": "[steps('vmDetails').publicIpAddress.domainNameLabel]",
 			"cloudUsername" : "[concat(basics('cloudEmail'), '.azure')]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
