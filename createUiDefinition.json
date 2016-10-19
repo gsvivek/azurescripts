@@ -915,11 +915,11 @@
 							"subnets": ""
 						},
 						"defaultValue": {
-							"name": "vnet01",
-							"addressPrefixSize": "/16"
+							"name": "icspaygvnet01",
+							"addressPrefixSize": "/24"
 						},
 						"constraints": {
-							"minAddressPrefixSize": "/16"
+							"minAddressPrefixSize": "/24"
 						},
 						"options": {
 							"hideExisting": false
@@ -1419,8 +1419,8 @@
 			"vnetSubnetName": "[steps('vmDetails').vnetSelector.subnets.subnet1.name]",
 			"vnetRGName": "[steps('vmDetails').vnetSelector.resourceGroup]",
 			"vnetSubnetAddressPrefix": "[steps('vmDetails').vnetSelector.subnets.subnet1.addressPrefix]",
-			"publicIpAddressName": "[steps('vmDetails').publicIpAddress.publicIpAddressName]",
-			"publicIPAddressType": "[steps('vmDetails').publicIpAddress.publicIPAddressType]",
+			"publicIpAddressName": "[steps('vmDetails').publicIpAddress.publicIpAddress.publicIpAddressName]",
+			"publicIPAddressType": "[steps('vmDetails').publicIpAddress.publicIpAddress.publicIPAddressType]",
 			"domainNameLabel": "[steps('vmDetails').publicIpAddress.domainNameLabel]",
 			"cloudUsername" : "[concat(basics('cloudEmail'), '.azure')]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
