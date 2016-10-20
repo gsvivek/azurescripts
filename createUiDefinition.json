@@ -910,10 +910,6 @@
 							"virtualNetwork": "Virtual network",
 							"subnets": "Subnets"
 						},
-						"toolTip": {
-							"virtualNetwork": "",
-							"subnets": ""
-						},
 						"defaultValue": {
 							"name": "icspaygvnet01",
 							"addressPrefixSize": "/24"
@@ -944,11 +940,7 @@
 						"type": "Microsoft.Network.PublicIpAddressCombo",
 						"label": {
 							"publicIpAddress": "Public IP address",
-							"domainNameLabel": "Domain name label"
-						},
-						"toolTip": {
-							"publicIpAddress": "",
-							"domainNameLabel": ""
+							"domainNameLabel": "Domain name prefix"
 						},
 						"defaultValue": {
 							"publicIpAddressName": "icspaygPIP",
@@ -956,8 +948,7 @@
 						},
 						"constraints": {
 							"required": {
-								"domainNameLabel": true,
-								"publicIpAddressName": true
+								"domainNameLabel": true
 							}
 						},
 						"options": {
@@ -1423,10 +1414,6 @@
 			"publicIPNewOrExisting": "[steps('vmDetails').publicIpAddress.newOrExistingOrNone]",
 			"publicIPRGName": "[steps('vmDetails').publicIpAddress.resourceGroup]",
 			"publicIpAddressName": "[steps('vmDetails').publicIpAddress.name]",
-			"publicIPAddressType": "[steps('vmDetails').publicIpAddress.publicIPAddressType]",
-			"publicIPAddressType": "[steps('vmDetails').publicIpAddress.assignment]",
-			"publicIPAddressType": "[steps('vmDetails').publicIpAddress.type]",
-			"publicIPAddressType": "[steps('vmDetails').publicIpAddress.addressType]",
 			"domainNameLabel": "[steps('vmDetails').publicIpAddress.domainNameLabel]",
 			"cloudUsername" : "[concat(basics('cloudEmail'), '.azure')]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
