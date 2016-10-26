@@ -881,7 +881,7 @@
 						"imageReference" : {
 							"publisher" : "informatica",
 							"offer" : "ics-payg-windows-preview",
-							"sku" : "ICS-PAYG-WINDOWS"
+							"sku" : "ics-payg-windows"
 						},
 						"count" : 1,
 						"visible" : "[equals(steps('vmDetails').os, 'windows')]"
@@ -899,7 +899,7 @@
 						"imageReference" : {
 							"publisher" : "informatica",
 							"offer" : "ics-payg-ubuntu-preview",
-							"sku" : "ICS-PAYG-UBUNTU"
+							"sku" : "ics-payg-ubuntu"
 						},
 						"count" : 1,
 						"visible" : "[equals(steps('vmDetails').os, 'linux')]"
