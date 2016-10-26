@@ -939,28 +939,6 @@
 									}
 								},
 								"visible" : true
-							}, {
-								"name" : "publicIpAddress",
-								"type" : "Microsoft.Network.PublicIpAddressCombo",
-								"label" : {
-									"publicIpAddress" : "Public IP address",
-									"domainNameLabel" : "Domain name prefix"
-								},
-								"defaultValue" : {
-									"publicIpAddressName" : "icspaygPIP",
-									"domainNameLabel" : "icspaygdns"
-								},
-								"constraints" : {
-									"required" : {
-										"domainNameLabel" : true
-									}
-								},
-								"options" : {
-									"hideNone" : true,
-									"hideDomainNameLabel" : false,
-									"hideExisting" : false
-								},
-								"visible" : true
 							}
 						],
 						"visible" : true
@@ -1068,7 +1046,7 @@
 									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
 								}, {
 									"label" : "Microsoft Dyanamics CRM",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Microsoft Dynamics AX",
 									"value" : "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
@@ -1080,22 +1058,22 @@
 									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
 								}, {
 									"label" : "MySQL",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "NetSuite",
 									"value" : "e977b246-8cd4-4ed9-94ab-e534353e87ff"
 								}, {
 									"label" : "ODBC",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Oracle DB (12c)",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Salesforce Analytics",
 									"value" : "d4e564a0-4042-11e4-916c-0800200c9a66"
 								}, {
 									"label" : "Salesforce CRM",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Salesforce Marketing Cloud",
 									"value" : "4848f1de-b6e0-4c2e-9a6a-186332db6591"
@@ -1158,7 +1136,7 @@
 									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
 								}, {
 									"label" : "Microsoft Dyanamics CRM",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Microsoft Dynamics AX",
 									"value" : "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
@@ -1170,22 +1148,22 @@
 									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
 								}, {
 									"label" : "MySQL",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "NetSuite",
 									"value" : "e977b246-8cd4-4ed9-94ab-e534353e87ff"
 								}, {
 									"label" : "ODBC",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Oracle DB (12c)",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Salesforce Analytics",
 									"value" : "d4e564a0-4042-11e4-916c-0800200c9a66"
 								}, {
 									"label" : "Salesforce CRM",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Salesforce Marketing Cloud",
 									"value" : "4848f1de-b6e0-4c2e-9a6a-186332db6591"
@@ -1248,7 +1226,7 @@
 									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
 								}, {
 									"label" : "Microsoft Dyanamics CRM",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Microsoft Dynamics AX",
 									"value" : "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
@@ -1260,22 +1238,22 @@
 									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
 								}, {
 									"label" : "MySQL",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "NetSuite",
 									"value" : "e977b246-8cd4-4ed9-94ab-e534353e87ff"
 								}, {
 									"label" : "ODBC",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Oracle DB (12c)",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Salesforce Analytics",
 									"value" : "d4e564a0-4042-11e4-916c-0800200c9a66"
 								}, {
 									"label" : "Salesforce CRM",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Salesforce Marketing Cloud",
 									"value" : "4848f1de-b6e0-4c2e-9a6a-186332db6591"
@@ -1338,7 +1316,7 @@
 									"value" : "c2587bb0-992f-4d36-ab38-0547f76490b4"
 								}, {
 									"label" : "Microsoft Dyanamics CRM",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Microsoft Dynamics AX",
 									"value" : "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
@@ -1350,22 +1328,22 @@
 									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
 								}, {
 									"label" : "MySQL",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "NetSuite",
 									"value" : "e977b246-8cd4-4ed9-94ab-e534353e87ff"
 								}, {
 									"label" : "ODBC",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Oracle DB (12c)",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Salesforce Analytics",
 									"value" : "d4e564a0-4042-11e4-916c-0800200c9a66"
 								}, {
 									"label" : "Salesforce CRM",
-									"value" : ""
+									"value" : "defaultValue"
 								}, {
 									"label" : "Salesforce Marketing Cloud",
 									"value" : "4848f1de-b6e0-4c2e-9a6a-186332db6591"
@@ -1419,14 +1397,10 @@
 			"vnetSubnetName" : "[steps('vmDetails').networkSection.vnetSelector.subnets.subnet1.name]",
 			"vnetRGName" : "[steps('vmDetails').networkSection.vnetSelector.resourceGroup]",
 			"vnetSubnetAddressPrefix" : "[steps('vmDetails').networkSection.vnetSelector.subnets.subnet1.addressPrefix]",
-			"publicIPNewOrExisting" : "[steps('vmDetails').networkSection.publicIpAddress.newOrExistingOrNone]",
-			"publicIPRGName" : "[steps('vmDetails').networkSection.publicIpAddress.resourceGroup]",
-			"publicIpAddressName" : "[steps('vmDetails').networkSection.publicIpAddress.name]",
-			"domainNameLabel" : "[steps('vmDetails').networkSection.publicIpAddress.domainNameLabel]",
 			"cloudUsername" : "[concat(basics('cloudEmail'), '.azure')]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
 			"cloudConnector1" : "[steps('cloudRegDetails').cloudConnector1]",
-			"cloudConnector2" : "[coalesce(steps('cloudRegDetails').cloudConnector2_1,steps('cloudRegDetails').cloudConnector2_2,steps('cloudRegDetails').cloudConnector2_3,steps('cloudRegDetails').cloudConnector2_4)]"
+			"cloudConnector2" : "[replace(coalesce(steps('cloudRegDetails').cloudConnector2_1,steps('cloudRegDetails').cloudConnector2_2,steps('cloudRegDetails').cloudConnector2_3,steps('cloudRegDetails').cloudConnector2_4), 'defaultValue', '')]"
 		}
 	}
 }
