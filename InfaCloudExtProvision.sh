@@ -12,17 +12,15 @@ then
 	sleep 10
 	./consoleAgentManager.sh configure "$1" "$3"
 else
-	echo "Error occurred while registering user on Informatica Cloud. VM has been shut down but not deallocated and you will incur charges. Please stop the VM from the Azure portal to stop incurring charges." >&2
 	if [[ ${msg} = "UserAlreadyExists" ]] 
 	then
-		echo "Error Details: User already exists with the username $1" >&2
+		errorCode=195
 	elif [[ ${msg} = "ConnectorActivationFailed" ]] 
 	then
-		echo "Error Details: Connector activation failed." >&2
+		errorCode=196
 	else
-		echo "An unexpected error has occurred. Please try again later or contact support." >&2
+		errorCode=200
 	fi
 	rm "/usr/local/infaagent/InfaCloudExtProvision.jar"
-	shutdown -P 1
-	exit 195
+	exit ${errorCode}
 fi

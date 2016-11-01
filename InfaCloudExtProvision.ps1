@@ -10,11 +10,9 @@ Start-Process "C:\Program Files\Informatica Cloud Secure Agent\apps\agentcore\ag
 Start-Process "C:\Program Files\Informatica Cloud Secure Agent\apps\agentcore\consoleAgentManager.bat" "configure $cloudUsername $cloudPassword"
 }
 else {
-Write-Error "Error occurred while registering user on Informatica Cloud. VM has been shut down but not deallocated and you will incur charges. Please stop the VM from the Azure portal to stop incurring charges."
-if($msg -eq "UserAlreadyExists") {Write-Error "Error Details: User already exists with the username " $cloudUsername}
-ElseIf ($msg -eq "ConnectorActivationFailed") {Write-Error "Error Details: Connector activation failed."}
-Else {Write-Error "An unexpected error has occurred. Please try again later or contact support."}
+if($msg -eq "UserAlreadyExists") {Write-Error "Error Code: 195"}
+ElseIf ($msg -eq "ConnectorActivationFailed") {Write-Error "Error Code: 196"}
+Else {Write-Error "Error Code: 200"}
 Remove-Item "C:\Program Files\Informatica Cloud Secure Agent\InfaCloudExtProvision.jar"
-Stop-Computer -force
-exit 195
+exit 519
 }

@@ -58,6 +58,9 @@
 		},
 		"scriptsUri" : {
 			"type": "string"
+		},
+		"location" : {
+			"type": "string"
 		}
     },
     "variables": {"sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]"},
@@ -66,7 +69,12 @@
 		"apiVersion": "2016-03-30",
 		"type": "Microsoft.Compute/virtualMachines",
 		"name": "[parameters('vmName')]",
-		"location": "[resourceGroup().location]",
+		"location": "[parameters('location')]",
+		"plan": {
+			"name": "ics-payg-ubuntu",
+			"product": "ics-payg-ubuntu-preview",
+			"publisher": "informatica"
+		},
 		"properties": {
 			"hardwareProfile" : {
 				"vmSize" : "[parameters('vmSize')]"
@@ -90,12 +98,11 @@
 				"imageReference": {
 					"publisher": "informatica",
 					"offer": "ics-payg-ubuntu-preview",
-					"sku": "ICS-PAYG-UBUNTU",
+					"sku": "ics-payg-ubuntu",
 					"version": "latest"
 				},
 				"osDisk": {
 					"name": "[concat(parameters('vmName'),'-osDisk')]",
-					"osType": "linux",
 					"caching": "ReadWrite",
 					"createOption": "FromImage",
 					"vhd": {
@@ -114,7 +121,7 @@
 		"type": "Microsoft.Compute/virtualMachines/extensions",
 		"name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
 		"apiVersion": "2016-03-30",
-		"location": "[resourceGroup().location]",
+		"location": "[parameters('location')]",
 		"dependsOn" : [
 			"[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
 		],

@@ -37,10 +37,7 @@
 		"os" : {
 			"type" : "string",
 			"defaultValue" : "windows",
-			"allowedValues" : [
-				"windows",
-				"linux"
-			],
+			"allowedValues" : ["windows", "linux"],
 			"metadata" : {
 				"description" : "The OS type chosen by the user. Allowed values are Windows and Linux"
 			}
@@ -102,14 +99,33 @@
 		"cloudConnector1" : {
 			"type" : "string",
 			"metadata" : {
-				"description" : "The target connector chosen by the user."
+				"description" : "Connector 1 chosen by the user."
 			}
 		},
 		"cloudConnector2" : {
 			"type" : "string",
 			"metadata" : {
-				"description" : "The source connector chosen by the user."
+				"description" : "Connector 2 chosen by the user."
 			}
+		},
+		"vnetNewOrExisting" : {
+			"type" : "string"
+		},
+		"vnetAddressPrefix" : {
+			"type" : "string",
+			"defaultValue" : ""
+		},
+		"vnetName" : {
+			"type" : "string"
+		},
+		"vnetSubnetName" : {
+			"type" : "string"
+		},
+		"vnetRGName" : {
+			"type" : "string"
+		},
+		"vnetSubnetAddressPrefix" : {
+			"type" : "string"
 		},
 		"location" : {
 			"type" : "string",
@@ -128,88 +144,143 @@
 	"variables" : {
 		"scriptsUri" : "[concat(parameters('artifactsBaseUrl'),'/')]",
 		"storageAccountName" : "[concat('icspayg', uniqueString(resourceGroup().id))]",
-		"storageAccountType": "Standard_LRS",
+		"storageAccountType" : "Standard_LRS",
 		"nicName" : "IcsPaygNic",
-		"addressPrefix" : "10.0.0.0/16",
-		"subnetName" : "Subnet",
-		"subnetPrefix" : "10.0.0.0/24",
 		"vmName" : "[concat('icspayg',parameters('os'))]",
-		"virtualNetworkName" : "IcsPaygVNET",
-		"publicIPAddressName": "[concat('icspaygIP', uniqueString(resourceGroup().id))]",
-		"IPAddressType": "Dynamic",
-		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-		"subnetRef" : "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+		"publicIPAddressName" : "[concat(variables('vmName'), '-pip')]",
+		"IPAddressType" : "Dynamic",
+		"vnetID" : "[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
+		"nsgName" : "ics-payg-nsg",
 		"state" : "CA",
 		"connectorUUIDList" : "[concat(parameters('cloudConnector1'),'|',parameters('cloudConnector2'))]",
 		"vmSetupURL" : "[concat(variables('scriptsUri'), 'vm_script_', parameters('os'), '_', parameters('authType'), '.json')]"
 	},
-	"resources" : [
-		{
-            "type": "Microsoft.Storage/storageAccounts",
-            "name": "[variables('storageAccountName')]",
-            "apiVersion": "2016-01-01",
-            "location": "[parameters('location')]",
-            "properties": {
-            },
-            "sku": {
-                "name": "[variables('storageAccountType')]"
-            },  
-            "kind": "Storage"
-        }, {
-			"apiVersion": "2016-06-01",
-			"type": "Microsoft.Network/publicIPAddresses",
-			"name": "[variables('publicIPAddressName')]",
-			"location": "[resourceGroup().location]",
-			"properties": {
-				"publicIPAllocationMethod": "[variables('IPAddressType')]"
-			}
+	"resources" : [{
+			"type" : "Microsoft.Storage/storageAccounts",
+			"name" : "[variables('storageAccountName')]",
+			"apiVersion" : "2016-01-01",
+			"location" : "[parameters('location')]",
+			"properties" : {},
+			"sku" : {
+				"name" : "[variables('storageAccountType')]"
+			},
+			"kind" : "Storage"
 		}, {
 			"apiVersion" : "2016-06-01",
-			"type" : "Microsoft.Network/virtualNetworks",
-			"name" : "[variables('virtualNetworkName')]",
-			"location" : "[resourceGroup().location]",
+			"type" : "Microsoft.Network/publicIPAddresses",
+			"name" : "[variables('publicIPAddressName')]",
+			"location" : "[parameters('location')]",
 			"properties" : {
-				"addressSpace" : {
-					"addressPrefixes" : [
-						"[variables('addressPrefix')]"
-					]
+				"publicIPAllocationMethod" : "[variables('IPAddressType')]"
+			}
+		}, {
+			"type" : "Microsoft.Resources/deployments",
+			"name" : "[concat(variables('vmName'), '-vnet')]",
+			"apiVersion" : "2016-06-01",
+			"properties" : {
+				"mode" : "Incremental",
+				"templateLink" : {
+					"uri" : "[concat(variables('scriptsUri'), 'vnet_', parameters('vnetNewOrExisting'), '.json')]",
+					"contentVersion" : "1.0.0.0"
 				},
-				"subnets" : [{
-						"name" : "[variables('subnetName')]",
+				"parameters" : {
+					"vnetName" : {
+						"value" : "[parameters('vnetName')]"
+					},
+					"vnetAddressPrefix" : {
+						"value" : "[parameters('vnetAddressPrefix')]"
+					},
+					"vnetSubnetName" : {
+						"value" : "[parameters('vnetSubnetName')]"
+					},
+					"vnetSubnetAddressPrefix" : {
+						"value" : "[parameters('vnetSubnetAddressPrefix')]"
+					},
+					"location" : {
+						"value" : "[parameters('location')]"
+					}
+				}
+			}
+		}, {
+			"type" : "Microsoft.Network/networkSecurityGroups",
+			"name" : "[variables('nsgName')]",
+			"apiVersion" : "2016-06-01",
+			"location" : "[parameters('location')]",
+			"properties" : {
+				"securityRules" : [{
+						"name" : "rdp-rule-win",
 						"properties" : {
-							"addressPrefix" : "[variables('subnetPrefix')]"
+							"description" : "Allow RDP for Windows",
+							"protocol" : "Tcp",
+							"sourcePortRange" : "*",
+							"destinationPortRange" : "3389",
+							"sourceAddressPrefix" : "Internet",
+							"destinationAddressPrefix" : "*",
+							"access" : "Allow",
+							"priority" : 1000,
+							"direction" : "Inbound"
+						}
+					}, {
+						"name" : "ssh-rule-linux",
+						"properties" : {
+							"description" : "Allow SSH for Linux",
+							"protocol" : "Tcp",
+							"sourcePortRange" : "*",
+							"destinationPortRange" : "22",
+							"sourceAddressPrefix" : "Internet",
+							"destinationAddressPrefix" : "*",
+							"access" : "Allow",
+							"priority" : 1100,
+							"direction" : "Inbound"
+						}
+					}, {
+						"name" : "infa-secure-agent-rule",
+						"properties" : {
+							"description" : "Allow secure agent connection to Informatica Cloud",
+							"protocol" : "Tcp",
+							"sourcePortRange" : "*",
+							"destinationPortRange" : "443",
+							"sourceAddressPrefix" : "*",
+							"destinationAddressPrefix" : "Internet",
+							"access" : "Allow",
+							"priority" : 1200,
+							"direction" : "Outbound"
 						}
 					}
 				]
 			}
 		}, {
-			"apiVersion" : "2016-06-01",
 			"type" : "Microsoft.Network/networkInterfaces",
 			"name" : "[variables('nicName')]",
-			"location" : "[resourceGroup().location]",
+			"apiVersion" : "2016-06-01",
+			"location" : "[parameters('location')]",
 			"dependsOn" : [
 				"[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
-				"[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+				"[concat('Microsoft.Resources/deployments/', variables('vmName'), '-vnet')]",
+				"[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
 			],
 			"properties" : {
+				"networkSecurityGroup" : {
+					"id" : "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+				},
 				"ipConfigurations" : [{
 						"name" : "ipconfig1",
 						"properties" : {
 							"privateIPAllocationMethod" : "[variables('IPAddressType')]",
 							"publicIPAddress" : {
-								"id" : "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+								"id" : "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
 							},
 							"subnet" : {
-								"id" : "[variables('subnetRef')]"
+								"id" : "[concat(resourceId(parameters('vnetRGName'), 'Microsoft.Network/virtualNetworks', parameters('vnetName')), '/subnets/', parameters('vnetSubnetName'))]"
 							}
 						}
 					}
 				]
 			}
 		}, {
-			"apiVersion" : "2016-06-01",
 			"type" : "Microsoft.Resources/deployments",
 			"name" : "[concat(variables('vmName'),'-vm')]",
+			"apiVersion" : "2016-06-01",
 			"dependsOn" : [
 				"[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
 				"[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
@@ -277,6 +348,9 @@
 					},
 					"scriptsUri" : {
 						"value" : "[variables('scriptsUri')]"
+					},
+					"location" : {
+						"value" : "[parameters('location')]"
 					}
 				}
 			}
