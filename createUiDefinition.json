@@ -1009,6 +1009,9 @@
 								}, {
 									"label" : "Microsoft Azure SQL Data Warehouse",
 									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
+								}, {
+									"label" : "Microsoft Azure SQL Database",
+									"value" : "dummyValue0"
 								}
 							]
 						}
@@ -1044,6 +1047,9 @@
 								}, {
 									"label" : "Microsoft Azure SQL Data Warehouse",
 									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
+								}, {
+									"label" : "Microsoft Azure SQL Database",
+									"value" : "dummyValue0"
 								}, {
 									"label" : "Microsoft Dyanamics CRM",
 									"value" : "dummyValue1"
@@ -1135,6 +1141,9 @@
 									"label" : "Microsoft Azure SQL Data Warehouse",
 									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
 								}, {
+									"label" : "Microsoft Azure SQL Database",
+									"value" : "dummyValue0"
+								}, {
 									"label" : "Microsoft Dyanamics CRM",
 									"value" : "dummyValue1"
 								}, {
@@ -1224,6 +1233,9 @@
 								}, {
 									"label" : "Microsoft Azure SQL Data Warehouse",
 									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
+								}, {
+									"label" : "Microsoft Azure SQL Database",
+									"value" : "dummyValue0"
 								}, {
 									"label" : "Microsoft Dyanamics CRM",
 									"value" : "dummyValue1"
@@ -1315,6 +1327,9 @@
 									"label" : "Microsoft Azure DocumentDB",
 									"value" : "c2587bb0-992f-4d36-ab38-0547f76490b4"
 								}, {
+									"label" : "Microsoft Azure SQL Database",
+									"value" : "dummyValue0"
+								}, {
 									"label" : "Microsoft Dyanamics CRM",
 									"value" : "dummyValue1"
 								}, {
@@ -1372,6 +1387,99 @@
 							]
 						},
 						"visible" : "[equals(steps('cloudRegDetails').cloudConnector1, '592f0ecc-9312-4936-b9db-184dcd0a48c8')]"
+					}, {
+						"name" : "cloudConnector2_5",
+						"type" : "Microsoft.Common.DropDown",
+						"label" : "Connector #2",
+						"defaultValue" : "Workday",
+						"toolTip" : "Select the connector for your other data source.",
+						"constraints" : {
+							"required" : true,
+							"allowedValues" : [{
+									"label" : "Amazon DynamoDB",
+									"value" : "45d431c2-9474-40de-bcf1-409dc56faa3f"
+								}, {
+									"label" : "Amazon RedShift",
+									"value" : "0b0ad503-1c2c-4514-95ac-85a5adb71b3b"
+								}, {
+									"label" : "Amazon S3",
+									"value" : "554a67aa-7f07-42f8-bfad-c927cf4d7f28"
+								}, {
+									"label" : "Box",
+									"value" : "ef75055a-3197-4e79-ba70-6dfd03f7c1ac"
+								}, {
+									"label" : "JDBC",
+									"value" : "33ec8fc7-dc6d-4d2e-9f6f-a950669a62d1"
+								}, {
+									"label" : "Microsoft Azure Blob Storage",
+									"value" : "0db52dc0-49c5-11e4-916c-0800200c9a66"
+								}, {
+									"label" : "Microsoft Azure Data Lake Store",
+									"value" : "27a9f87a-7ae1-4b96-b53c-c3ad7f61c3fa"
+								}, {
+									"label" : "Microsoft Azure DocumentDB",
+									"value" : "c2587bb0-992f-4d36-ab38-0547f76490b4"
+								}, {
+									"label" : "Microsoft Azure SQL Data Warehouse",
+									"value" : "592f0ecc-9312-4936-b9db-184dcd0a48c8"
+								}, {
+									"label" : "Microsoft Dyanamics CRM",
+									"value" : "dummyValue1"
+								}, {
+									"label" : "Microsoft Dynamics AX",
+									"value" : "4f3682df-ef20-494b-a2c7-9abd1cb912c8"
+								}, {
+									"label" : "Microsoft Dynamics GP",
+									"value" : "47ca4b25-e21d-4d86-a8c6-7f59e495bc44"
+								}, {
+									"label" : "Microsoft Dynamics NAV",
+									"value" : "d78660a5-ddeb-4441-9f3b-7979243c865b"
+								}, {
+									"label" : "MySQL",
+									"value" : "dummyValue2"
+								}, {
+									"label" : "NetSuite",
+									"value" : "e977b246-8cd4-4ed9-94ab-e534353e87ff"
+								}, {
+									"label" : "ODBC",
+									"value" : "dummyValue3"
+								}, {
+									"label" : "Oracle DB (12c)",
+									"value" : "dummyValue4"
+								}, {
+									"label" : "Salesforce Analytics",
+									"value" : "d4e564a0-4042-11e4-916c-0800200c9a66"
+								}, {
+									"label" : "Salesforce CRM",
+									"value" : "dummyValue5"
+								}, {
+									"label" : "Salesforce Marketing Cloud",
+									"value" : "4848f1de-b6e0-4c2e-9a6a-186332db6591"
+								}, {
+									"label" : "SAP BW",
+									"value" : "ff5896e2-b56f-482c-ae1f-4ac483bbd6ea"
+								}, {
+									"label" : "SAP SuccessFactors (Odata)",
+									"value" : "9ff13103-688b-42db-9d8a-081538918eb0"
+								}, {
+									"label" : "SAP Table Connector",
+									"value" : "71247120-1cdd-11e2-892e-0800200c9a66"
+								}, {
+									"label" : "Sugar CRM",
+									"value" : "860cf54a-895e-4e47-a3bb-6c35f098ee08"
+								}, {
+									"label" : "Tableau",
+									"value" : "cb852a22-876d-11e4-b116-123b93f75cba"
+								}, {
+									"label" : "Workday",
+									"value" : "78ea38f4-06e8-44d6-b4ce-ff5b651f06e9"
+								}, {
+									"label" : "Marketo",
+									"value" : "0ea72f00-949c-11e4-b4a9-0800200c9a67"
+								}
+							]
+						},
+						"visible" : "[equals(steps('cloudRegDetails').cloudConnector1, 'dummyValue0')]"
 					}
 				]
 			}
@@ -1399,8 +1507,8 @@
 			"vnetSubnetAddressPrefix" : "[steps('vmDetails').networkSection.vnetSelector.subnets.subnet1.addressPrefix]",
 			"cloudUsername" : "[concat(basics('cloudEmail'), '.azure')]",
 			"cloudPassword" : "[steps('cloudRegDetails').cloudPassword]",
-			"cloudConnector1" : "[steps('cloudRegDetails').cloudConnector1]",
-			"cloudConnector2" : "[replace(replace(replace(replace(replace(coalesce(steps('cloudRegDetails').cloudConnector2_1,steps('cloudRegDetails').cloudConnector2_2,steps('cloudRegDetails').cloudConnector2_3,steps('cloudRegDetails').cloudConnector2_4), 'dummyValue1', ''), 'dummyValue2', ''), 'dummyValue3', ''), 'dummyValue4', ''), 'dummyValue5', '')]"
+			"cloudConnector1" : "[replace(steps('cloudRegDetails').cloudConnector1,'dummyValue0', '')]",
+			"cloudConnector2" : "[replace(replace(replace(replace(replace(replace(coalesce(steps('cloudRegDetails').cloudConnector2_1,steps('cloudRegDetails').cloudConnector2_2,steps('cloudRegDetails').cloudConnector2_3,steps('cloudRegDetails').cloudConnector2_4,steps('cloudRegDetails').cloudConnector2_5), 'dummyValue0', ''), 'dummyValue1', ''), 'dummyValue2', ''), 'dummyValue3', ''), 'dummyValue4', ''), 'dummyValue5', '')]"
 		}
 	}
 }
